@@ -15,17 +15,20 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('category_id')->references('id')->on('category');
+            $table->unsignedBigInteger('user_id');
             $table->string('title');
-            $table->text('excerpt');
+            $table->text('excerpt')->nullable();
             $table->text('body');
-            $table->string('image');
+            $table->string('featured_image')->nullable();
+            $table->text('attachments')->nullable();
             $table->string('slug');
+            $table->enum('post_type', ['post', 'discussion']);
             $table->enum('status', ['PUBLISHED', 'DRAFT', 'PENDING'])->default('DRAFT');
-            $table->boolean('featured')->default(false);
+            $table->boolean('allow_discussion')->default(true);
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

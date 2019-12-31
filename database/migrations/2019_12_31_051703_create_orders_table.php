@@ -32,7 +32,7 @@ class CreateOrdersTable extends Migration
             $table->integer('billing_tax');
             $table->integer('billing_total');
             $table->string('payment_gateway')->default('stripe');
-            $table->boolean('shipped')->default(false);
+            $table->enum('status', ['Complete', 'Pending', 'Cancelled'])->default('Pending');
             $table->string('error')->nullable();
             $table->timestamps();
         });

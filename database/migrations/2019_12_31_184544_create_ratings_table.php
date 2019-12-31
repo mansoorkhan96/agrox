@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSocialProvidersTable extends Migration
+class CreateRatingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateSocialProvidersTable extends Migration
      */
     public function up()
     {
-        Schema::create('social_providers', function (Blueprint $table) {
+        Schema::create('ratings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('provider_id');
-            $table->string('provider');
+            $table->unsignedBigInteger('post_id');
+            $table->foreign('post_id')->references('id')->on('posts');
+            $table->tinyInteger('rating');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateSocialProvidersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('social_providers');
+        Schema::dropIfExists('ratings');
     }
 }
