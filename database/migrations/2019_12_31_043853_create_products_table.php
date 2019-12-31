@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->boolean('featured')->default(false);
             $table->unsignedInteger('quantity')->default(0);
+            $table->enum('status', ['PUBLISHED', 'DRAFT', 'PENDING'])->default('DRAFT');
             $table->softDeletes();
             $table->timestamps();
         });
