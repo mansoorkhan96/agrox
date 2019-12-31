@@ -73,7 +73,6 @@
                             <div class="col-md-6 col-md-offset-4">
                                 <a href="{{ url('/auth/facebook') }}" class="btn btn-primary"><i class="fa fa-facebook"></i> Facebook</a>
                                 <a href="{{ url('/auth/google') }}" class="btn btn-danger"><i class="fa fa-facebook"></i> Google</a>
-                                <a href="{{ url('/auth/github') }}" class="btn btn-secondary"><i class="fa fa-facebook"></i> Github</a>
                             </div>
                         </div>
                     </form>
