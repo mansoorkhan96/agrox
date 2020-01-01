@@ -23,8 +23,8 @@ class CreatePostsTable extends Migration
             $table->text('attachments')->nullable();
             $table->string('slug');
             $table->enum('post_type', ['post', 'discussion']);
+            $table->enum('tag', ['success_story', 'farmer_experience']);
             $table->enum('status', ['PUBLISHED', 'DRAFT', 'PENDING'])->default('DRAFT');
-            $table->boolean('allow_discussion')->default(true);
             $table->softDeletes();
             $table->timestamps();
 

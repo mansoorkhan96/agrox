@@ -13,7 +13,7 @@ class CreateCategoryPostTable extends Migration
      */
     public function up()
     {
-        Schema::create('create_post', function (Blueprint $table) {
+        Schema::create('category_post', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('category');

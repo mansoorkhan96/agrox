@@ -15,8 +15,8 @@ class CreateProficienciesTable extends Migration
     {
         Schema::create('proficiencies', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->enum('Proficiency', ['Expert', 'Advanced', 'Intermediate', 'Novice', 'Not Applicable']);
-            $table->text('descripion')->nullable();
+            $table->enum('proficiency', ['Expert', 'Advanced', 'Intermediate', 'Novice', 'Not Applicable']);
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
