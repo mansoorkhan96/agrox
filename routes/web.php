@@ -10,13 +10,16 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes();
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/check', function() {
+    return view('pages.home');
+});
 
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -24,8 +27,3 @@ Route::get('/home', 'HomeController@index')->name('home');
 // OAuth Routes
 Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
-
-
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
-});

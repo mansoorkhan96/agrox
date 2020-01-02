@@ -1,36 +1,39 @@
 <?php
 
+use App\Permission;
 use Illuminate\Database\Seeder;
-use TCG\Voyager\Models\Permission;
 
 class PermissionsTableSeeder extends Seeder
 {
     /**
-     * Auto generated seed file.
+     * Run the database seeds.
+     *
+     * @return void
      */
     public function run()
     {
-        $keys = [
-            'browse_admin',
-            'browse_bread',
-            'browse_database',
-            'browse_media',
-            'browse_compass',
-        ];
+        Permission::create([
+            'name' => 'Show All Posts',
+            'controller' => 'PostController',
+            'method' => 'index'
+        ]);
 
-        foreach ($keys as $key) {
-            Permission::firstOrCreate([
-                'key'        => $key,
-                'table_name' => null,
-            ]);
-        }
+        Permission::create([
+            'name' => 'Edit Posts',
+            'controller' => 'PostController',
+            'method' => 'edit'
+        ]);
 
-        Permission::generateFor('menus');
+        Permission::create([
+            'name' => 'Delete Post',
+            'controller' => 'PostController',
+            'method' => 'destroy'
+        ]);
 
-        Permission::generateFor('roles');
-
-        Permission::generateFor('users');
-
-        Permission::generateFor('settings');
+        Permission::create([
+            'name' => 'Show Single Post',
+            'controller' => 'PostController',
+            'method' => 'show'
+        ]);
     }
 }

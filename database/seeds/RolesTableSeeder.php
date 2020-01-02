@@ -1,27 +1,40 @@
 <?php
 
+use App\Role;
 use Illuminate\Database\Seeder;
-use TCG\Voyager\Models\Role;
 
 class RolesTableSeeder extends Seeder
 {
     /**
-     * Auto generated seed file.
+     * Run the database seeds.
+     *
+     * @return void
      */
     public function run()
     {
-        $role = Role::firstOrNew(['name' => 'admin']);
-        if (!$role->exists) {
-            $role->fill([
-                    'display_name' => __('voyager::seeders.roles.admin'),
-                ])->save();
-        }
+        Role::create([
+            'name' => 'Admin',
+            'description' => 'Admin role description'
+        ]);
 
-        $role = Role::firstOrNew(['name' => 'user']);
-        if (!$role->exists) {
-            $role->fill([
-                    'display_name' => __('voyager::seeders.roles.user'),
-                ])->save();
-        }
+        Role::create([
+            'name' => 'Farmer',
+            'description' => 'Farmer role description'
+        ]);
+
+        Role::create([
+            'name' => 'Consultant',
+            'description' => 'Consultant role description'
+        ]);
+
+        Role::create([
+            'name' => 'Academic',
+            'description' => 'Academic role description'
+        ]);
+
+        Role::create([
+            'name' => 'Other',
+            'description' => 'Other role description'
+        ]);
     }
 }
