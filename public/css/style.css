@@ -289,7 +289,7 @@ button, input, select, textarea {
     -webkit-font-smoothing: antialiased;
 }
 input[type="text"], input[type="email"], input[type="url"], input[type="password"], input[type="search"], input[type="number"], input[type="tel"], input[type="range"], input[type="date"], input[type="month"], input[type="week"], input[type="time"], input[type="datetime"], input[type="datetime-local"], input[type="color"], textarea {
-    border: 1px solid #f1eeea;
+    border: 1px solid #d4d2cf;
     border-radius: 3px;
     color: #666;
     padding: 7px 15px;
@@ -5116,7 +5116,7 @@ header.header-4 .mini-cart-wrap .mini-cart .mini-cart-icon {
     font-weight: 400;
 }
 .commerce-login-form {
-	border: 1px solid #f1eeea;
+	border: 1px solid #d4d2cf;
     padding: 20px;
     margin: 2em 0;
 	-webkit-border-radius: 2px;

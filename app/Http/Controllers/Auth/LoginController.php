@@ -71,10 +71,22 @@ class LoginController extends Controller
 
         if(!$socialProvider){
             //create a new user and provider
+            //dd($socialUser->getName());
+            // $user = User::firstOrCreate(
+            //     ['avatar' => $socialUser->getAvatar() ?? ''],
+            //     ['email' => $socialUser->getEmail()],
+            //     ['name' => $socialUser->getName()]
+            // );
+            // $avatarUrl = $this->graphUrl.'/'.$this->version.'/'.$socialUser->getId().'/picture';
+            // dd($socialUser->getAvatar());
             $user = User::firstOrCreate(
-                ['email' => $socialUser->getEmail()],
-                ['name' => $socialUser->getName()]
+                [
+                    'avatar' => $socialUser->getAvatar(),
+                    'email' => $socialUser->getEmail(),
+                    'name' => $socialUser->getName()
+                ]
             );
+
             $user->socialProviders()->create(
                 ['provider_id' => $socialUser->getId(), 'provider' => $provider]
             );

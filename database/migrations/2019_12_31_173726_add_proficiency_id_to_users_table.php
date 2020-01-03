@@ -14,7 +14,7 @@ class AddProficiencyIdToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('proficiency_id')->after('role_id');
+            $table->unsignedBigInteger('proficiency_id')->nullable()->after('role_id');
             $table->foreign('proficiency_id')->references('id')->on('proficiencies');
         });
     }
