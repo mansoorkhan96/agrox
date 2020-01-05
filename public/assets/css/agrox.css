@@ -1,0 +1,25 @@
+.page-title {
+    display: inline-block;
+    height: auto;
+    font-size: 20px;
+    height: 100px;
+    line-height: 43px;
+    margin-top: 3px;
+    padding-top: 15px;
+    color: #555;
+    position: relative;
+    margin-bottom: 0;
+    font-weight: 600;
+    margin-right: 20px;
+}
+
+.agrox-table {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.05);
+}
+
+.no-btn {
+    all: unset;
+    cursor: pointer;
+}

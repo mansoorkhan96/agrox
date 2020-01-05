@@ -1,7 +1,7 @@
 <nav class="page-sidebar" id="sidebar">
     <div id="sidebar-collapse">
         <ul class="side-menu metismenu">
-            <li class="active">
+            <li class="">
                 <a href="javascript:;"><i class="sidebar-item-icon ti-home"></i>
                     <span class="nav-label">Dashboards</span><i class="fa fa-angle-left arrow"></i></a>
                 <ul class="nav-2-level collapse">
@@ -29,6 +29,17 @@
                 </ul>
             </li>
             <li class="heading">FEATURES</li>
+            <li>
+                <a href="/admin/categories"><i class="sidebar-item-icon ti-menu"></i>
+                    <span class="nav-label">Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="/admin/products"><i class="sidebar-item-icon ti-shopping-cart"></i>
+                    <span class="nav-label">Products</span>
+                </a>
+            </li>
+            
             <li>
                 <a href="javascript:;"><i class="sidebar-item-icon ti-paint-roller"></i>
                     <span class="nav-label">Basic UI</span><i class="fa fa-angle-left arrow"></i></a>

@@ -16,8 +16,10 @@
     <link href="{{ asset('assets/vendors/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet" />
     <!-- PLUGINS STYLES-->
     <link href="{{ asset('assets/vendors/jvectormap/jquery-jvectormap-2.0.3.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/vendors/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet" />
     <!-- THEME STYLES-->
     <link href="{{ asset('assets/css/main.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/agrox.css') }}" rel="stylesheet" />
     <!-- PAGE LEVEL STYLES-->
 </head>
 
@@ -475,9 +477,18 @@
     <script src="{{ asset('assets/vendors/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/jvectormap/jquery-jvectormap-2.0.3.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+
+    <script src="{{ asset('assets/vendors/dataTables/datatables.min.js') }}"></script>
+
+    <script src="{{ asset('assets/vendors/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
     <!-- CORE SCRIPTS-->
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
     <!-- PAGE LEVEL SCRIPTS-->
     <script src="{{ asset('assets/js/scripts/dashboard_visitors.js') }}"></script>
+    <script src="{{ asset('assets/vendors/dataTables/datatables.min.js') }}"></script>
+    
+    @yield('datatables')
+
+    @yield('page_script')
 </body>
 </html>

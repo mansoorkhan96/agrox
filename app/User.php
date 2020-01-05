@@ -41,4 +41,8 @@ class User extends Authenticatable
     public function socialProviders() {
         return $this->hasMany(SocialProvider::class);
     }
+
+    public function products() {
+        return $this->hasMany('App\Product');
+    }
 }

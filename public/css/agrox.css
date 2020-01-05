@@ -8,3 +8,8 @@
     float: none;
     margin: 0 auto;
 }
+
+.no-btn {
+    all: unset;
+    cursor: pointer;
+}

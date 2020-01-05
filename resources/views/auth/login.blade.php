@@ -15,12 +15,12 @@
                             <a href="auth/google" class="btn btn-md btn-block btn-danger" value="">Login &nbsp; with &nbsp; Google</a>
                         </div>
                     </div>
-                    <form class="commerce-login-form">
+                    {{ Form::open(['route' => 'login', 'method' => 'POST', 'class' => 'commerce-login-form']) }}
                         <div class="row">
                             <div class="col-md-12">
-                                <label>Username or email address <span class="required">*</span></label>
+                                <label>Email address <span class="required">*</span></label>
                                 <div class="form-wrap">
-                                    <input type="text" placeholder="Enter Username or email address" name="your-name" value="" size="40">
+                                    <input type="text" name="email" placeholder="Enter email address" name="your-name" value="" size="40">
                                 </div>
                             </div>
                         </div>
@@ -28,7 +28,7 @@
                             <div class="col-md-12">
                                 <label>Password <span class="required">*</span></label>
                                 <div class="form-wrap">
-                                    <input type="password" placeholder="Enter Password" name="your-pass" value="" size="40">
+                                    <input type="password" name="password" placeholder="Enter Password" name="your-pass" value="" size="40">
                                 </div>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
                             <div class="col-md-12">
                                 <div class="form-wrap">
                                     <input type="submit" value="LOGIN">
-                                    <input name="rememberme" type="checkbox" id="rememberme" value="forever" />
+                                    <input name="remember" type="checkbox" id="remember" {{ old('remember') ? 'checked' : '' }} />
                                     <span>Remember me</span> 
                                 </div>
                             </div>
@@ -46,7 +46,7 @@
                                 <a href="#">Lost your password?</a>
                             </div>
                         </div>
-                    </form>
+                    {{Form::close()}}
                 </div>
             </div>
         </div>

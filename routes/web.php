@@ -19,6 +19,9 @@ Route::get('/admin', function () {
     return view('admin.index');
 });
 
+Route::resource('/admin/categories', 'CategoriesController');
+Route::resource('/admin/products', 'ProductsController');
+
 Route::get('/check', function() {
     return view('pages.home');
 });
