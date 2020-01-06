@@ -53,7 +53,7 @@
                         <tr>
                             <td>{{ $id }}</td>
                             <td>
-                                <img class="mr-3" src="{{ asset('assets/img/products/07.jpg') }}" alt="image" width="60" /> {{$name}}</td>
+                                <img class="mr-3" src="{{ asset('/storage/' . $featured_image) }}" alt="image" width="60" /> {{$name}}</td>
                             <td>
                                 @forelse ($categories as $category)
                                     {{ $category['name'] }}

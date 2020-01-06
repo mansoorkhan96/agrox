@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class ProductsController extends Controller
@@ -16,7 +17,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::with(['user', 'categories'])->get()->toArray();
+        $products = Product::with(['user', 'categories'])->latest()->get()->toArray();
 
         return view('products.index', compact('products'));
     }
@@ -57,14 +58,15 @@ class ProductsController extends Controller
 
         $data['slug'] = Str::slug($data['name']) . '-' . strtolower(Str::random(10));
 
-        $data['featured_image'] = $request->file('featured_image')->store('/product_images');
+        $data['featured_image'] = request('featured_image')->store('product_images', 'public');
 
         $images = [];
-
-        foreach($request->file('images') as $image) {
-            $images[] = $image->store('product_images');
+        if($request->hasFile('images')) {
+            foreach($request->file('images') as $image) {
+                $images[] = $image->store('product_images', 'public');
+            }
         }
-
+        
         $data['user_id'] = 1;
         $data['images'] = implode(',', $images);
 
@@ -73,10 +75,11 @@ class ProductsController extends Controller
 
         if($product = Product::create($data)) {
             $product->categories()->attach($categories);
-            return 'Created';
+            
+            return redirect('/admin/products')->with('success', 'Product added successfully');
         }
 
-        return 'Failed';
+        return redirect('/admin/products')->with('error', 'Could not add product');
     }
 
     /**
@@ -96,9 +99,14 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        //
+        $categories = Category::with('parent')->get()->toArray();
+
+        $product_categories = Product::with('categories')->where('id', $product->id)->get()->toArray();
+        $product_categories =  Arr::pluck($product_categories[0]['categories'], 'id');
+
+        return view('products/edit', compact(['product', 'categories', 'product_categories']));
     }
 
     /**
@@ -108,9 +116,49 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $data = $request->validate([
+            'name' => ['required'],
+            'categories' => ['required'],
+            'price' => ['required', 'integer'],
+            'description' => ['required'],
+            'featured_image' => ['image', 'max:1990'],
+            'featured' => ['nullable'],
+            'quantity' => ['required', 'integer'],
+            'images.*' => ['image', 'max:1990']
+        ], [
+            'images.*.image' => 'Product Image must a type of: JPEG, PNG, JPG',
+            'images.*.max' => 'Product Image size can not be greater than 2MB'
+        ]);
+
+        $data['slug'] = Str::slug($data['name']) . '-' . strtolower(Str::random(10));
+
+        if($request->hasFile('featured_image')) {
+            $data['featured_image'] = request('featured_image')->store('product_images', 'public');
+        }
+
+        $images = [];
+        if($request->hasFile('images')) {
+            foreach($request->file('images') as $image) {
+                $images[] = $image->store('product_images', 'public');
+            }
+
+            $data['images'] = implode(',', $images);
+        }
+        
+        $data['user_id'] = 1;
+        
+        $categories = $data['categories'];
+        unset($data['categories']);
+
+        if(Product::where('id', $product->id)->update($data)) {
+            $product->categories()->sync($categories);
+            
+            return redirect('/admin/products')->with('success', 'Product updated successfully');
+        }
+
+        return redirect('/admin/products')->with('error', 'Could not update product');
     }
 
     /**
@@ -119,8 +167,12 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        if($product->delete()) {
+            return redirect('/admin/products')->with('success', 'Product deleted successfully');
+        }
+
+        return redirect('/admin/products')->with('Could not delete product');
     }
 }

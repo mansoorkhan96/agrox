@@ -2,6 +2,7 @@
     $(function() {
         $('#datatable').DataTable({
             pageLength: 10,
+            order: [],
             fixedHeader: true,
             responsive: true,
             "sDom": 'rtip',

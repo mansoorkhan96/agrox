@@ -35,7 +35,7 @@
                 
                     <div class="form-group mb-4">
                         <label>Product Name</label>
-                        <input class="form-control form-control-solid" type="text" name="name" placeholder="Enter Product Name">
+                        {{ Form::text('name', null, ['class' => 'form-control form-control-solid', 'placeholder' => 'Enter Product Name']) }}
                         @error('name')
                             <label for="name" class="col-form-label text-danger">{{ $message }}</label>
                         @enderror
@@ -48,7 +48,8 @@
                             @php extract($category) @endphp
                                 <div class="form-group">
                                     <label class="checkbox checkbox-grey checkbox-primary">
-                                        <input type="checkbox" value="{{$id}}" name="categories[]">
+                                        {{ Form::checkbox('categories[]', $id) }}
+                                        
                                         <span class="input-span"></span> {{ $parent['name'] ? $parent['name']  . ' -> ' . $name : $name }} </label>
                                 </div>
                             @empty
@@ -64,14 +65,14 @@
                     <div class="row">
                         <div class="col-sm-6 form-group mb-4">
                             <label>Price</label>
-                            <input class="form-control form-control-solid" type="text" name="price" placeholder="Unit Price">
+                            {{ Form::number('price', null, ['class' => 'form-control form-control-solid', 'placeholder' => 'Price']) }}
                             @error('price')
                                 <label for="price" class="col-form-label text-danger">{{ $message }}</label>
                             @enderror
                         </div>
                         <div class="col-sm-6 form-group mb-4">
                             <label>Quantity</label>
-                            <input class="form-control form-control-solid" type="text" name="quantity" placeholder="Quantity">
+                            {{ Form::number('quantity', null, ['class' => 'form-control form-control-solid', 'placeholder' => 'Quantity']) }}
                             @error('quantity')
                                 <label for="quantity" class="col-form-label text-danger">{{ $message }}</label>
                             @enderror
@@ -83,14 +84,14 @@
                     </div> --}}
                     <div class="form-group mb-4">
                         <label>Description</label>
-                        <textarea class="form-control form-control-solid" rows="4" name="description" placeholder="Description"></textarea>
+                        {{ Form::textarea('description', null, ['class' => 'form-control form-control-solid', 'placeholder' => 'Description']) }}
                         @error('description')
                             <label for="description" class="col-form-label text-danger">{{ $message }}</label>
                         @enderror
                     </div>
                     <div class="form-group mb-4">
                         <label class="ui-switch switch-icon mr-3 mb-0">
-                            <input type="checkbox" value="1" name="featured">
+                            {{ Form::checkbox('featured', 1) }}
                             <span></span>
                         </label>Featured ?</div>
                         @error('featured')
