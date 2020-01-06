@@ -4,108 +4,106 @@
 <div class="ibox">
     <div class="ibox-body">
         <h5 class="font-strong mb-5">ADD NEW PRODUCT</h5>
+        {{ Form::open(['action' => 'ProductsController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
         <div class="row">
             <div class="col-lg-4">
                 <div style="width: 325px; height:355px" style="position:relative">
-                    {{-- <img src="{{ asset('images/shop/shopq_5.jpg') }}" class="product-featured-img" alt="image" /> --}}
-                    <p class="lead">Featured Image</p>
+                    <div class="lead" id="featured_image">Featured Image</div>
                     <div class="add-featured-img" style="position: absolute;
                     left: 40%;
                     top: 25%;">
-                        <div class="file-input-plus file-input"><i class="la la-plus-circle"></i>
-                            <input type="file">
+                        <div class="file-input-plus file-input" id="feature-image-btn"><i class="la la-plus-circle"></i>
+                            <input type="file" name="featured_image" id="upload_featured_image">
                         </div>
                     </div>
-                    
+                    @error('featured_image')
+                        <label for="featured_image" class="col-form-label text-danger">{{ $message }}</label>
+                    @enderror
                 </div>
-                <div class="row mt-4">
-                    <div class="col-md-3">
-                        <img src="{{ asset('images/shop/shop_5.jpg') }}" alt="image" />
-                    </div>
-                    <div class="col-md-3">
-                        <img src="{{ asset('images/shop/shop_5.jpg') }}" alt="image" />
-                    </div>
-                    <div class="col-md-3">
-                        <img src="{{ asset('images/shop/shop_5.jpg') }}" alt="image" />
-                    </div>
+                <div class="row mt-4" id="product_images">
                     <div class="col-md-3">
                         <div class="file-input-plus file-input"><i class="la la-plus-circle"></i>
-                            <input type="file">
-                        </div>
+                            <input type="file" name="images[]" id="upload_product_images" multiple="multiple">
+                        </div> Add More Images
+                        @error('images.*')
+                            <label for="images" class="col-form-label text-danger">{{ $message }}</label>
+                        @enderror
                     </div>
                 </div>
             </div>
             <div class="col-lg-8">
-                <form action="javascript:;">
+                
                     <div class="form-group mb-4">
                         <label>Product Name</label>
-                        <input class="form-control form-control-solid" type="text" placeholder="Enter Product Name">
+                        <input class="form-control form-control-solid" type="text" name="name" placeholder="Enter Product Name">
+                        @error('name')
+                            <label for="name" class="col-form-label text-danger">{{ $message }}</label>
+                        @enderror
                     </div>
                     <div class="row">
-                        <div class="col-sm-6 form-group mb-4">
-                            <label>Category</label>
+                        <div class="col-sm-12 form-group mb-4">
+                            <label>Categories</label>
                             <div>
-                                <select class="selectpicker show-tick form-control" title="Please select" data-style="btn-solid">
-                                    <optgroup label="Electronics">
-                                        <option>TV & Video</option>
-                                        <option>Cameras & Photo</option>
-                                        <option>Computers & Tablets</option>
-                                    </optgroup>
-                                    <optgroup label="Fashion">
-                                        <option>Health & Beauty</option>
-                                        <option>Shoes</option>
-                                        <option>Handbags & Purses</option>
-                                        <option>Jewelry and Watches</option>
-                                    </optgroup>
-                                </select>
+                            @forelse ($categories as $category)
+                            @php extract($category) @endphp
+                                <div class="form-group">
+                                    <label class="checkbox checkbox-grey checkbox-primary">
+                                        <input type="checkbox" value="{{$id}}" name="categories[]">
+                                        <span class="input-span"></span> {{ $parent['name'] ? $parent['name']  . ' -> ' . $name : $name }} </label>
+                                </div>
+                            @empty
+                                No Data Found.
+                            @endforelse
+                            @error('categories')
+                                <label for="categories" class="col-form-label text-danger">{{ $message }}</label>
+                            @enderror
                             </div>
                         </div>
-                        <div class="col-sm-6 form-group mb-4">
-                            <label>SKU</label>
-                            <input class="form-control form-control-solid" type="text" placeholder="SKU Number">
-                        </div>
+                        
                     </div>
                     <div class="row">
-                        <div class="col-sm-4 form-group mb-4">
+                        <div class="col-sm-6 form-group mb-4">
                             <label>Price</label>
-                            <input class="form-control form-control-solid" type="text" placeholder="Unit Price">
+                            <input class="form-control form-control-solid" type="text" name="price" placeholder="Unit Price">
+                            @error('price')
+                                <label for="price" class="col-form-label text-danger">{{ $message }}</label>
+                            @enderror
                         </div>
-                        <div class="col-sm-4 form-group mb-4">
-                            <label>Currency </label>
-                            <div>
-                                <select class="selectpicker show-tick form-control" title="Please select" data-style="btn-solid">
-                                    <option>USD</option>
-                                    <option>Euro</option>
-                                    <option>Rouble</option>
-                                    <option>Pound</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 form-group mb-4">
+                        <div class="col-sm-6 form-group mb-4">
                             <label>Quantity</label>
-                            <input class="form-control form-control-solid" type="text" placeholder="Quantity">
+                            <input class="form-control form-control-solid" type="text" name="quantity" placeholder="Quantity">
+                            @error('quantity')
+                                <label for="quantity" class="col-form-label text-danger">{{ $message }}</label>
+                            @enderror
                         </div>
                     </div>
-                    <div class="form-group mb-4">
+                    {{-- <div class="form-group mb-4">
                         <label>Tags</label>
                         <input class="tagsinput form-control form-control-solid" type="text" placeholder="Tags" value="Fashion,Dress,Broadway,Autumn collection,Shop">
-                    </div>
+                    </div> --}}
                     <div class="form-group mb-4">
                         <label>Description</label>
-                        <textarea class="form-control form-control-solid" rows="4" placeholder="Description"></textarea>
+                        <textarea class="form-control form-control-solid" rows="4" name="description" placeholder="Description"></textarea>
+                        @error('description')
+                            <label for="description" class="col-form-label text-danger">{{ $message }}</label>
+                        @enderror
                     </div>
                     <div class="form-group mb-4">
                         <label class="ui-switch switch-icon mr-3 mb-0">
-                            <input type="checkbox" checked="">
+                            <input type="checkbox" value="1" name="featured">
                             <span></span>
-                        </label>Available</div>
+                        </label>Featured ?</div>
+                        @error('featured')
+                            <label for="featured" class="col-form-label text-danger">{{ $message }}</label>
+                        @enderror
                     <div class="text-right">
-                        <button class="btn btn-primary btn-air mr-2">Save</button>
+                        <button type="submit" class="btn btn-primary btn-air mr-2">Save</button>
                         <button class="btn btn-secondary">Cancel</button>
                     </div>
-                </form>
+                
             </div>
         </div>
+        {{Form::close()}}
     </div>
 </div>
 @endsection
@@ -117,6 +115,41 @@
                 tagClass: 'label label-primary'
             });
             $('.tagsinput.form-control-solid').siblings('.bootstrap-tagsinput').addClass('form-control-solid');
+        });
+
+        $(document).on('change', '#upload_featured_image', function(e) {
+            if(this.files && this.files[0]) {
+                let reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#featured_image').html(
+                        `<img src="${e.target.result}">`
+                    );
+                }
+
+                reader.readAsDataURL(this.files[0]);
+
+                $('#feature-image-btn').hide();
+            }
+        });
+
+        $(document).on('change', '#upload_product_images', function(e) {
+            for(let i = 0; i < this.files.length; i++) {
+                if(this.files && this.files[i]) {
+                    let reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('#product_images').prepend(
+                            `<div class="col-md-3">
+                                <img src="${e.target.result}">
+                            </div>
+                            `
+                        );
+                    }
+
+                    reader.readAsDataURL(this.files[i]);
+                }
+            }
         });
     </script>
 @endsection

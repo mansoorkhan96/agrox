@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductsController extends Controller
 {
@@ -26,7 +28,9 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $categories = Category::with('parent')->get()->toArray();
+
+        return view('products.create', compact('categories'));
     }
 
     /**
@@ -37,7 +41,42 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => ['required'],
+            'categories' => ['required'],
+            'price' => ['required', 'integer'],
+            'description' => ['required'],
+            'featured_image' => ['required', 'image', 'max:1990'],
+            'featured' => ['nullable'],
+            'quantity' => ['required', 'integer'],
+            'images.*' => ['image', 'max:1990']
+        ], [
+            'images.*.image' => 'Product Image must a type of: JPEG, PNG, JPG',
+            'images.*.max' => 'Product Image size can not be greater than 2MB'
+        ]);
+
+        $data['slug'] = Str::slug($data['name']) . '-' . strtolower(Str::random(10));
+
+        $data['featured_image'] = $request->file('featured_image')->store('/product_images');
+
+        $images = [];
+
+        foreach($request->file('images') as $image) {
+            $images[] = $image->store('product_images');
+        }
+
+        $data['user_id'] = 1;
+        $data['images'] = implode(',', $images);
+
+        $categories = $data['categories'];
+        unset($data['categories']);
+
+        if($product = Product::create($data)) {
+            $product->categories()->attach($categories);
+            return 'Created';
+        }
+
+        return 'Failed';
     }
 
     /**
