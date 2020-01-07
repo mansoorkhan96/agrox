@@ -18,6 +18,7 @@
 		<link rel="stylesheet" href="{{ asset('css/settings.css') }}" type="text/css" media="all"/>
 		<link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css" media="all"/>
 		<link rel="stylesheet" href="{{ asset('css/custom.css') }}" type="text/css" media="all"/>
+		<link href="{{ asset('assets/vendors/toastr/toastr.min.css') }}" rel="stylesheet" />
 		<link rel="stylesheet" href="{{ asset('css/agrox.css') }}" type="text/css" media="all"/>
 		<link href="http://fonts.googleapis.com/css?family=Great+Vibes%7CLato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet"/>
 		
@@ -216,6 +217,7 @@
 		<script type="text/javascript" src="{{ asset('js/extensions/revolution.extension.navigation.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/extensions/revolution.extension.migration.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/extensions/revolution.extension.parallax.min.js') }}"></script>
+		<script src="{{ asset('assets/vendors/toastr/toastr.min.js') }}"></script>
 		
 		{{-- Shop Details --}}
 		<script type='text/javascript' src="{{ asset('js/jquery.prettyPhoto.js') }}"></script>
@@ -230,5 +232,26 @@
 		<script type="text/javascript" src="{{asset('js/slider.min.js') }}"></script>
 		<script type="text/javascript" src="{{asset('js/jquery.ui.touch-punch.js') }}"></script>
 		<script type="text/javascript" src="{{asset('js/price-slider.js') }}"></script>
+
+		@include('includes.message')
+
+		@yield('page_script')
+
+		<script>
+			// $(document).ready(function() {
+			// 	$(document).on('submit', '#add_to_cart', function() {
+			// 		let formData = $(this.).serialize();
+
+			// 		$.ajax({
+			// 			url: "{{ route('cart.store') }}",
+			// 			method: 'POST',
+			// 			data: formData,
+			// 			processData: false
+			// 		}).done(function(data) {
+			// 			if(data.status == true);
+			// 		});
+			// 	})
+			// });
+		</script>
 	</body>
 </html>

@@ -84,6 +84,13 @@
                         <input class="tagsinput form-control form-control-solid" type="text" placeholder="Tags" value="Fashion,Dress,Broadway,Autumn collection,Shop">
                     </div> --}}
                     <div class="form-group mb-4">
+                        <label>Details</label>
+                        {{ Form::textarea('details', $product->details, ['class' => 'form-control form-control-solid', 'placeholder' => 'Short Description', 'rows' => 3]) }}
+                        @error('details')
+                            <label for="details" class="col-form-label text-danger">{{ $message }}</label>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-4">
                         <label>Description</label>
                         {{ Form::textarea('description', $product->description, ['class' => 'form-control form-control-solid', 'placeholder' => 'Description']) }}
                         @error('description')

@@ -24,26 +24,6 @@
 </head>
 
 <body class="fixed-navbar">
-    {{-- Command: toastr["success"]("Product added successfully", "Success")
-
-toastr.options = {
-  "closeButton": true,
-  "debug": false,
-  "newestOnTop": false,
-  "progressBar": true,
-  "positionClass": "toast-top-right",
-  "preventDuplicates": false,
-  "onclick": null,
-  "showDuration": "300",
-  "hideDuration": "1000",
-  "timeOut": "4000",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
-} --}}
-
     <div class="page-wrapper">
         <!-- START HEADER-->
         @include('includes.admin.header')
@@ -108,9 +88,9 @@ toastr.options = {
     <!-- END THEME CONFIG PANEL-->
     <!-- BEGIN PAGA BACKDROPS-->
     <div class="sidenav-backdrop backdrop"></div>
-    <div class="preloader-backdrop">
+    {{-- <div class="preloader-backdrop">
         <div class="page-preloader">Loading</div>
-    </div>
+    </div> --}}
     <!-- END PAGA BACKDROPS-->
     <!-- New question dialog-->
     <div class="modal fade" id="session-dialog">

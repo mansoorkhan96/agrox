@@ -136,7 +136,7 @@
                     <div class="btn-wrap">
                         <div class="mini-cart-wrap">
                             <div class="mini-cart">
-                                <div class="mini-cart-icon" data-count="2">
+                                <div class="mini-cart-icon" data-count="{{ Cart::instance('default')->count() }}">
                                     <i class="ion-bag"></i>
                                 </div>
                             </div>
@@ -201,9 +201,9 @@
             <div class="col-xs-2">
                 <div class="header-right">
                     <div class="mini-cart-wrap">
-                        <a href="cart.html">
+                        <a href="{{ route('cart.index') }}">
                             <div class="mini-cart">
-                                <div class="mini-cart-icon" data-count="2">
+                                <div class="mini-cart-icon" data-count="{{ Cart::instance('default')->count() }}">
                                     <i class="ion-bag"></i>
                                 </div>
                             </div>

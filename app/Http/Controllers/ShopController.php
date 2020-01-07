@@ -27,7 +27,29 @@ class ShopController extends Controller
         
         $mightAlsoLike = $products = Product::inRandomOrder()->latest()->take(5)->get()->toArray();
 
-        return view('shop.home', compact(['categoriesProductCount', 'mightAlsoLike']));
+        $products = Product::paginate(6);
+
+        return view('shop.home', compact(['categoriesProductCount', 'mightAlsoLike', 'products']));
+    }
+
+    public function shopList() {
+        $products = Product::paginate(6);
+
+        return view('shop.shop-list', compact('products'));
+    }
+
+    public function shopGrid() {
+        $categoriesProductCount = DB::table('categories')
+            ->join('category_product', 'categories.id', '=', 'category_product.category_id')
+            ->select(DB::raw(('categories.id, categories.name, COUNT(category_product.product_id) AS products_count')))
+            ->groupBy('categories.id')
+            ->get()->toArray();
+        
+        $mightAlsoLike = $products = Product::inRandomOrder()->latest()->take(5)->get()->toArray();
+
+        $products = Product::paginate(6);
+
+        return view('shop.shop-grid', compact(['categoriesProductCount', 'mightAlsoLike', 'products']));
     }
 
     /**

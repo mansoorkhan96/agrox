@@ -13,3 +13,45 @@
     all: unset;
     cursor: pointer;
 }
+
+.product-item .product-action .add-to-cart > button {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    display: inline-block;
+    overflow: hidden;
+    background: none;
+    padding: 0;
+    font-size: 0;
+    color: #fff;
+    opacity: 1;
+}
+.product-item .product-action .add-to-cart > button:before {
+    content: '\f110';
+    font-size: 20px;
+    display: inline-block;
+    font-family: Ionicons;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    text-rendering: auto;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+table.shop-cart tbody tr.cart_item td.product-remove button {
+    all: unset;
+    background-color: transparent;
+    color: #888;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+table.shop-cart tbody tr.cart_item td.product-remove button:hover {
+    color: #5fbd74;
+}
+

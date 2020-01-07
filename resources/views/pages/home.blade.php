@@ -87,9 +87,17 @@
                                 <img src="{{ asset('/storage/' . $product['featured_image']) }}" alt="" />
                             </a>
                             <div class="product-action">
-                                <span class="add-to-cart">
+                                {{ Form::open(['action' => 'CartController@store', 'method' => 'POST', 'id' => 'add_to_cart']) }}
+                                    {{ Form::hidden('id', $product['id']) }}
+                                    {{ Form::hidden('name', $product['name']) }}
+                                    {{ Form::hidden('price', $product['price']) }}
+                                    <span class="add-to-cart">
+                                        <button type="submit" data-placement="top" title="Add to cart"></button>
+                                    </span>
+                                {{ Form::close() }}
+                                {{-- <span class="add-to-cart">
                                     <a href="#" data-toggle="tooltip" data-placement="top" title="Add to cart"></a>
-                                </span>
+                                </span> --}}
                             </div>
                         </div>
                         <div class="product-info">

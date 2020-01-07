@@ -13,7 +13,13 @@
 
 Route::get('/', 'PagesController@home');
 
+Route::get('/shop/list', 'ShopController@shopList')->name('shop.list');
+
+Route::get('/shop/grid', 'ShopController@shopGrid')->name('shop.grid');
+
 Route::resource('shop', 'ShopController');
+
+Route::resource('cart', 'CartController');
 
 Route::get('/admin', function () {
     return view('admin.index');

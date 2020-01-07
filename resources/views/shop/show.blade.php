@@ -66,7 +66,7 @@
                                 <ins>RS {{ $product->price }}</ins>
                             </div>
                             <div class="mb-3">
-                                <p>Relish the goodness of hand-picked oranges from the finest orchards. Foster a healthy lifestyle with the benefits of oranges. 100 percent orange juice with no added sugar for a healthy you.</p>
+                                <p>{{ $product->details }}</p>
                             </div>
                             <form class="cart">
                                 <div class="quantity-chooser">
@@ -250,12 +250,6 @@
                                 
                             @endforelse
                         </ul>
-                    </div>
-                    <div class="widget widget-tags">
-                        <h3 class="widget-title">Product Tags</h3>
-                        <div class="tagcloud">
-                            <a href="#">bread</a> <a href="#">food</a> <a href="#">fruits</a> <a href="#">green</a> <a href="#">healthy</a> <a href="#">natural</a> <a href="#">organic store</a> <a href="#">vegatable</a>
-                        </div>
                     </div>
                 </div>
             </div>
