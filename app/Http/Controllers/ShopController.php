@@ -19,7 +19,15 @@ class ShopController extends Controller
      */
     public function index()
     {
-        //
+        $categoriesProductCount = DB::table('categories')
+            ->join('category_product', 'categories.id', '=', 'category_product.category_id')
+            ->select(DB::raw(('categories.id, categories.name, COUNT(category_product.product_id) AS products_count')))
+            ->groupBy('categories.id')
+            ->get()->toArray();
+        
+        $mightAlsoLike = $products = Product::inRandomOrder()->latest()->take(5)->get()->toArray();
+
+        return view('shop.home', compact(['categoriesProductCount', 'mightAlsoLike']));
     }
 
     /**
