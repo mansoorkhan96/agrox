@@ -216,5 +216,19 @@
 		<script type="text/javascript" src="{{ asset('js/extensions/revolution.extension.navigation.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/extensions/revolution.extension.migration.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/extensions/revolution.extension.parallax.min.js') }}"></script>
+		
+		{{-- Shop Details --}}
+		<script type='text/javascript' src="{{ asset('js/jquery.prettyPhoto.js') }}"></script>
+		<script type='text/javascript' src="{{ asset('js/jquery.prettyPhoto.init.min.js') }}"></script>
+		<script type='text/javascript' src="{{ asset('js/slick.min.js') }}"></script>
+
+		{{-- Shop.html --}}
+
+		<script type="text/javascript" src="{{asset('js/core.min.js') }}"></script>
+		<script type="text/javascript" src="{{asset('js/widget.min.js') }}"></script>
+		<script type="text/javascript" src="{{asset('js/mouse.min.js') }}"></script>
+		<script type="text/javascript" src="{{asset('js/slider.min.js') }}"></script>
+		<script type="text/javascript" src="{{asset('js/jquery.ui.touch-punch.js') }}"></script>
+		<script type="text/javascript" src="{{asset('js/price-slider.js') }}"></script>
 	</body>
 </html>
