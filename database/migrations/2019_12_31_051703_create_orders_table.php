@@ -26,15 +26,11 @@ class CreateOrdersTable extends Migration
             $table->string('billing_province')->nullable();
             $table->string('billing_postalcode')->nullable();
             $table->string('billing_phone')->nullable();
-            $table->string('billing_name_on_card')->nullable();
-            $table->integer('billing_discount')->default(0);
-            $table->string('billing_discount_code')->nullable();
             $table->integer('billing_subtotal');
-            $table->integer('billing_tax');
+            $table->integer('shipping_charges')->default(200);
             $table->integer('billing_total');
-            $table->string('payment_gateway')->default('stripe');
+            $table->integer('quantity')->unsigned();
             $table->enum('status', ['Complete', 'Pending', 'Cancelled'])->default('Pending');
-            $table->string('error')->nullable();
             $table->timestamps();
         });
     }

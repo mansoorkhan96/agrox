@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'PagesController@home');
+Route::get('/message', 'PagesController@message')->name('pages.message');
 
 Route::get('/shop/list', 'ShopController@shopList')->name('shop.list');
 
@@ -20,6 +21,9 @@ Route::get('/shop/grid', 'ShopController@shopGrid')->name('shop.grid');
 Route::resource('shop', 'ShopController');
 
 Route::resource('cart', 'CartController');
+
+Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
+Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');
 
 Route::get('/admin', function () {
     return view('admin.index');

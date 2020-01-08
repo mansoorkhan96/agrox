@@ -68,16 +68,12 @@
                             <div class="mb-3">
                                 <p>{{ $product->details }}</p>
                             </div>
-                            <form class="cart">
-                                <div class="quantity-chooser">
-                                    <div class="quantity">
-                                        <span class="qty-minus" data-min="1"><i class="ion-ios-minus-outline"></i></span>
-                                        <input type="text" name="quantity" value="1" title="Qty" class="input-text qty text" size="4">
-                                        <span class="qty-plus" data-max=""><i class="ion-ios-plus-outline"></i></span>
-                                    </div>
-                                </div>
+                            {{ Form::open(['action' => 'CartController@store', 'method' => 'POST', 'id' => 'add_to_cart']) }}
+                                {{ Form::hidden('id', $product['id']) }}
+                                {{ Form::hidden('name', $product['name']) }}
+                                {{ Form::hidden('price', $product['price']) }}
                                 <button type="submit" class="single-add-to-cart">ADD TO CART</button>
-                            </form>
+                            {{ Form::close() }}
                         </div>
                     </div>
                     <div class="col-md-12">

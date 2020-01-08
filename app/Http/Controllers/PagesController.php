@@ -21,6 +21,16 @@ class PagesController extends Controller
     }
 
     /**
+     * Display a custom message.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function message()
+    {
+        return view('pages.message');
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

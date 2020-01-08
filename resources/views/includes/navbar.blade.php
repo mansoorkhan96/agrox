@@ -164,7 +164,9 @@
                                 </p>
                                 <p class="buttons">
                                     <a href="{{ route('cart.index') }}" class="view-cart">View cart</a>
-                                    <a href="checkout.html" class="checkout">Checkout</a>
+                                    @if (Cart::count() > 0)
+                                    <a href="{{ route('checkout.index') }}" class="checkout">Checkout</a>
+                                    @endif
                                 </p>
                             </div>
                         </div>

@@ -26,7 +26,7 @@
                     @forelse ($products as $product)
                     <div class="col-md-4 col-sm-6 product-item text-center mb-3">
                         <div class="product-thumb">
-                            <a href="/shop/{{ $product->slug }}">
+                            <a href="{{ route('shop.show', $product->slug) }}">
                                 <img src="{{ asset('/storage/' . $product->featured_image) }}" alt="" />
                             </a>
                             <div class="product-action">
@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         <div class="product-info">
-                            <a href="shop-detail.html">
+                            <a href="{{ route('shop.show', $product->slug) }}">
                                 <h2 class="title">{{ $product->name }}</h2>
                                 <span class="price">
                                     <del>$15.00</del> 

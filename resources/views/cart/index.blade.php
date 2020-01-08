@@ -26,7 +26,7 @@
                             </td>
                             <td class="product-quantity">
                                 <div class="quantity">
-                                    <input id="qty-1" type="number" min="0" name="number" value="1" class="input-text qty text" size="4">
+                                    <input type="number" min="1" cart-row-id="{{ $item->rowId }}" name="number" value="{{ $item->qty }}" class="input-text qty text cart-quantity" size="4">
                                 </div>
                             </td>
                             <td class="product-subtotal">
@@ -39,7 +39,6 @@
                         <tr>
                             <td colspan="5" class="actions">
                                 <a class="organik-btn" href="{{ route('shop.index') }}"> Continue Shopping</a>
-                                <input type="submit" style="line-height: 1.5" class="organik-btn pull-right" name="update_cart" value="Update Cart" />
                             </td>
                         </tr>
                     </tbody>
@@ -55,16 +54,16 @@
                             </tr>
                             <tr class="shipping">
                                 <th>Shipping</th>
-                                <td>Free Shipping</td>
+                                <td>Rs 200</td>
                             </tr>
                             <tr class="order-total">
                                 <th>Total</th>
-                                <td><strong>Rs {{ Cart::total() }}</strong></td>
+                                <td><strong>Rs {{ Cart::total() +200 }}</strong></td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="proceed-to-checkout">
-                        <a href="#">Proceed to Checkout</a>
+                        <a href="{{ route('checkout.index') }}">Proceed to Checkout</a>
                     </div>
                 </div>
                 <div class="coupon-shipping">
@@ -87,4 +86,30 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('page_script')
+    <script>
+        $(document).ready(function() {
+            $(document).on('change', '.cart-quantity', function(e) {
+                e.preventDefault();
+
+                let id = $(this).attr('cart-row-id');
+                let quantity = $(this).val();
+
+                $.ajax({
+                    url: `/cart/${id}`,
+                    method: 'PUT',
+                    data: {quantity: quantity}
+                }).done(function(data) {
+                    if(data.status == true) {
+                        $(this).val(data.quantity);
+                        toastr.success('Quantity was updated successfully!')
+                    }
+                }).fail(function(error) {
+                    console.log(error)
+                });
+            })
+        });
+    </script>
 @endsection
