@@ -3,6 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width initial-scale=1.0">
     <title>AgroX | Dashboard</title>
@@ -464,12 +467,15 @@
     <!-- END QUICK SIDEBAR-->
     <!-- CORE PLUGINS-->
     <script src="{{ asset('assets/vendors/jquery/dist/jquery.min.js') }}"></script>
+
+    <script src="{{ asset('assets/vendors/toastr/toastr.min.js') }}"></script>
+    @include('includes.admin.message')
+
     <script src="{{ asset('assets/vendors/popper.js/dist/umd/popper.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/metisMenu/dist/metisMenu.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/jquery-idletimer/dist/idle-timer.min.js') }}"></script>
-    <script src="{{ asset('assets/vendors/toastr/toastr.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/jquery-validation/dist/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/bootstrap-select/dist/js/bootstrap-select.min.js') }}"></script>
     <!-- PAGE LEVEL PLUGINS-->
@@ -491,7 +497,5 @@
 
     @yield('page_script')
     
-
-    @include('includes.admin.message')
 </body>
 </html>

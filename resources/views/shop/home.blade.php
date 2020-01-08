@@ -51,7 +51,14 @@
                                     <p>{{ $product->details }}</p>
                                 </div>
                                 <div class="product-action-list">
-                                    <a class="organik-btn small" href="#"> ADD TO CART </a>
+                                    {{ Form::open(['action' => 'CartController@store', 'method' => 'POST', 'id' => 'add_to_cart']) }}
+                                        {{ Form::hidden('id', $product['id']) }}
+                                        {{ Form::hidden('name', $product['name']) }}
+                                        {{ Form::hidden('price', $product['price']) }}
+                                        <span class="add-to-cart">
+                                            <button type="submit" class="organik-btn small" data-placement="top" title="Add to cart">Add To Cart</button>
+                                        </span>
+                                    {{ Form::close() }}
                                 </div>
                             </div>
                         </div>

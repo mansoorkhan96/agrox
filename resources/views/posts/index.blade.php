@@ -3,7 +3,7 @@
 @section('content')
 <div class="ibox">
     <div class="ibox-body">
-        <h5 class="font-strong mb-4">Products</h5>
+        <h5 class="font-strong mb-4">posts</h5>
         <div class="flexbox mb-4">
             <div class="flexbox">
                 <label class="mb-0 mr-2">Type:</label>
@@ -27,10 +27,10 @@
                     <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
                     <input class="form-control form-control-rounded form-control-solid" id="key-search" type="text" placeholder="Search ...">
                 </div>
-                <a class="btn btn-success btn-air" href="/admin/products/create">
+                <a class="btn btn-success btn-air" href="/admin/posts/create">
                     <i class="la la-plus"></i> Add New
                 </a>
-                <a class="btn btn-warning ml-2 btn-air" href="/admin/products/trashed">
+                <a class="btn btn-warning ml-2 btn-air" href="/admin/posts/trashed">
                     <i class="la la-trash"></i> Trashed
                 </a>
             </div>
@@ -40,16 +40,43 @@
                 <thead class="thead-default thead-lg">
                     <tr>
                         <th>ID</th>
-                        <th>Product</th>
+                        <th>Title</th>
                         <th>Categories</th>
-                        <th>Price</th>
-                        <th>User</th>
-                        <th>Quantity</th>
+                        <th>Type</th>
+                        <th>Tag</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="table-data">
-                    
+                <tbody>
+                    @forelse ($posts as $post)
+                    @php
+                        extract($post)
+                    @endphp
+                        <tr>
+                            <td>{{ $id }}</td>
+                            <td>
+                                <img class="mr-3" src="{{ asset('/storage/' . $featured_image) }}" alt="image" width="60" /> {{$title}}</td>
+                            <td>
+                                @forelse ($categories as $category)
+                                    {{ $category['name'] }}
+                                    @if (! $loop->last)|@endif
+                                @empty
+                                    Uncategorized
+                                @endforelse
+                            </td>
+                            <td>{{ ucfirst($post_type) }}</td>
+                            <td>{{ str_replace('_', '-', $tag) }}</td>
+                            <td>
+                                <a class="text-light mr-3 font-16" href="{{ route('posts.show', $id) }}"><i class="ti-eye"></i></a>
+                                <a class="text-light mr-3 font-16" href="{{ route('posts.edit', $id) }}"><i class="ti-pencil"></i></a>
+                                {{ Form::open(['route' => ['posts.destroy', $id], 'class' =>'d-inline ', 'method' => 'delete']) }}
+                                    <button type="submit" class="no-btn text-light font-16"><i class="ti-trash"></i></button>
+                                {{ Form::close() }}
+                            </td>
+                        </tr>
+                    @empty
+                    <tr class="odd"><td valign="top" colspan="5" class="dataTables_empty">No records found</td></tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -59,45 +86,4 @@
 
 @section('datatables')
     @include('includes.datatables')
-@endsection
-
-@section('page_script')
-    <script>
-        $(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            products();
-
-            function products() {
-                $.ajax({
-                    url: '/admin/products/products',
-                }).done(function(data) {
-                    $('#table-data').html(data);
-                });
-            }
-
-            $(document).on('submit', '.delete-form', function(e) {
-                e.preventDefault();
-
-                let formData = $(this).serialize();
-                let id = $("input[name='id']", this).val();
-              
-                let url = "{{ route('products.destroy', ':id') }}";
-                url = url.replace(':id', id);
-                
-                $.ajax({
-                    url: url,
-                    method: 'DELETE'
-                }).done(function(data) {
-                    if(data.status != false) {
-                        $('#table-data').html(data);
-                        toastr.success("Product moved to Trash", 'Success');
-                    }
-                });
-            });
-        });
-    </script>
 @endsection

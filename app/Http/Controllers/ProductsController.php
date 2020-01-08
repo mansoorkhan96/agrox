@@ -17,9 +17,15 @@ class ProductsController extends Controller
      */
     public function index()
     {
+        //$products = Product::with(['user', 'categories'])->latest()->get()->toArray();
+
+        return view('products.index');
+    }
+
+    public function products() {
         $products = Product::with(['user', 'categories'])->latest()->get()->toArray();
 
-        return view('products.index', compact('products'));
+        return view('products.products', compact('products'));
     }
 
     /**
@@ -172,9 +178,29 @@ class ProductsController extends Controller
     public function destroy(Product $product)
     {
         if($product->delete()) {
-            return redirect('/admin/products')->with('success', 'Product deleted successfully');
+            $products = Product::with(['user', 'categories'])->latest()->get()->toArray();
+
+            return view('products.products', compact('products'));
+            // return redirect('/admin/products')->with('success', 'Product deleted successfully');
         }
 
-        return redirect('/admin/products')->with('Could not delete product');
+        // return redirect('/admin/products')->with('Could not delete product');
+        return response()->json('status', false);
+    }
+
+    public function trashed() {
+        $products = Product::onlyTrashed()->with(['user', 'categories'])->get()->toArray();
+
+        return view('products.trashed', compact('products'));
+    }
+
+    public function restore($id) {
+        if($product = Product::onlyTrashed()->where('id', $id)) {
+            $product->restore();
+
+            return back()->with('success', 'Product restored successfully');
+        }
+
+        abort(419);
     }
 }

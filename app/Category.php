@@ -18,4 +18,8 @@ class Category extends Model
     public function products() {
         return $this->belongsToMany('App\Product');
     }
+
+    public function posts() {
+        return $this->belongsToMany('App\Post');
+    }
 }

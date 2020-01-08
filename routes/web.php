@@ -26,7 +26,13 @@ Route::get('/admin', function () {
 });
 
 Route::resource('/admin/categories', 'CategoriesController');
+
+Route::get('/admin/products/products', 'ProductsController@products');
+Route::get('/admin/products/trashed', 'ProductsController@trashed');
+Route::put('/admin/products/restore/{product}', 'ProductsController@restore');
 Route::resource('/admin/products', 'ProductsController');
+
+Route::resource('/admin/posts', 'PostsController');
 
 Auth::routes();
 

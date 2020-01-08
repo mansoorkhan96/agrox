@@ -1,0 +1,81 @@
+@extends('layouts.admin')
+
+@section('content')
+<div class="ibox">
+    <div class="ibox-body">
+        <h5 class="font-strong mb-4">Trashed/Unavailable Products</h5>
+        <div class="flexbox mb-4">
+            <div class="flexbox">
+                
+            </div>
+            <div class="flexbox">
+                <div class="input-group-icon input-group-icon-left mr-3">
+                    <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
+                    <input class="form-control form-control-rounded form-control-solid" id="key-search" type="text" placeholder="Search ...">
+                </div>
+                <a class="btn btn-success btn-air" href="/admin/products/create">
+                    <i class="la la-plus"></i> Add New
+                </a>
+            </div>
+        </div>
+        <div class="table-responsive row">
+            <table class="table table-bordered table-hover" id="datatable">
+                <thead class="thead-default thead-lg">
+                    <tr>
+                        <th>ID</th>
+                        <th>Product</th>
+                        <th>Categories</th>
+                        <th>Price</th>
+                        <th>User</th>
+                        <th>Quantity</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($products as $product)
+                    @php
+                        extract($product)
+                    @endphp
+                        <tr>
+                            <td>{{ $id }}</td>
+                            <td>
+                                <img class="mr-3" src="{{ asset('/storage/' . $featured_image) }}" alt="image" width="60" /> {{$name}}</td>
+                            <td>
+                                @forelse ($categories as $category)
+                                    {{ $category['name'] }}
+                                    @if (! $loop->last)|@endif
+                                @empty
+                                    Uncategorized
+                                @endforelse
+                            </td>
+                            <td>{{ $price }}</td>
+                            <td>{{ $user['name'] }}</td>
+                            <td>
+                                @if($quantity < 1)
+                                <span class="badge badge-danger badge-pill">Out of stock</span>
+                                @elseif ($quantity <= 10)
+                                {{ $quantity }}<span class="badge d-inline ml-1 badge-warning badge-pill">Low stock</span>
+                                @else
+                                {{ $quantity }}
+                                @endif
+                                
+                            </td>
+                            <td>
+                                {{ Form::open(['action' => ['ProductsController@restore', $id], 'class' =>'d-inline ', 'method' => 'PUT']) }}
+                                    <button type="submit" class="btn btn-warning btn-sm font-12">Restore</button>
+                                {{ Form::close() }}
+                            </td>
+                        </tr>
+                    @empty
+                    <tr class="odd"><td valign="top" colspan="5" class="dataTables_empty">No records found</td></tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('datatables')
+    @include('includes.datatables')
+@endsection

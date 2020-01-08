@@ -10,8 +10,8 @@
                 <div style="width: 325px; height:355px" style="position:relative">
                     <div class="lead" id="featured_image">Featured Image</div>
                     <div class="add-featured-img" style="position: absolute;
-                    left: 40%;
-                    top: 25%;">
+                    left: 35%;
+                    top: 16%;">
                         <div class="file-input-plus file-input" id="feature-image-btn"><i class="la la-plus-circle"></i>
                             <input type="file" name="featured_image" id="upload_featured_image">
                         </div>
@@ -131,13 +131,11 @@
 
                 reader.onload = function(e) {
                     $('#featured_image').html(
-                        `<img src="${e.target.result}">`
+                        `<img style="width: 325px; height:355px" src="${e.target.result}">`
                     );
                 }
 
                 reader.readAsDataURL(this.files[0]);
-
-                $('#feature-image-btn').hide();
             }
         });
 

@@ -196,8 +196,12 @@
 				<div class="backtotop" id="backtotop"></div>
 			</div>
 		</div>
-
+		
 		<script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+
+		<script src="{{ asset('assets/vendors/toastr/toastr.min.js') }}"></script>
+		@include('includes.message')
+		
 		<script type="text/javascript" src="{{ asset('js/jquery-migrate.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/modernizr-2.7.1.min.js') }}"></script>
@@ -217,7 +221,7 @@
 		<script type="text/javascript" src="{{ asset('js/extensions/revolution.extension.navigation.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/extensions/revolution.extension.migration.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/extensions/revolution.extension.parallax.min.js') }}"></script>
-		<script src="{{ asset('assets/vendors/toastr/toastr.min.js') }}"></script>
+		
 		
 		{{-- Shop Details --}}
 		<script type='text/javascript' src="{{ asset('js/jquery.prettyPhoto.js') }}"></script>
@@ -232,8 +236,6 @@
 		<script type="text/javascript" src="{{asset('js/slider.min.js') }}"></script>
 		<script type="text/javascript" src="{{asset('js/jquery.ui.touch-punch.js') }}"></script>
 		<script type="text/javascript" src="{{asset('js/price-slider.js') }}"></script>
-
-		@include('includes.message')
 
 		@yield('page_script')
 

@@ -55,3 +55,17 @@ table.shop-cart tbody tr.cart_item td.product-remove button:hover {
     color: #5fbd74;
 }
 
+.mini-cart-wrap .widget-shopping-cart-content .cart-list li .remove {
+    all: unset;
+    position: relative;
+    float: right;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 20px;
+    border-radius: 0;
+    color: #5e5a54;
+    font-weight: 400;
+    cursor: pointer;
+}

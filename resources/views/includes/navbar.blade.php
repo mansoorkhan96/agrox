@@ -142,29 +142,28 @@
                             </div>
                             <div class="widget-shopping-cart-content">
                                 <ul class="cart-list">
+                                    @forelse (Cart::content() as $item)
                                     <li>
-                                        <a href="#" class="remove">×</a>
-                                        <a href="shop-detail.html">
-                                            <img src="{{ asset('images/shop/thumb/shop_1.jpg') }}" alt="" />
-                                            Orange Juice&nbsp;
+                                        {{ Form::open(['route' => ['cart.destroy', $item->rowId], 'method' => 'DELETE']) }}
+                                            <button type="submit" class="remove">x</button>
+                                        {{ Form::close() }}
+                                        {{-- <a href="#" class="remove">×</a> --}}
+                                        <a href="{{ route('shop.show', $item->model->slug) }}">
+                                            <img src="{{ asset('/storage/' . $item->model->featured_image) }}" alt="" />
+                                            {{ $item->model->name }}&nbsp;
                                         </a>
-                                        <span class="quantity">1 × $12.00</span>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="remove">×</a>
-                                        <a href="shop-detail.html">
-                                            <img src="{{ asset('images/shop/thumb/shop_2.jpg') }}" alt="" />
-                                            Aurore Grape&nbsp;
-                                        </a>
-                                        <span class="quantity">1 × $9.00</span>
-                                    </li>
+                                        <span class="quantity">{{ $item->qty }} × Rs {{ $item->model->price }}</span>
+                                    </li> 
+                                    @empty
+                                       Empty Cart 
+                                    @endforelse
                                 </ul>
                                 <p class="total">
                                     <strong>Subtotal:</strong> 
-                                    <span class="amount">$21.00</span>
+                                    <span class="amount">Rs {{ Cart::subtotal() }}</span>
                                 </p>
                                 <p class="buttons">
-                                    <a href="cart.html" class="view-cart">View cart</a>
+                                    <a href="{{ route('cart.index') }}" class="view-cart">View cart</a>
                                     <a href="checkout.html" class="checkout">Checkout</a>
                                 </p>
                             </div>

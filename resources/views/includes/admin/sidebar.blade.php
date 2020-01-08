@@ -39,6 +39,11 @@
                     <span class="nav-label">Products</span>
                 </a>
             </li>
+            <li>
+                <a href="/admin/posts"><i class="sidebar-item-icon ti-pencil"></i>
+                    <span class="nav-label">Posts</span>
+                </a>
+            </li>
             
             <li>
                 <a href="javascript:;"><i class="sidebar-item-icon ti-paint-roller"></i>
