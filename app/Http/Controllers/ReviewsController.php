@@ -2,16 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\City;
-use App\Country;
-use App\Http\Controllers\Controller;
-use App\Proficiency;
-use App\Province;
-use App\Role;
-use App\User;
 use Illuminate\Http\Request;
 
-class ProfilesController extends Controller
+class ReviewsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -61,19 +54,9 @@ class ProfilesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        $proficiencies = Proficiency::pluck('proficiency', 'id');
-
-        $roles = Role::pluck('name', 'id');
-
-        $countries = Country::pluck('name', 'id');
-
-        $provinces = Province::pluck('name', 'id');
-
-        $cities = City::pluck('name', 'id');
-
-        return view('profiles.edit', compact(['user', 'proficiencies', 'roles', 'countries', 'provinces', 'cities']));
+        //
     }
 
     /**
@@ -85,24 +68,7 @@ class ProfilesController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'role_id' => ['required', 'integer'],
-            'city_id' => ['required', 'integer'],
-            'address' => ['required'],
-            'phone' => ['required'],
-            'proficiency_id' => ['required', 'integer'],
-            'avatar' => ['required', 'image', 'max:1990']
-        ]);
-
-        
-
-        $data['avatar'] = request('avatar')->store('profiles', 'public');
-
-        auth()->user()->update($data);
-
-        return redirect()->route('profile.show', auth()->user()->id)->with('success', 'Profile Updated Successfully!');
+        //
     }
 
     /**

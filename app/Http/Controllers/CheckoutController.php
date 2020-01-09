@@ -6,6 +6,9 @@ use App\Order;
 use App\OrderProduct;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use App\City;
+use App\Country;
+use App\Province;
 
 class CheckoutController extends Controller
 {
@@ -20,9 +23,13 @@ class CheckoutController extends Controller
             return redirect()->route('shop.index');
         }
 
-        // if logged in send details
+        $countries = Country::pluck('name', 'id');
 
-        return view('checkout.index');
+        $provinces = Province::pluck('name', 'id');
+
+        $cities = City::pluck('name', 'id');
+
+        return view('checkout.index', compact(['countries', 'provinces', 'cities']));
     }
 
     /**
@@ -55,10 +62,10 @@ class CheckoutController extends Controller
             'billing_city' => 'required',
             'billing_address' => 'required',
             'shipping_address' => 'required',
-            'billing_phone' => ['required', 'integer'],
+            'billing_phone' => ['required'],
         ]);
 
-        $data['user_id'] = auth()->user() ? auth()->user()->id : null;
+        $data['user_id'] = auth()->user()->id;
         $data['billing_subtotal'] = Cart::subtotal();
         $data['shipping_charges'] = 200;
         $data['billing_total'] = Cart::total() + 200;

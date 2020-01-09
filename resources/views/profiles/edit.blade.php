@@ -2,15 +2,20 @@
 
 @section('content')
 <div class="ibox">
-    <form action="javascript:;">
+    {{ Form::open(['route' => ['profile.update', $user->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) }}
         <div class="ibox-head">
             <div class="ibox-title">Edit Your Profile</div>
         </div>
         <div class="ibox-body">
             <div class="row ">
-                <div class="col-12 ml-auto justify-content-center">
-                    <img class="img-circle" src="{{ asset('assets/img/users/u8.jpg') }}" alt="image" width="110">
-                    <p>Profile Image</p>
+                <div class="col-12 ml-auto text-center">
+                    @if (filter_var($user->avatar, FILTER_VALIDATE_URL) !== false)
+                        <img class="img-circle" src="{{ $user->avatar }}" alt="image" width="110">
+                    @else
+                        <img class="img-circle" src="{{ $user->avatar ? asset('/storage/' . $user->avatar) : asset('images/no-image.jpg') }}" alt="image" width="110">
+                    @endif
+                    
+                    <p class="mt-1 mb-5"><b>Profile Image</b></p>
                 </div>
             </div>
             <div class="row">
@@ -20,13 +25,6 @@
                         {{ Form::text('name', $user->name, ['class' => 'form-control', 'placeholder' => 'Name']) }}
                         @error('name')
                         <label for="name" class="text-danger">{{ $message }}</label>
-                        @enderror
-                    </div>
-                    <div class="form-group mb-4">
-                        <label>Email</label>
-                        {{ Form::email('email', $user->email, ['class' => 'form-control', 'placeholder' => 'Email']) }}
-                        @error('email')
-                        <label for="email" class="text-danger">{{ $message }}</label>
                         @enderror
                     </div>
                     <div class="form-group mb-4">
@@ -56,13 +54,10 @@
                 <div class="col-md-6">
                     <div class="form-group mb-4">
                         <label>Location</label>
-                        <div class="input-group-icon input-group-icon-left">
-                            <span class="input-icon input-icon-left"><i class="ti-location-pin font-16"></i></span>
-                            {{ Form::text('address', $user->address, ['class' => 'form-control', 'placeholder' => 'Location']) }}
-                            @error('address')
-                            <label for="address" class="text-danger">{{ $message }}</label>
-                            @enderror
-                        </div>
+                        {{ Form::text('address', $user->address, ['class' => 'form-control', 'placeholder' => 'Location']) }}
+                        @error('address')
+                        <label for="address" class="text-danger">{{ $message }}</label>
+                        @enderror
                     </div>
                     <div class="form-group mb-4">
                         <label>Phone Number</label>
@@ -88,22 +83,20 @@
                 </div>
             </div>
             <div class="form-group mb-0">
-                <label>Account Type</label>
-                <div class="mt-1">
-                    <label class="radio radio-inline radio-grey radio-primary">
-                        <input type="radio" name="d" checked>
-                        <span class="input-span"></span>Personal</label>
-                    <label class="radio radio-inline radio-grey radio-primary">
-                        <input type="radio" name="d">
-                        <span class="input-span"></span>Corporate</label>
-                </div>
-                <span class="help-block">Select one of 2 types of accounts.</span>
+                <label>Avatar (Profile Picture)</label> <br>
+                <label class="btn btn-primary file-input mr-2">
+                    <span class="btn-icon"><i class="la la-cloud-upload"></i>Browse Image</span>
+                    <input type="file" name="avatar">
+                </label>
+                @error('avatar')
+                    <label for="avatar" class="text-danger">{{ $message }}</label>
+                @enderror
             </div>
         </div>
         <div class="ibox-footer">
-            <button class="btn btn-primary mr-2" type="button">Submit</button>
+            <button class="btn btn-primary mr-2" type="submit">Submit</button>
             <button class="btn btn-outline-secondary" type="reset">Cancel</button>
         </div>
-    </form>
+    {{ Form::close() }}
 </div>
 @endsection

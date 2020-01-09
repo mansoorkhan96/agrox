@@ -149,23 +149,16 @@
                                     </div>
                                     <div class="single-comment-form mt-0">
                                         <div class="mb-2">
-                                            <h2 class="comment-title">LEAVE A REPLY</h2>
+                                            <h2 style="display:inline-block" class="comment-title">Review Product</h2>
+                                            <div class="star-rating pull-right">
+                                                <span class="unfilled" style="width:100%"></span>
+                                            </div>
                                         </div>
                                         <form class="comment-form">
+                                        {{ Form::open(['route' => 'review.store', 'method' => 'POST']) }}
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <textarea id="comment" name="comment" cols="45" rows="5" placeholder="Message *"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <input id="author" name="author" type="text" value="" size="30" placeholder="Name *" class="mb-2">
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <input id="email" name="email" type="email" value="" size="30" placeholder="Email *" class="mb-2">
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <input id="url" name="url" type="text" value="" placeholder="Website">
+                                                    {{ Form::textarea('review', null, ['rows' => '4', 'placeholder' => 'Comment']) }}
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -173,7 +166,7 @@
                                                     <input name="submit" type="submit" id="submit" class="btn btn-alt btn-border" value="Submit">
                                                 </div>
                                             </div>
-                                        </form>
+                                        {{ Form::close() }}
                                     </div>
                                 </div>
                             </div>

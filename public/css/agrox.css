@@ -107,3 +107,14 @@ table.shop-cart tbody tr.cart_item td.product-remove button:hover {
     -o-transition: all .5s;
     transition: all .5s;
 }
+
+/* .star-rating:before {
+    content: "\f3ae";
+}
+.star-rating span:before {
+    content: "\f2fc";
+} */
+
+.unfilled {
+    color: #c1c1c1 !important
+}

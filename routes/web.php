@@ -27,6 +27,8 @@ Route::get('/profile/{user}/edit', 'ProfilesController@edit')->name('profile.edi
 Route::put('/profile/{user}', 'ProfilesController@update')->name('profile.update');
 Route::get('/profile/{user}', 'ProfilesController@show')->name('profile.show');
 
+Route::post('/reviews', 'ReviewsController@store')->name('review.store');
+
 Route::get('/admin', function () {
     return view('admin.index');
 });

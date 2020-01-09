@@ -11,7 +11,7 @@
                         <div class="col-md-6">
                             <label>Name </label>
                             <div class="form-wrap">
-                                {{ Form::text('billing_name', null, ['placeholder' => 'Name']) }}
+                                {{ Form::text('billing_name', auth()->user()->name, ['placeholder' => 'Name']) }}
                                 @error('billing_name')
                                 <label for="billing_name" class="text-danger">{{ $message }}</label>
                                 @enderror
@@ -20,7 +20,7 @@
                         <div class="col-md-6">
                             <label>Email </label>
                             <div class="form-wrap">
-                                {{ Form::email('billing_email', null, ['placeholder' => 'Email']) }}
+                                {{ Form::email('billing_email', auth()->user()->email, ['placeholder' => 'Email']) }}
                                 @error('billing_email')
                                 <label for="billing_email" class="text-danger">{{ $message }}</label>
                                 @enderror
@@ -41,7 +41,7 @@
                         <div class="col-md-6">
                             <label>Country</label>
                             <div class="form-wrap">
-                                {{ Form::select('country', ['PK' => 'Pakistan', 'US' => 'United States'], null, ['placeholder' => 'Select Country']) }}
+                                {{ Form::select('country', $countries, null, ['placeholder' => 'Select Country']) }}
                                 @error('country')
                                 <label for="country" class="text-danger">{{ $message }}</label>
                                 @enderror
@@ -53,7 +53,7 @@
                             <label>Province </label>
                             <div class="form-wrap">
                                 <div class="form-wrap">
-                                    {{ Form::select('billing_province', ['Sindh' => 'Sindh', 'Punjab' => 'Punjab'], null, ['placeholder' => 'Select Province']) }}
+                                    {{ Form::select('billing_province', $provinces, null, ['placeholder' => 'Select Province']) }}
                                     @error('billing_province')
                                     <label for="billing_province" class="text-danger">{{ $message }}</label>
                                     @enderror
@@ -64,7 +64,7 @@
                             <label>City </label>
                             <div class="form-wrap">
                                 <div class="form-wrap">
-                                    {{ Form::select('billing_city', ['Jamshoro' => 'Jamshoro', 'Hyderabad' => 'Huderabad'], null, ['placeholder' => 'Select City']) }}
+                                    {{ Form::select('billing_city', $cities, auth()->user()->city_id, ['placeholder' => 'Select City']) }}
                                     @error('billing_city')
                                     <label for="billing_city" class="text-danger">{{ $message }}</label>
                                     @enderror
@@ -76,7 +76,7 @@
                         <div class="col-md-12">
                             <label>Billing Address </label>
                             <div class="form-wrap">
-                                {{ Form::textarea('billing_address', null, ['rows' => 3]) }}
+                                {{ Form::textarea('billing_address', auth()->user()->address, ['rows' => 3]) }}
                                 @error('billing_address')
                                     <label for="billing_address" class="text-danger">{{ $message }}</label>
                                 @enderror
@@ -87,7 +87,7 @@
                         <div class="col-md-12">
                             <label>Shipping Address </label>
                             <div class="form-wrap">
-                                {{ Form::textarea('shipping_address', null, ['rows' => 3]) }}
+                                {{ Form::textarea('shipping_address', auth()->user()->address, ['rows' => 3]) }}
                                 @error('shipping_address')
                                     <label for="shipping_address" class="text-danger">{{ $message }}</label>
                                 @enderror
@@ -98,7 +98,7 @@
                         <div class="col-md-6">
                             <label>Phone</label>
                             <div class="form-wrap">
-                                {{ Form::number('billing_phone', null, ['Placeholder' => 'Phone']) }}
+                                {{ Form::text('billing_phone', auth()->user()->phone, ['Placeholder' => 'Phone']) }}
                                 @error('billing_phone')
                                     <label for="billing_phone" class="text-danger">{{ $message }}</label>
                                 @enderror
