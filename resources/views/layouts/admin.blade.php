@@ -18,6 +18,7 @@
     <link href="{{ asset('assets/vendors/toastr/toastr.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/vendors/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet" />
     <!-- PLUGINS STYLES-->
+    <link href="{{ asset('assets/vendors/summernote/dist/summernote.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/vendors/jvectormap/jquery-jvectormap-2.0.3.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/vendors/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}" rel="stylesheet" />
     <!-- THEME STYLES-->

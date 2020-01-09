@@ -91,7 +91,7 @@
                     </div>
                     <div class="form-group mb-4">
                         <label>Description</label>
-                        {{ Form::textarea('description', null, ['class' => 'form-control form-control-solid', 'placeholder' => 'Description']) }}
+                        {{ Form::textarea('description', null, ['class' => 'form-control form-control-solid', 'placeholder' => 'Description', 'id' => 'summernote']) }}
                         @error('description')
                             <label for="description" class="col-form-label text-danger">{{ $message }}</label>
                         @enderror
@@ -117,7 +117,15 @@
 @endsection
 
 @section('page_script')
+    <script src="{{ asset('assets/vendors/summernote/dist/summernote.min.js') }}"></script>
     <script>
+        $(function() {
+            $('#summernote').summernote();
+            $('#summernote_air').summernote({
+                airMode: true
+            });
+        });
+    
         $(function() {
             $('.tagsinput').tagsinput({
                 tagClass: 'label label-primary'

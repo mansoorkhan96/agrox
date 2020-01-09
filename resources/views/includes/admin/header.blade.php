@@ -182,7 +182,7 @@
                         </div>
                     </div>
                     <div class="admin-menu-features">
-                        <a class="admin-features-item" href="javascript:;"><i class="ti-user"></i>
+                        <a class="admin-features-item" href="{{ route('profile.show', 1) }}"><i class="ti-user"></i>
                             <span>PROFILE</span>
                         </a>
                         <a class="admin-features-item" href="javascript:;"><i class="ti-support"></i>

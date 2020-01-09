@@ -69,3 +69,41 @@ table.shop-cart tbody tr.cart_item td.product-remove button:hover {
     font-weight: 400;
     cursor: pointer;
 }
+
+.btn-facebook {
+    padding: 12px 29px;
+    border: 1px solid;
+    border-color: #204d74;
+    border-radius: 3px;
+    background: #204d74;
+    color: #fff;
+    font-size: 15px;
+    line-height: 1;
+    font-weight: bold;
+    letter-spacing: .05em;
+    outline: 0;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -ms-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
+}
+
+.btn-google {
+    padding: 12px 29px;
+    border: 1px solid;
+    border-color: #d43f3a;
+    border-radius: 3px;
+    background: #d9534f;
+    color: #fff;
+    font-size: 15px;
+    line-height: 1;
+    font-weight: bold;
+    letter-spacing: .05em;
+    outline: 0;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -ms-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
+}
