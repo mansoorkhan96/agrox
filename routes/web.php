@@ -14,6 +14,8 @@
 Route::get('/', 'PagesController@home');
 Route::get('/message', 'PagesController@message')->name('pages.message');
 
+Route::resource('blog', 'BlogController');
+
 Route::get('/shop/list', 'ShopController@shopList')->name('shop.list');
 Route::get('/shop/grid', 'ShopController@shopGrid')->name('shop.grid');
 Route::resource('shop', 'ShopController');
@@ -40,6 +42,8 @@ Route::get('/admin/products/trashed', 'ProductsController@trashed');
 Route::put('/admin/products/restore/{product}', 'ProductsController@restore');
 Route::resource('/admin/products', 'ProductsController');
 
+Route::get('/admin/posts/trashed', 'PostsController@trashed');
+Route::put('/admin/posts/restore/{product}', 'PostsController@restore');
 Route::resource('/admin/posts', 'PostsController');
 
 Auth::routes();

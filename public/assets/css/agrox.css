@@ -23,3 +23,13 @@
     all: unset;
     cursor: pointer;
 }
+
+.article-date {
+    height: 48px;
+    width: 48px;
+    text-align: center;
+    color: #fff;
+    padding: 6px 5px;
+    border-radius: 50%;
+    line-height: 1;
+}

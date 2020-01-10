@@ -115,7 +115,7 @@
                 @endforelse
             </div>
             <div class="loadmore-contain">
-                <a class="organik-btn small" href="#"> Show All Products </a>
+                <a class="organik-btn small" href="{{ route('shop.index') }}"> Show All Products </a>
             </div>
         </div>
     </div>
@@ -135,93 +135,43 @@
             </div>
         </div>
         <div class="row">
+            @forelse ($posts as $post)
             <div class="col-md-4">
                 <div class="blog-grid-item">
                     <div class="post-thumbnail">
-                        <a href="blog-detail.html"> 
-                            <img src="{{ asset('images/blog/blog_1.jpg') }}" alt="" /> 
+                        <a href="{{ route('blog.show', $post->id) }}"> 
+                            <img src="{{ asset('/storage/' . $post->featured_image) }}" alt="" /> 
                         </a>
                     </div>
                     <div class="post-content">
                         <div class="entry-meta">
                             <span class="posted-on">
                                 <i class="ion-calendar"></i> 
-                                <span>August 9, 2016</span>
+                                <span>{{ date('F, j y', strtotime($post->created_at)) }}</span>
                             </span>
                             <span class="comment">
                                 <i class="ion-chatbubble-working"></i> 0
                             </span>
                         </div>
-                        <a href="blog-detail.html">
-                            <h1 class="entry-title">How to steam &amp; purée your sugar pie pumkin</h1>
+                        <a href="{{ route('blog.show', $post->slug) }}">
+                            <h1 class="entry-title">{{ $post->title }}</h1>
                         </a>
                         <div class="entry-content"> 
-                            Cut the halves into smaller pieces and place in a large pot of water with a steam basket to keep the pumpkin pieces from touching…
+                            {{ Str::words($post->excerpt, 20) }}
                         </div>
                         <div class="entry-more">
-                            <a href="blog-detail.html">Read more</a>
+                            <a href="{{ route('blog.show', $post->slug) }}">Read more</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="blog-grid-item">
-                    <div class="post-thumbnail">
-                        <a href="blog-detail.html"> 
-                            <img src="{{ asset('images/blog/blog_2.jpg') }}" alt="" /> 
-                        </a>
-                    </div>
-                    <div class="post-content">
-                        <div class="entry-meta">
-                            <span class="posted-on">
-                                <i class="ion-calendar"></i> 
-                                <span>August 9, 2016</span>
-                            </span>
-                            <span class="comment">
-                                <i class="ion-chatbubble-working"></i> 0
-                            </span>
-                        </div>
-                        <a href="blog-detail.html">
-                            <h1 class="entry-title">Great bulk recipes to help use all your organic vegetables</h1>
-                        </a>
-                        <div class="entry-content"> 
-                            A fridge full of organic vegetables purchased or harvested with the best of intentions, and then life gets busy, leaving no time to peel,
-                        </div>
-                        <div class="entry-more">
-                            <a href="blog-detail.html">Read more</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="blog-grid-item">
-                    <div class="post-thumbnail">
-                        <a href="blog-detail.html"> 
-                            <img src="{{ asset('images/blog/blog_1.jpg') }}" alt="" /> 
-                        </a>
-                    </div>
-                    <div class="post-content">
-                        <div class="entry-meta">
-                            <span class="posted-on">
-                                <i class="ion-calendar"></i> 
-                                <span>August 9, 2016</span>
-                            </span>
-                            <span class="comment">
-                                <i class="ion-chatbubble-working"></i> 0
-                            </span>
-                        </div>
-                        <a href="blog-detail.html">
-                            <h1 class="entry-title">How can salmon be raised organically in fish farms?</h1>
-                        </a>
-                        <div class="entry-content"> 
-                            Organic food consumption is rapidly increasing. The heightened interest in the global environment and a willingness to look
-                        </div>
-                        <div class="entry-more">
-                            <a href="blog-detail.html">Read more</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @empty
+            <div><div class="lead text-center">No Post Found</div></div>  
+            @endforelse
+            
+        </div>
+        <div class="loadmore-contain">
+            <a class="organik-btn small" href="{{ route('blog.index') }}"> Show All Posts </a>
         </div>
         <div class="row">
             <div class="col-sm-12">

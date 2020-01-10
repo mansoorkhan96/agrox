@@ -42,6 +42,7 @@
                         <th>ID</th>
                         <th>Title</th>
                         <th>Categories</th>
+                        <th>Excerpt</th>
                         <th>Type</th>
                         <th>Tag</th>
                         <th>Actions</th>
@@ -64,8 +65,9 @@
                                     Uncategorized
                                 @endforelse
                             </td>
+                            <td width="35%">{{ Str::words($excerpt, 10) }}</td>
                             <td>{{ ucfirst($post_type) }}</td>
-                            <td>{{ str_replace('_', '-', $tag) }}</td>
+                            <td>{{ $tag ? str_replace('_', '-', $tag) : 'Null' }}</td>
                             <td>
                                 <a class="text-light mr-3 font-16" href="{{ route('posts.show', $id) }}"><i class="ti-eye"></i></a>
                                 <a class="text-light mr-3 font-16" href="{{ route('posts.edit', $id) }}"><i class="ti-pencil"></i></a>

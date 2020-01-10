@@ -5,6 +5,9 @@
     <div class="ibox-body">
         <h5 class="font-strong mb-5">ADD NEW POST</h5>
         {{ Form::open(['action' => 'PostsController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
+        {{-- @if($errors->any())
+            {{ dd($errors->all())}}
+        @endif --}}
         <div class="row">
             <div class="col-lg-4">
                 <div style="width: 325px; height:355px" style="position:relative">
@@ -92,7 +95,7 @@
                         <div class="file-input-plus file-input"><i class="la la-plus-circle"></i>
                             <input type="file" name="attachments[]" id="" multiple="multiple">
                         </div>
-                        @error('attachments')
+                        @error('attachments.*')
                             <label for="attachments" class="col-form-label text-danger">{{ $message }}</label>
                         @enderror
                     </div>
@@ -137,25 +140,6 @@
                 }
 
                 reader.readAsDataURL(this.files[0]);
-            }
-        });
-
-        $(document).on('change', '#upload_product_images', function(e) {
-            for(let i = 0; i < this.files.length; i++) {
-                if(this.files && this.files[i]) {
-                    let reader = new FileReader();
-
-                    reader.onload = function(e) {
-                        $('#product_images').prepend(
-                            `<div class="col-md-3">
-                                <img src="${e.target.result}">
-                            </div>
-                            `
-                        );
-                    }
-
-                    reader.readAsDataURL(this.files[i]);
-                }
             }
         });
     

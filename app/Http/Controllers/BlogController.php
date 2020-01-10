@@ -4,33 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Post;
-use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class PagesController extends Controller
+class BlogController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function home()
+    public function index()
     {
-        $posts = Post::where('post_type', 'post')->latest()->take(3)->get();
+        $categoriesPostCount = DB::table('categories')
+            ->join('category_post', 'categories.id', '=', 'category_post.category_id')
+            ->select(DB::raw(('categories.id, categories.name, COUNT(category_post.post_id) AS posts_count')))
+            ->groupBy('categories.id')
+            ->get()->toArray();
+        $popular = Post::inRandomOrder()->latest()->take(5)->get()->toArray();
 
-        $products = Product::where('featured', true)->inRandomOrder()->latest()->take(8)->get()->toArray();
+        $posts = Post::paginate(6);
 
-        return view('pages.home', compact(['products', 'posts']));
-    }
-
-    /**
-     * Display a custom message.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function message()
-    {
-        return view('pages.message');
+        return view('blog.index', compact(['categoriesPostCount', 'popular', 'posts']));
     }
 
     /**
@@ -60,9 +55,18 @@ class PagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $post = Post::with('user')->where('slug', $slug)->firstOrFail();
+
+        $categoriesPostCount = DB::table('categories')
+            ->join('category_post', 'categories.id', '=', 'category_post.category_id')
+            ->select(DB::raw(('categories.id, categories.name, COUNT(category_post.post_id) AS posts_count')))
+            ->groupBy('categories.id')
+            ->get()->toArray();
+        $popular = Post::inRandomOrder()->latest()->take(5)->get()->toArray();
+
+        return view('blog.show', compact('post'));
     }
 
     /**

@@ -1,11 +1,13 @@
 @extends('layouts.admin')
 
 @section('content')
-{{-- {{dd($product_categories)}} --}}
 <div class="ibox">
     <div class="ibox-body">
-        <h5 class="font-strong mb-5">EDIT PRODUCT</h5>
-        {{ Form::open(['action' => ['ProductsController@update', $product->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) }}
+        <h5 class="font-strong mb-5">EDIT POST</h5>
+        {{ Form::open(['action' => ['PostsController@update', $post->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) }}
+        {{-- @if($errors->any())
+            {{ dd($errors->all())}}
+        @endif --}}
         <div class="row">
             <div class="col-lg-4">
                 <div style="width: 325px; height:355px" style="position:relative">
@@ -21,36 +23,27 @@
                         <label for="featured_image" class="col-form-label text-danger">{{ $message }}</label>
                     @enderror
                 </div>
-                <div class="row mt-4" id="product_images">
-                    <div class="col-md-3">
-                        <div class="file-input-plus file-input"><i class="la la-plus-circle"></i>
-                            <input type="file" name="images[]" id="upload_product_images" multiple="multiple">
-                        </div> Add More Images
-                        @error('images.*')
-                            <label for="images" class="col-form-label text-danger">{{ $message }}</label>
-                        @enderror
-                    </div>
-                </div>
+                
             </div>
             <div class="col-lg-8">
                 
                     <div class="form-group mb-4">
-                        <label>Product Name</label>
-                        {{ Form::text('name', $product->name, ['class' => 'form-control form-control-solid', 'placeholder' => 'Enter Product Name']) }}
-                        @error('name')
-                            <label for="name" class="col-form-label text-danger">{{ $message }}</label>
+                        <label>Title</label>
+                        {{ Form::text('title', $post->title, ['class' => 'form-control form-control-solid', 'placeholder' => 'Title']) }}
+                        @error('title')
+                            <label for="title" class="col-form-label text-danger">{{ $message }}</label>
                         @enderror
                     </div>
                     <div class="row">
                         <div class="col-sm-12 form-group mb-4">
                             <label>Categories</label>
                             <div>
-                            @forelse ($categories as $key => $category)
+                            @forelse ($categories as $category)
                             @php extract($category) @endphp
                                 <div class="form-group">
                                     <label class="checkbox checkbox-grey checkbox-primary">
-                                        {{ Form::checkbox('categories[]', $id, in_array($id, $product_categories)) }}
-                                    
+                                        {{ Form::checkbox('categories[]', $id, in_array($id, $post_categories)) }}
+                                        
                                         <span class="input-span"></span> {{ $parent['name'] ? $parent['name']  . ' -> ' . $name : $name }} </label>
                                 </div>
                             @empty
@@ -65,17 +58,17 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6 form-group mb-4">
-                            <label>Price</label>
-                            {{ Form::number('price', $product->price, ['class' => 'form-control form-control-solid', 'placeholder' => 'Price']) }}
-                            @error('price')
-                                <label for="price" class="col-form-label text-danger">{{ $message }}</label>
+                            <label>Post Type</label>
+                            {{ Form::select('post_type', ['post' => 'Post', 'discussion' => 'Discussion'], $post->post_type, ['class' => 'form-control form-control-solid', 'placeholder' => 'Select Post Type']) }}
+                            @error('post_type')
+                                <label for="post_type" class="col-form-label text-danger">{{ $message }}</label>
                             @enderror
                         </div>
                         <div class="col-sm-6 form-group mb-4">
-                            <label>Quantity</label>
-                            {{ Form::number('quantity', $product->quantity, ['class' => 'form-control form-control-solid', 'placeholder' => 'Quantity']) }}
-                            @error('quantity')
-                                <label for="quantity" class="col-form-label text-danger">{{ $message }}</label>
+                            <label>Tag</label>
+                            {{ Form::select('tag', ['success_story' => 'Success-Story', 'farmer_experience' => 'Farmer-Experience'], $post->tag, ['class' => 'form-control form-control-solid', 'placeholder' => 'Select a Tag']) }}
+                            @error('tag')
+                                <label for="tag" class="col-form-label text-danger">{{ $message }}</label>
                             @enderror
                         </div>
                     </div>
@@ -84,27 +77,29 @@
                         <input class="tagsinput form-control form-control-solid" type="text" placeholder="Tags" value="Fashion,Dress,Broadway,Autumn collection,Shop">
                     </div> --}}
                     <div class="form-group mb-4">
-                        <label>Details</label>
-                        {{ Form::textarea('details', $product->details, ['class' => 'form-control form-control-solid', 'placeholder' => 'Short Description', 'rows' => 3]) }}
-                        @error('details')
-                            <label for="details" class="col-form-label text-danger">{{ $message }}</label>
+                        <label>Excerpt</label>
+                        {{ Form::textarea('excerpt', $post->excerpt, ['class' => 'form-control form-control-solid', 'placeholder' => 'Short Description', 'rows' => 3]) }}
+                        @error('excerpt')
+                            <label for="excerpt" class="col-form-label text-danger">{{ $message }}</label>
                         @enderror
                     </div>
                     <div class="form-group mb-4">
                         <label>Description</label>
-                        {{ Form::textarea('description', $product->description, ['class' => 'form-control form-control-solid', 'placeholder' => 'Description', 'id' => 'summernote']) }}
-                        @error('description')
-                            <label for="description" class="col-form-label text-danger">{{ $message }}</label>
+                        {{ Form::textarea('body', $post->body, ['class' => 'form-control form-control-solid', 'placeholder' => 'Description', 'id' => 'summernote', 'data-plugin'=>'summernote', 'data-air-mode' => 'true']) }}
+                        @error('body')
+                            <label for="body" class="col-form-label text-danger">{{ $message }}</label>
                         @enderror
                     </div>
                     <div class="form-group mb-4">
-                        <label class="ui-switch switch-icon mr-3 mb-0">
-                            {{ Form::checkbox('featured', 1, $product->featured) }}
-                            <span></span>
-                        </label>Featured ?</div>
-                        @error('featured')
-                            <label for="featured" class="col-form-label text-danger">{{ $message }}</label>
+                        <label>Attachments</label><br>
+                        <div class="file-input-plus file-input"><i class="la la-plus-circle"></i>
+                            <input type="file" name="attachments[]" id="" multiple="multiple">
+                        </div>
+                        @error('attachments.*')
+                            <label for="attachments" class="col-form-label text-danger">{{ $message }}</label>
                         @enderror
+                    </div>
+                    <div class="form-group mb-4">
                     <div class="text-right">
                         <button type="submit" class="btn btn-primary btn-air mr-2">Save</button>
                         <button class="btn btn-secondary">Cancel</button>
@@ -126,7 +121,7 @@
                 airMode: true
             });
         });
-    
+        
         $(function() {
             $('.tagsinput').tagsinput({
                 tagClass: 'label label-primary'
@@ -147,24 +142,6 @@
                 reader.readAsDataURL(this.files[0]);
             }
         });
-
-        $(document).on('change', '#upload_product_images', function(e) {
-            for(let i = 0; i < this.files.length; i++) {
-                if(this.files && this.files[i]) {
-                    let reader = new FileReader();
-
-                    reader.onload = function(e) {
-                        $('#product_images').prepend(
-                            `<div class="col-md-3">
-                                <img src="${e.target.result}">
-                            </div>
-                            `
-                        );
-                    }
-
-                    reader.readAsDataURL(this.files[i]);
-                }
-            }
-        });
+    
     </script>
 @endsection

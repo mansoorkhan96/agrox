@@ -6,6 +6,8 @@ use App\Category;
 use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class PostsController extends Controller
 {
@@ -45,40 +47,47 @@ class PostsController extends Controller
             'title' => ['required'],
             'categories' => ['required'],
             'post_type' => ['required', 'alpha'],
-            'tag' => ['required', 'alpha_dash'],
-            'excertp' => ['required'],
+            'tag' => ['nullable', 'alpha_dash'],
+            'excerpt' => ['required'],
             'body' => ['required'],
             'featured_image' => ['required', 'image', 'max:1990'],
-            'attachments.*' => ['image', 'max:1990']
+            'attachments.*' => [
+                'nullable',
+                'file',
+                'max:3990',
+                'mimetypes:application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,image/jpeg,image/png,video/avi,video/mpeg,video/quicktime,video/3gpp,video/3gpp2,video/mp4,video/webm'
+            ]
         ], [
-            'images.*.image' => 'Product Image must a type of: JPEG, PNG, JPG',
-            'images.*.max' => 'Product Image size can not be greater than 2MB'
+            'attachments.*.image' => 'Attachment(s) must a type of: JPEG, PNG, JPG',
+            'attachments.*.max' => 'Attachment(s) size can not be greater than 4MB',
+            'attachments.*.mimetypes' => 'Attachment(s) must be of type: [Image, Word File, Excel File, PPT File, Video]',
+            'attachments.*.file' => 'Attachment(s) must be a file'
         ]);
-
-        $data['slug'] = Str::slug($data['name']) . '-' . strtolower(Str::random(10));
+            
+        $data['slug'] = Str::slug($data['title']) . '-' . strtolower(Str::random(10));
 
         $data['featured_image'] = request('featured_image')->store('product_images', 'public');
 
-        $images = [];
-        if($request->hasFile('images')) {
-            foreach($request->file('images') as $image) {
-                $images[] = $image->store('product_images', 'public');
+        $attachments = [];
+        if($request->hasFile('attachments')) {
+            foreach($request->file('attachments') as $image) {
+                $attachments[] = $image->store('post_attachments', 'public');
             }
         }
         
         $data['user_id'] = 1;
-        $data['images'] = implode(',', $images);
+        $data['attachments'] = implode(',', $attachments);
 
         $categories = $data['categories'];
         unset($data['categories']);
 
-        if($product = Product::create($data)) {
-            $product->categories()->attach($categories);
+        if($post = Post::create($data)) {
+            $post->categories()->attach($categories);
             
-            return redirect('/admin/products')->with('success', 'Product added successfully');
+            return redirect('/admin/posts')->with('success', 'Post added successfully!');
         }
 
-        return redirect('/admin/products')->with('error', 'Could not add product');
+        return redirect('/admin/posts')->with('error', 'Could not add Post!');
     }
 
     /**
@@ -87,9 +96,11 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        $post_categories = $post->categories()->where('category_post.post_id', $post->id)->pluck('name');
+
+        return view('posts.show', compact(['post', 'post_categories']));
     }
 
     /**
@@ -98,9 +109,16 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        $categories = Category::with('parent')->get()->toArray();
+
+        $post_categories = $post->categories()->where('category_post.post_id', $post->id)->pluck('category_post.category_id')->toArray();
+
+        // $post_categories = Post::with('categories')->where('id', $post->id)->get()->toArray();
+        // $post_categories =  Arr::pluck($post_categories[0]['categories'], 'id');
+
+        return view('posts.edit', compact(['post', 'categories', 'post_categories']));
     }
 
     /**
@@ -110,9 +128,56 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->validate([
+            'title' => ['required'],
+            'categories' => ['required'],
+            'post_type' => ['required', 'alpha'],
+            'tag' => ['nullable', 'alpha_dash'],
+            'excerpt' => ['required'],
+            'body' => ['required'],
+            'featured_image' => ['image', 'max:1990'],
+            'attachments.*' => [
+                'nullable',
+                'file',
+                'max:3990',
+                'mimetypes:application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,image/jpeg,image/png,video/avi,video/mpeg,video/quicktime,video/3gpp,video/3gpp2,video/mp4,video/webm'
+            ]
+        ], [
+            'attachments.*.image' => 'Attachment(s) must a type of: JPEG, PNG, JPG',
+            'attachments.*.max' => 'Attachment(s) size can not be greater than 4MB',
+            'attachments.*.mimetypes' => 'Attachment(s) must be of type: [Image, Word File, Excel File, PPT File, Video]',
+            'attachments.*.file' => 'Attachment(s) must be a file'
+        ]);
+            
+        $data['slug'] = Str::slug($data['title']) . '-' . strtolower(Str::random(10));
+
+        if($request->hasFile('featured_image')) {
+            $data['featured_image'] = request('featured_image')->store('product_images', 'public');
+        }
+
+        $attachments = [];
+        if($request->hasFile('attachments')) {
+            foreach($request->file('attachments') as $image) {
+                $attachments[] = $image->store('post_attachments', 'public');
+            }
+            
+            $data['attachments'] = implode(',', $attachments);
+        }
+        
+        $data['user_id'] = 1;
+
+        $categories = $data['categories'];
+        unset($data['categories']);
+
+        if(Post::where('id', $post->id)->update($data)) {
+            $post->categories()->sync($categories);
+            
+            return redirect('/admin/posts')->with('success', 'Post update successfully!');
+        }
+
+        return redirect('/admin/posts')->with('error', 'Could not update Post!');
     }
 
     /**
@@ -121,8 +186,28 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        if($post->delete()) {
+            return redirect()->route('posts.index')->with('success', 'Post moved to Trash!');
+        }
+
+        return redirect()->route('posts.index')->with('error', 'Could not delete the post!');
+    }
+
+    public function trashed() {
+        $posts = Post::onlyTrashed()->with(['user', 'categories'])->get()->toArray();
+
+        return view('posts.trashed', compact('posts'));
+    }
+
+    public function restore($id) {
+        if($post = Post::onlyTrashed()->where('id', $id)) {
+            $post->restore();
+
+            return back()->with('success', 'Post restored successfully');
+        }
+
+        abort(419);
     }
 }
