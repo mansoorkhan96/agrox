@@ -29,6 +29,7 @@ class ComposerStaticInite28f351ae2b72ececcde8d3e87b8893a
         'b6ec61354e97f32c0ae683041c78392a' => __DIR__ . '/..' . '/scrivo/highlight.php/HighlightUtilities/functions.php',
         'ed962a97bd972bc82007176b647d4e36' => __DIR__ . '/..' . '/facade/ignition/src/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
+        '48a6375642125665354baf6b7954ed7f' => __DIR__ . '/../..' . '/app/Http/Helpers/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -476,6 +477,7 @@ class ComposerStaticInite28f351ae2b72ececcde8d3e87b8893a
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Consultancy' => __DIR__ . '/../..' . '/app/Consultancy.php',
         'App\\ConsultantReview' => __DIR__ . '/../..' . '/app/ConsultantReview.php',
+        'App\\Country' => __DIR__ . '/../..' . '/app/Country.php',
         'App\\Discussion' => __DIR__ . '/../..' . '/app/Discussion.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
@@ -484,6 +486,7 @@ class ComposerStaticInite28f351ae2b72ececcde8d3e87b8893a
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\Auth\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerificationController.php',
+        'App\\Http\\Controllers\\BlogController' => __DIR__ . '/../..' . '/app/Http/Controllers/BlogController.php',
         'App\\Http\\Controllers\\CartController' => __DIR__ . '/../..' . '/app/Http/Controllers/CartController.php',
         'App\\Http\\Controllers\\CategoriesController' => __DIR__ . '/../..' . '/app/Http/Controllers/CategoriesController.php',
         'App\\Http\\Controllers\\CheckoutController' => __DIR__ . '/../..' . '/app/Http/Controllers/CheckoutController.php',
@@ -492,6 +495,8 @@ class ComposerStaticInite28f351ae2b72ececcde8d3e87b8893a
         'App\\Http\\Controllers\\PagesController' => __DIR__ . '/../..' . '/app/Http/Controllers/PagesController.php',
         'App\\Http\\Controllers\\PostsController' => __DIR__ . '/../..' . '/app/Http/Controllers/PostsController.php',
         'App\\Http\\Controllers\\ProductsController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductsController.php',
+        'App\\Http\\Controllers\\ProfilesController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfilesController.php',
+        'App\\Http\\Controllers\\ReviewsController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReviewsController.php',
         'App\\Http\\Controllers\\ShopController' => __DIR__ . '/../..' . '/app/Http/Controllers/ShopController.php',
         'App\\Http\\Controllers\\UploadFilesController' => __DIR__ . '/../..' . '/app/Http/Controllers/UploadFilesController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',

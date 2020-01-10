@@ -18,4 +18,12 @@ class Post extends Model
     public function categories() {
         return $this->belongsToMany('App\Category');
     }
+
+    public function userRating() {
+        return $this->hasMany(Rating::class)->where('user_id', 12);
+    }
+
+    public function ratings() {
+        return $this->hasMany('App\Rating');
+    }
 }

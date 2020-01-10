@@ -108,13 +108,13 @@ table.shop-cart tbody tr.cart_item td.product-remove button:hover {
     transition: all .5s;
 }
 
-/* .star-rating:before {
-    content: "\f3ae";
-}
-.star-rating span:before {
-    content: "\f2fc";
-} */
 
-.unfilled {
-    color: #c1c1c1 !important
+.star-outer {
+    padding-left: 0px !important;
+    margin-right: 10px !important;
+    cursor:pointer;
+}
+#rating li{
+    font-size: 15px;
+    display: inline-block;
 }

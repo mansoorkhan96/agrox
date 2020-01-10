@@ -9,11 +9,7 @@
         <div class="ibox-body">
             <div class="row ">
                 <div class="col-12 ml-auto text-center">
-                    @if (filter_var($user->avatar, FILTER_VALIDATE_URL) !== false)
-                        <img class="img-circle" src="{{ $user->avatar }}" alt="image" width="110">
-                    @else
-                        <img class="img-circle" src="{{ $user->avatar ? asset('/storage/' . $user->avatar) : asset('images/no-image.jpg') }}" alt="image" width="110">
-                    @endif
+                    <img class="img-circle" src="{{ avatar($user->avatar) }}" alt="image" width="110">
                     
                     <p class="mt-1 mb-5"><b>Profile Image</b></p>
                 </div>

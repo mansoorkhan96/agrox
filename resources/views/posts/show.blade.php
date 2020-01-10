@@ -8,8 +8,8 @@
                 <div class="flexbox">
                     <div class="flexbox">
                         <div class="article-date mr-4 text-primary bg-primary-50">
-                            <h5 class="font-strong mb-0">16</h5>
-                            <span class="font-13">Feb</span>
+                            <h5 class="font-strong mb-0">{{ date('j', strtotime($post->created_at)) }}</h5>
+                            <span class="font-13">{{ date('M', strtotime($post->created_at)) }}</span>
                         </div>
                         <div class="d-inline-flex">
                             <span class="text-muted pl-3 pr-3 text-center" style="border-right:1px solid rgba(0,0,0,.1);"><i class="fa fa-heart-o d-block font-16 mb-2"></i>124</span>

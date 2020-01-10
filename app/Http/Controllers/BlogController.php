@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class BlogController extends Controller
@@ -59,14 +60,28 @@ class BlogController extends Controller
     {
         $post = Post::with('user')->where('slug', $slug)->firstOrFail();
 
+        $ratings = $post->ratings()->count();
+
+        $ratingsSum = $post->ratings()->sum('rating');
+
+        $postRating = ($ratingsSum / $ratings);
+
+        $userRating = null;
+        if(Auth::check()) {
+            $userRating = $post->userRating()->first()->rating;
+        }
+
+        $post_categories = $post->categories()->where('category_post.post_id', $post->id)->pluck('name');
+
         $categoriesPostCount = DB::table('categories')
             ->join('category_post', 'categories.id', '=', 'category_post.category_id')
             ->select(DB::raw(('categories.id, categories.name, COUNT(category_post.post_id) AS posts_count')))
             ->groupBy('categories.id')
             ->get()->toArray();
+
         $popular = Post::inRandomOrder()->latest()->take(5)->get()->toArray();
 
-        return view('blog.show', compact('post'));
+        return view('blog.show', compact(['post', 'categoriesPostCount', 'popular', 'post_categories', 'userRating', 'postRating']));
     }
 
     /**

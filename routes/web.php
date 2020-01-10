@@ -15,6 +15,7 @@ Route::get('/', 'PagesController@home');
 Route::get('/message', 'PagesController@message')->name('pages.message');
 
 Route::resource('blog', 'BlogController');
+Route::post('/rating/{post}', 'PostRating@store')->name('postRating.store');
 
 Route::get('/shop/list', 'ShopController@shopList')->name('shop.list');
 Route::get('/shop/grid', 'ShopController@shopGrid')->name('shop.grid');
