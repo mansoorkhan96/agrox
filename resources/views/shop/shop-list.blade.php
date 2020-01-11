@@ -13,7 +13,7 @@
                 <a href="/shop/{{ $product->slug }}">
                     <h2 class="title">{{ $product->name }}</h2>
                     <span class="price">
-                        <del>$15.00</del> 
+                         
                         <ins>RS {{ $product->price }}</ins>
                     </span>
                 </a>

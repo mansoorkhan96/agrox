@@ -19,4 +19,12 @@ class Product extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function reviews() {
+        return $this->hasMany('App\ProductReview');
+    }
+
+    public function userReview() {
+        return $this->hasMany(ProductReview::class)->where('user_id', auth()->user()->id);
+    }
+
 }

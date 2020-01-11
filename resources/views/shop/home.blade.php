@@ -37,15 +37,29 @@
                                 <a href="/shop/{{ $product->slug }}">
                                     <h2 class="title">{{ $product->name }}</h2>
                                     <span class="price">
-                                        <del>$15.00</del> 
+                                        
                                         <ins>RS {{ $product->price }}</ins>
                                     </span>
                                 </a>
                                 <div class="product-rating">
-                                    <div class="star-rating">
-                                        <span style="width:100%"></span>
-                                    </div>
-                                    <i>(2 customer reviews)</i>
+                                    @php
+                                        $rating = 0;
+                                    @endphp
+                                    
+                                    @forelse ($product->reviews as $item)
+                                        @php
+                                            $rating += $item->rating
+                                        @endphp
+                                    @empty
+                                        @php
+                                            $rating = '';
+                                        @endphp
+                                    @endforelse
+                                    <ul class="post-meta w-30">
+                                        <li id="post-rating" style="display: inline-block;" class="star-outer"> {{ $rating }} </li>
+                                        <li style="display: inline-block; color: #5fbd74" class="star-outer"> <i class="star fa fa-star"></i> </li>
+                                    </ul>
+                                    <i>[ {{ count($product->reviews) }} customer review(s) ]</i>
                                 </div>
                                 <div class="product-desc">
                                     <p>{{ $product->details }}</p>
@@ -98,7 +112,7 @@
                                         <img src="{{ asset('/storage/' . $item['featured_image']) }}" alt="" />
                                         <span class="product-title">{{ $item['name'] }}</span>
                                     </a>
-                                    <del>$15.00</del>
+                                    
                                     <ins>RS {{ $item['price'] }}</ins>
                                 </li> 
                             @empty

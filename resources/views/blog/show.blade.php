@@ -28,7 +28,7 @@
                             @endforelse
                         </span>
                         <span class="comment">
-                            <i class="ion-chatbubble-working"></i> 0
+                            <i class="ion-chatbubble-working"></i> {{ count($comments) }}
                         </span>
                         
 
@@ -77,56 +77,29 @@
                     <div class="comments-area">
                         <div class="single-comments-list mt-0">
                             <div class="mb-2">
-                                <h2 class="comment-title">2 comment(s) for Orange Juice</h2>
+                                
+                                <h2 class="comment-title">{{ count($comments) }} comment(s) for {{ $post->title }}</h2>
                             </div>
                             <ul class="comment-list">
+                                @forelse ($comments as $comment)
                                 <li>
                                     <div class="comment-container">
                                         <div class="comment-author-vcard">
-                                            <img alt="" src="{{ asset('images/avatar/avatar.png') }}" />
+                                            <img alt="" src="{{ avatar($comment->user->avatar) }}" />
                                         </div>
                                         <div class="comment-author-info">
-                                            <span class="comment-author-name">admin</span>
-                                            <a href="#" class="comment-date">July 27, 2016</a>
-                                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                                            <span class="comment-author-name">{{ $comment->user->name }}</span>
+                                            <a href="#" class="comment-date">{{ date('F, j Y', strtotime($comment->created_at)) }}</a>
+                                            <p>{{ $comment->discussion }}</p>
                                         </div>
                                         <div class="reply">
-                                            <a class="comment-reply-link" href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <ul class="children">
-                                        <li>
-                                            <div class="comment-container">
-                                                <div class="comment-author-vcard">
-                                                    <img alt="" src="{{ asset('images/avatar/ava') }}tar.png" />
-                                                </div>
-                                                <div class="comment-author-info">
-                                                    <span class="comment-author-name">admin</span>
-                                                    <a href="#" class="comment-date">July 27, 2016</a>
-                                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                                                </div>
-                                                <div class="reply">
-                                                    <a class="comment-reply-link" href="#">Reply</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <div class="comment-container">
-                                        <div class="comment-author-vcard">
-                                            <img alt="" src="{{ asset('images/avatar/avatar.png') }}" />
-                                        </div>
-                                        <div class="comment-author-info">
-                                            <span class="comment-author-name">admin</span>
-                                            <a href="#" class="comment-date">July 27, 2016</a>
-                                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                                        </div>
-                                        <div class="reply">
-                                            <a class="comment-reply-link" href="#">Reply</a>
+                                            <a class="comment-reply-link" href="#comment">Reply</a>
                                         </div>
                                     </div>
                                 </li>
+                                @empty
+                                    <div><p class="lead textcenter">No Comments</p></div>
+                                @endforelse
                             </ul>
                         </div>
                         
@@ -134,10 +107,11 @@
                             <div>
                                 <h2 class="mb-1 comment-title" style="display:inline-block">Leave A Comment</h2>
                             </div>
-                            <form class="comment-form">
+                            {{ Form::open(['method' => 'POST', 'class' => 'comment-form', 'id' => 'create-comment']) }}
                                 <div class="row">
                                     <div class="col-md-12">
                                         <textarea id="comment" name="comment" cols="45" rows="5" placeholder="Message *"></textarea>
+                                        <label for="comment" id="comment-error" style="display:none" class="text-danger">Comment field is required</label>
                                     </div>
                                 </div>
                                 
@@ -146,7 +120,7 @@
                                         <input name="submit" type="submit" id="submit" class="btn btn-alt btn-border" value="Submit">
                                     </div>
                                 </div>
-                            </form>
+                            {{ Form::close() }}
                         </div>
                     </div>
                 </div>
@@ -195,39 +169,78 @@
 @endsection
 
 @section('page_script')
+    <script>
+        $(document).ready(function() {
 
-<script>
-$(document).ready(function() {
-    let current_rating = '';
+            $('.star-outer').click(function() {
+                let url = "{{ route('postRating.store', $post->id) }}";
+                let rating = this.id;
 
-    $('.star-outer').click(function() {
-        let url = "{{ route('postRating.store', $post->id) }}";
-        let rating = this.id;
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: {rating: rating}
+                }).done(function(data) {
+                    if(data.success) {
+                        $('#post-rating').html(data.postRating);
+                        unstyle_stars();
+                        style_stars(rating);
+                    }
+                });
+            });
 
-        $.ajax({
-            url: url,
-            method: 'POST',
-            data: {rating: rating}
-        }).done(function(data) {
-            if(data.success) {
-                $('#post-rating').html(data.postRating);
-                unstyle_stars();
-                style_stars(rating);
+            style_stars('{{ $userRating }}');
+
+            function style_stars(count) {
+                for (let i = 1; i <= count; i++ ) {
+                    document.getElementById(i).style.color='#5fbd74';
+                }
             }
+
+            function unstyle_stars() {
+                $('.star-outer').css('color', '#aaa')
+            }
+
+            $(document).on('submit', '#create-comment', function(e) {
+                e.preventDefault();
+                let url = '{{ route("comment.create", $post->id) }}'
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: $(this).serialize()
+                }).done(function(data) {
+                    if(data.success) {
+                        toastr.success(data.success, 'Success');
+
+                        $('#comment-error').hide();
+
+                        $('.comment-list').append(
+                            `
+                            <li>
+                                <div class="comment-container">
+                                    <div class="comment-author-vcard">
+                                        <img alt="" src="{{ avatar(auth()->user()->avatar) }}" />
+                                    </div>
+                                    <div class="comment-author-info">
+                                        <span class="comment-author-name">{{ $comment->user->name }}</span>
+                                        <a href="#" class="comment-date">{{ date('F, j Y', time()) }}</a>
+                                        <p>${$('#comment').val()}</p>
+                                    </div>
+                                    <div class="reply">
+                                        <a class="comment-reply-link" href="#comment">Reply</a>
+                                    </div>
+                                </div>
+                            </li>
+                            `
+                        );
+
+                        $('#create-comment').trigger("reset");
+                    }
+                }).fail(function(data) {
+                    $('#comment-error').show();
+                });
+            });
         });
-    });
-
-    style_stars('{{ $userRating }}');
-
-    function style_stars(count) {
-        for (let i = 1; i <= count; i++ ) {
-            document.getElementById(i).style.color='#5fbd74';
-        }
-    }
-
-    function unstyle_stars() {
-        $('.star-outer').css('color', '#aaa')
-    }
-});
-</script>
+    </script>
 @endsection

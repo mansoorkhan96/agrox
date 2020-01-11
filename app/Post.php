@@ -20,10 +20,14 @@ class Post extends Model
     }
 
     public function userRating() {
-        return $this->hasMany(Rating::class)->where('user_id', 12);
+        return $this->hasMany(Rating::class)->where('user_id', auth()->user()->id);
     }
 
     public function ratings() {
         return $this->hasMany('App\Rating');
+    }
+
+    public function discussions() {
+        return $this->hasMany('App\Discussion');
     }
 }

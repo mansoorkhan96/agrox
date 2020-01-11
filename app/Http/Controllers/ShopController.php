@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\Category;
+use App\ProductReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Arr;
 
@@ -27,7 +29,7 @@ class ShopController extends Controller
         
         $mightAlsoLike = $products = Product::inRandomOrder()->latest()->take(5)->get()->toArray();
 
-        $products = Product::paginate(6);
+        $products = Product::with('reviews')->latest()->paginate(6);
 
         return view('shop.home', compact(['categoriesProductCount', 'mightAlsoLike', 'products']));
     }
@@ -83,6 +85,22 @@ class ShopController extends Controller
     {
         $product = Product::where('slug', $slug)->firstOrFail();
 
+        $ratings = $product->reviews()->count();
+
+        $ratingsSum = $product->reviews()->sum('rating');
+
+        $productRating = '';
+        if($ratings > 0) {
+            $productRating = ($ratingsSum / $ratings);
+        }
+
+        $userRating = null;
+        if(Auth::check()) {
+            $userRating = $product->userReview()->first() ? $product->userReview()->first()->rating : '';
+        }
+
+        $reviews = ProductReview::with('user')->where('product_id', $product->id)->get();
+
         $categoriesProductCount = DB::table('categories')
             ->join('category_product', 'categories.id', '=', 'category_product.category_id')
             ->select(DB::raw(('categories.id, categories.name, COUNT(category_product.product_id) AS products_count')))
@@ -101,7 +119,7 @@ class ShopController extends Controller
             ->get()->toArray();
 
 
-        return view('shop.show', compact(['product', 'categoriesProductCount', 'mightAlsoLike', 'related_products']));
+        return view('shop.show', compact(['product', 'categoriesProductCount', 'mightAlsoLike', 'related_products', 'reviews', 'userRating', 'productRating']));
     }
 
     /**
@@ -136,5 +154,35 @@ class ShopController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function storeRating(Request $request, Product $product) {
+        ProductReview::updateOrCreate(
+            ['user_id' => auth()->user()->id, 'product_id' => $product->id],
+            ['user_id' => auth()->user()->id, 'product_id' => $product->id, 'rating' => $request->rating],
+        );
+
+        $ratings = $product->reviews()->count();
+
+        $ratingsSum = $product->reviews()->sum('rating');
+
+        $productRating = ($ratingsSum / $ratings);
+
+        return response()->json(['success' => 'producted Rated Successfully!', 'productRating' => $productRating]);
+    }
+
+    public function createReview(Request $request, Product $product) {
+        $request->validate([
+            'comment' => 'required'
+        ]);
+        
+        ProductReview::updateOrCreate(
+            ['user_id' => auth()->user()->id, 'product_id' => $product->id],
+            ['user_id' => auth()->user()->id, 'product_id' => $product->id, 'review' => $request->comment],
+        );
+
+        $reviews = ProductReview::with('user')->where('product_id', $product->id)->get();
+
+        return response()->json(['success' => 'Your review was saved!', 'reviews' => $reviews]);
     }
 }

@@ -44,7 +44,7 @@
                             <a href="{{ route('shop.show', $product->slug) }}">
                                 <h2 class="title">{{ $product->name }}</h2>
                                 <span class="price">
-                                    <del>$15.00</del> 
+                                     
                                     <ins>RS {{ $product->price }}</ins>
                                 </span>
                             </a>
@@ -85,7 +85,7 @@
                                         <img src="{{ asset('/storage/' . $item['featured_image']) }}" alt="" />
                                         <span class="product-title">{{ $item['name'] }}</span>
                                     </a>
-                                    <del>$15.00</del>
+                                    
                                     <ins>RS {{ $item['price'] }}</ins>
                                 </li> 
                             @empty

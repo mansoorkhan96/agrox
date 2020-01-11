@@ -56,13 +56,14 @@
                         <div class="summary">
                             <h1 class="product-title">{{ $product->name }}</h1>
                             <div class="product-rating">
-                                <div class="star-rating">
-                                    <span style="width:100%"></span>
-                                </div>
-                                <i>(2 customer reviews)</i>
+                                <ul class="post-meta w-30" style="display:inline-block">
+                                    <li id="post-rating" style="display: inline-block;" class="star-outer"> {{ $productRating }} </li>
+                                    <li style="display: inline-block; color: #5fbd74" class="star-outer"> <i class="star fa fa-star"></i> </li>
+                                </ul>
+                                <i>[ {{ count($reviews) }} customer review(s) ]</i>
                             </div>
                             <div class="product-price">
-                                <del>$15.00</del>
+                                
                                 <ins>RS {{ $product->price }}</ins>
                             </div>
                             <div class="mb-3">
@@ -95,72 +96,50 @@
                                 <div id="tab-reviews" class="tab-pane fade">
                                     <div class="single-comments-list mt-0">
                                         <div class="mb-2">
-                                            <h2 class="comment-title">2 reviews for Orange Juice</h2>
+                                            <h2 class="comment-title">{{ count($reviews) }} review(s) for {{ $product->name }}</h2>
                                         </div>
                                         <ul class="comment-list">
+                                            @forelse ($reviews as $comment)
                                             <li>
                                                 <div class="comment-container">
                                                     <div class="comment-author-vcard">
-                                                        <img alt="" src="{{ asset('images/avatar/avatar.png') }}" />
+                                                        <img alt="" src="{{ avatar($comment->user->avatar) }}" />
                                                     </div>
                                                     <div class="comment-author-info">
-                                                        <span class="comment-author-name">admin</span>
-                                                        <a href="#" class="comment-date">July 27, 2016</a>
-                                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                                                        <span class="comment-author-name">{{ $comment->user->name }}</span>
+                                                        <a href="#" class="comment-date">{{ date('F, j Y', strtotime($comment->created_at)) }}</a>
+                                                        <p>{{ $comment->review }}</p>
                                                     </div>
                                                     <div class="reply">
-                                                        <a class="comment-reply-link" href="#">Reply</a>
-                                                    </div>
-                                                </div>
-                                                <ul class="children">
-                                                    <li>
-                                                        <div class="comment-container">
-                                                            <div class="comment-author-vcard">
-                                                                <img alt="" src="{{ asset('images/avatar/avatar.png') }}" />
-                                                            </div>
-                                                            <div class="comment-author-info">
-                                                                <span class="comment-author-name">admin</span>
-                                                                <a href="#" class="comment-date">July 27, 2016</a>
-                                                                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                                                            </div>
-                                                            <div class="reply">
-                                                                <a class="comment-reply-link" href="#">Reply</a>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <div class="comment-container">
-                                                    <div class="comment-author-vcard">
-                                                        <img alt="" src="{{ asset('images/avatar/avatar.png') }}" />
-                                                    </div>
-                                                    <div class="comment-author-info">
-                                                        <span class="comment-author-name">admin</span>
-                                                        <a href="#" class="comment-date">July 27, 2016</a>
-                                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                                                    </div>
-                                                    <div class="reply">
-                                                        <a class="comment-reply-link" href="#">Reply</a>
+                                                        <a class="comment-reply-link" href="#comment">Reply</a>
                                                     </div>
                                                 </div>
                                             </li>
+                                            @empty
+                                                <div><p class="lead textcenter">No Reviews</p></div>
+                                            @endforelse
                                         </ul>
                                     </div>
                                     <div class="single-comment-form mt-0">
                                         <div class="mb-2">
                                             <h2 style="display:inline-block" class="comment-title">Review Product</h2>
-                                            <div class="star-rating pull-right">
-                                                <span class="unfilled" style="width:100%"></span>
-                                            </div>
+                                            <ul id="rating" style="display: inline-block;" class="post-meta pull-right w-30">
+                                                <li>Rate :</li>
+                                                <li id="1" class="star-outer"> <i class="star fa fa-star"></i> </li>
+                                                <li id="2" class="star-outer"> <i class="star fa fa-star"></i> </li>
+                                                <li id="3" class="star-outer"> <i class="star fa fa-star"></i> </li>
+                                                <li id="4" class="star-outer"> <i class="star fa fa-star"></i> </li>
+                                                <li id="5" class="star-outer"> <i class="star fa fa-star"></i> </li>
+                                            </ul>
                                         </div>
-                                        <form class="comment-form">
-                                        {{ Form::open(['route' => 'review.store', 'method' => 'POST']) }}
+                                        {{ Form::open(['method' => 'POST', 'class' => 'comment-form', 'id' => 'create-comment']) }}
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    {{ Form::textarea('review', null, ['rows' => '4', 'placeholder' => 'Comment']) }}
+                                                    <textarea id="comment" name="comment" cols="45" rows="5" placeholder="Message *"></textarea>
+                                                    <label for="comment" id="comment-error" style="display:none" class="text-danger">Comment field is required</label>
                                                 </div>
                                             </div>
+                                            
                                             <div class="row">
                                                 <div class="col-md-2">
                                                     <input name="submit" type="submit" id="submit" class="btn btn-alt btn-border" value="Submit">
@@ -232,7 +211,7 @@
                                         <img src="{{ asset('/storage/' . $item['featured_image']) }}" alt="" />
                                         <span class="product-title">{{ $item['name'] }}</span>
                                     </a>
-                                    <del>$15.00</del>
+                                    
                                     <ins>RS {{ $item['price'] }}</ins>
                                 </li> 
                             @empty
@@ -245,4 +224,90 @@
         </div>
     </div>
 </div>    
+@endsection
+
+@section('page_script')
+    <script>
+        $(document).ready(function() {
+
+            $('.star-outer').click(function() {
+                let url = "{{ route('productRating.store', $product->id) }}";
+                let rating = this.id;
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: {rating: rating}
+                }).done(function(data) {
+                    if(data.success) {
+                        $('#post-rating').html(data.productRating);
+                        unstyle_stars();
+                        style_stars(rating);
+                    }
+                });
+            });
+
+            style_stars('{{ $userRating }}');
+
+            function style_stars(count) {
+                for (let i = 1; i <= count; i++ ) {
+                    document.getElementById(i).style.color='#5fbd74';
+                }
+            }
+
+            function unstyle_stars() {
+                $('.star-outer').css('color', '#aaa');
+            }
+
+            $(document).on('submit', '#create-comment', function(e) {
+                e.preventDefault();
+                let url = '{{ route("product.review", $product->id) }}'
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: $(this).serialize()
+                }).done(function(data) {
+                    if(data.success) {
+                        toastr.success(data.success, 'Success');
+
+                        $('#comment-error').hide();
+
+                        let output = '';
+
+                        $.each(data.reviews, function(key, item) {
+                            let avatar = item.user.avatar;
+                            let name = item.user.name;
+                            let created_at = item.created_at;
+                            let review = item.review
+
+                            output += 
+                            `
+                                <li>
+                                    <div class="comment-container">
+                                        <div class="comment-author-vcard">
+                                            <img alt="" src="{{ avatar('${avatar}') }}" />
+                                        </div>
+                                        <div class="comment-author-info">
+                                            <span class="comment-author-name">${name}</span>
+                                            <a href="" class="comment-date">{{ date('F, j Y', time()) }}</a>
+                                            <p>${review}</p>
+                                        </div>
+                                        <div class="reply">
+                                            <a class="comment-reply-link" href="comment">Reply</a>
+                                        </div>
+                                    </div>
+                                </li>
+                           `
+                        });
+                        $('.comment-list').html(output)
+
+                        $('#create-comment').trigger("reset");
+                    }
+                }).fail(function(data) {
+                    $('#comment-error').show();
+                });
+            });
+        });
+    </script>
 @endsection

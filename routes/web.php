@@ -16,10 +16,13 @@ Route::get('/message', 'PagesController@message')->name('pages.message');
 
 Route::resource('blog', 'BlogController');
 Route::post('/rating/{post}', 'PostRating@store')->name('postRating.store');
+Route::post('/create-comment/{post}', 'BlogController@createComment')->name('comment.create');
 
 Route::get('/shop/list', 'ShopController@shopList')->name('shop.list');
 Route::get('/shop/grid', 'ShopController@shopGrid')->name('shop.grid');
 Route::resource('shop', 'ShopController');
+Route::post('/product-rating/{product}', 'ShopController@storeRating')->name('productRating.store');
+Route::post('/product-review/{product}', 'ShopController@createReview')->name('product.review');
 
 Route::resource('cart', 'CartController');
 

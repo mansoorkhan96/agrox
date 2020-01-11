@@ -21,6 +21,9 @@
                                 <label>Email address <span class="required">*</span></label>
                                 <div class="form-wrap">
                                     <input type="text" name="email" placeholder="Enter email address" name="your-name" value="" size="40">
+                                    @error('email')
+                                        <label for="email" class="text-danger">{{ $message }}</label>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -29,6 +32,9 @@
                                 <label>Password <span class="required">*</span></label>
                                 <div class="form-wrap">
                                     <input type="password" name="password" placeholder="Enter Password" name="your-pass" value="" size="40">
+                                    @error('email')
+                                        <label for="email" class="text-danger">{{ $message }}</label>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

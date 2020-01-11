@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Discussion;
 use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
@@ -60,15 +61,20 @@ class BlogController extends Controller
     {
         $post = Post::with('user')->where('slug', $slug)->firstOrFail();
 
+        $comments = Discussion::with('user')->where('post_id', $post->id)->get();
+
         $ratings = $post->ratings()->count();
 
         $ratingsSum = $post->ratings()->sum('rating');
 
-        $postRating = ($ratingsSum / $ratings);
+        $postRating = '';
+        if($ratings > 0) {
+            $postRating = ($ratingsSum / $ratings);
+        }
 
         $userRating = null;
         if(Auth::check()) {
-            $userRating = $post->userRating()->first()->rating;
+            $userRating = $post->userRating()->first() ? $post->userRating()->first()->rating : '';
         }
 
         $post_categories = $post->categories()->where('category_post.post_id', $post->id)->pluck('name');
@@ -81,7 +87,7 @@ class BlogController extends Controller
 
         $popular = Post::inRandomOrder()->latest()->take(5)->get()->toArray();
 
-        return view('blog.show', compact(['post', 'categoriesPostCount', 'popular', 'post_categories', 'userRating', 'postRating']));
+        return view('blog.show', compact(['post', 'categoriesPostCount', 'popular', 'post_categories', 'userRating', 'postRating', 'comments']));
     }
 
     /**
@@ -116,5 +122,19 @@ class BlogController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function createComment(Request $request, Post $post) {
+        $request->validate([
+            'comment' => 'required'
+        ]);
+        
+        Discussion::create([
+            'user_id' => auth()->user()->id,
+            'post_id' => $post->id,
+            'discussion' => $request->comment
+        ]);
+
+        return response()->json(['success' => 'Your comment was saved!']);
     }
 }

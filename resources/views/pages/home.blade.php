@@ -15,7 +15,7 @@
                 <p class="mb-4">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non ad quisquam ducimus beatae? Quo praesentium reiciendis distinctio velit? Suscipit odio quae consectetur magni voluptatibus doloremque vero eum id labore rem fugiat, deserunt doloribus illum fuga iusto numquam recusandae modi rerum.
                 </p>
-                <a class="organik-btn arrow" href="#">Our products</a>
+                <a class="organik-btn arrow" href="{{ route('shop.index') }}">Our products</a>
             </div>
         </div>
     </div>
@@ -104,7 +104,7 @@
                             <a href="{{ '/shop/' . $product['slug'] }}">
                                 <h2 class="title">{{ $product['name'] }}</h2>
                                 <span class="price">
-                                    <del>$15.00</del>
+                                    
                                     <ins>RS {{ $product['price'] }}</ins>
                                 </span>
                             </a>
