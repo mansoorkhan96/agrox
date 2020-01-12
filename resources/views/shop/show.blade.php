@@ -195,8 +195,8 @@
                     <div class="widget widget-product-categories">
                         <h3 class="widget-title">Product Categories</h3>
                         <ul class="product-categories">
-                            @forelse ($categoriesProductCount as $item)
-                            <li><a href="#">{{ $item->name }}</a> <span class="count">{{ $item->products_count }}</span></li>  
+                            @forelse ($categoriesProductCount as $category)
+                            <li><a class="{{ request()->category == $category->slug ? 'active' : '' }}" href="{{ route('shop.index', ['category' => $category->slug]) }}">{{ $category->name }}</a> <span class="count">{{ $category->products_count }}</span></li>  
                             @empty
                                 
                             @endforelse

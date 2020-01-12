@@ -8,6 +8,7 @@ use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class BlogController extends Controller
 {
@@ -20,14 +21,33 @@ class BlogController extends Controller
     {
         $categoriesPostCount = DB::table('categories')
             ->join('category_post', 'categories.id', '=', 'category_post.category_id')
-            ->select(DB::raw(('categories.id, categories.name, COUNT(category_post.post_id) AS posts_count')))
+            ->select(DB::raw(('categories.id, categories.name, categories.slug, COUNT(category_post.post_id) AS posts_count')))
             ->groupBy('categories.id')
             ->get()->toArray();
+
         $popular = Post::inRandomOrder()->latest()->take(5)->get()->toArray();
 
-        $posts = Post::paginate(6);
+        if(request()->tag) {
+            $posts = Post::where('tag', request()->tag)->withCount('discussions')->paginate(1);
 
-        return view('blog.index', compact(['categoriesPostCount', 'popular', 'posts']));
+            $title = Str::title(request()->tag);
+            $title = 'Tag: ' . str_replace('_', ' ', $title);
+
+        } else if(request()->category) {
+
+            $posts = Post::whereHas('categories', function($query) {
+                $query->where('slug', request()->category);
+            })->withCount('discussions')->paginate(1);
+
+            $title = Str::title(request()->tag);
+            $title = 'Category: ' . Str::title(str_replace('-', ' ', request()->category));
+            
+        } else {
+            $posts = Post::withCount('discussions')->paginate(6);
+            $title = 'Latest Posts';
+        }
+
+        return view('blog.index', compact(['categoriesPostCount', 'popular', 'posts', 'title']));
     }
 
     /**
@@ -81,7 +101,7 @@ class BlogController extends Controller
 
         $categoriesPostCount = DB::table('categories')
             ->join('category_post', 'categories.id', '=', 'category_post.category_id')
-            ->select(DB::raw(('categories.id, categories.name, COUNT(category_post.post_id) AS posts_count')))
+            ->select(DB::raw(('categories.id, categories.name, categories.slug, COUNT(category_post.post_id) AS posts_count')))
             ->groupBy('categories.id')
             ->get()->toArray();
 

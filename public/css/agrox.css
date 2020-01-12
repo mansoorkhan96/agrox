@@ -118,3 +118,35 @@ table.shop-cart tbody tr.cart_item td.product-remove button:hover {
     font-size: 15px;
     display: inline-block;
 }
+
+.font-weight-bold {
+    font-weight: 400!important;
+}
+
+.table-custom>tbody>tr>td {
+    border-top: none;
+}
+
+.badge-success {
+    color: #fff;
+    background-color: #5fbd74;
+}
+
+.badge-warning {
+    color: #212529;
+    background-color: #ffc107;
+}
+
+.badge-info {
+    color: #fff;
+    background-color: #17a2b8;
+}
+.table-custom .lead {
+    line-height: 0.6;
+    font-size: 18px !important;
+    margin-bottom: 15px;
+}
+
+.product-categories a.active {
+    font-weight: 900;
+}

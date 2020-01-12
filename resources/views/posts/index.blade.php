@@ -3,7 +3,7 @@
 @section('content')
 <div class="ibox">
     <div class="ibox-body">
-        <h5 class="font-strong mb-4">posts</h5>
+        <h5 class="font-strong mb-4">Posts</h5>
         <div class="flexbox mb-4">
             <div class="flexbox">
                 <label class="mb-0 mr-2">Type:</label>

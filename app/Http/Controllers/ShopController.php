@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Product;
 use App\Category;
 use App\ProductReview;
+use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -21,17 +22,27 @@ class ShopController extends Controller
      */
     public function index()
     {
+
         $categoriesProductCount = DB::table('categories')
             ->join('category_product', 'categories.id', '=', 'category_product.category_id')
-            ->select(DB::raw(('categories.id, categories.name, COUNT(category_product.product_id) AS products_count')))
+            ->select(DB::raw(('categories.id, categories.name, categories.slug, COUNT(category_product.product_id) AS products_count')))
             ->groupBy('categories.id')
             ->get()->toArray();
         
         $mightAlsoLike = $products = Product::inRandomOrder()->latest()->take(5)->get()->toArray();
 
-        $products = Product::with('reviews')->latest()->paginate(6);
+        if(request()->category) {
+            $products = Product::whereHas('categories', function($query) {
+                $query->where('slug', request()->category);
+            })->with('reviews')->latest()->paginate(6);
 
-        return view('shop.home', compact(['categoriesProductCount', 'mightAlsoLike', 'products']));
+            $title = 'Category: ' . Category::where('slug', request()->category)->first()->name;
+        } else {
+            $products = Product::with('reviews')->latest()->paginate(6);
+            $title = 'Popular Products';
+        }
+
+        return view('shop.home', compact(['categoriesProductCount', 'mightAlsoLike', 'products', 'title']));
     }
 
     public function shopList() {
@@ -43,7 +54,7 @@ class ShopController extends Controller
     public function shopGrid() {
         $categoriesProductCount = DB::table('categories')
             ->join('category_product', 'categories.id', '=', 'category_product.category_id')
-            ->select(DB::raw(('categories.id, categories.name, COUNT(category_product.product_id) AS products_count')))
+            ->select(DB::raw(('categories.id, categories.name, categories.slug, COUNT(category_product.product_id) AS products_count')))
             ->groupBy('categories.id')
             ->get()->toArray();
         
@@ -103,7 +114,7 @@ class ShopController extends Controller
 
         $categoriesProductCount = DB::table('categories')
             ->join('category_product', 'categories.id', '=', 'category_product.category_id')
-            ->select(DB::raw(('categories.id, categories.name, COUNT(category_product.product_id) AS products_count')))
+            ->select(DB::raw(('categories.id, categories.name, categories.slug, COUNT(category_product.product_id) AS products_count')))
             ->groupBy('categories.id')
             ->get()->toArray();
 
@@ -184,5 +195,73 @@ class ShopController extends Controller
         $reviews = ProductReview::with('user')->where('product_id', $product->id)->get();
 
         return response()->json(['success' => 'Your review was saved!', 'reviews' => $reviews]);
+    }
+
+    /**
+     * Display a listing of the orders.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function orders()
+    {
+        $orders = auth()->user()->orders()->with('products')->get();
+
+        $categoriesProductCount = DB::table('categories')
+            ->join('category_product', 'categories.id', '=', 'category_product.category_id')
+            ->select(DB::raw(('categories.id, categories.name, categories.slug, COUNT(category_product.product_id) AS products_count')))
+            ->groupBy('categories.id')
+            ->get()->toArray();
+        
+        $mightAlsoLike = $products = Product::inRandomOrder()->latest()->take(5)->get()->toArray();
+
+        return view('shop.orders', compact(['orders', 'categoriesProductCount', 'mightAlsoLike']));
+    }
+
+    /**
+     * Display the specified order details.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showOrder(Order $order)
+    {
+        if(auth()->user()->id !== $order->user_id) {
+            abort(419, 'Unauthorized request');
+        }
+
+        $categoriesProductCount = DB::table('categories')
+            ->join('category_product', 'categories.id', '=', 'category_product.category_id')
+            ->select(DB::raw(('categories.id, categories.name, categories.slug, COUNT(category_product.product_id) AS products_count')))
+            ->groupBy('categories.id')
+            ->get()->toArray();
+        
+        $mightAlsoLike = $products = Product::inRandomOrder()->latest()->take(5)->get()->toArray();
+
+        $products = $order->products;
+
+        return view('shop.show-order', compact(['order', 'categoriesProductCount', 'mightAlsoLike', 'products']));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateOrder(Request $request, Order $order)
+    {
+        $status = 'Pending';
+        $msg = 'Order was activated!';
+
+        if($request->status == 'Cancelled') {
+            $status = 'Cancelled';
+            $msg = 'Order was cancelled!';
+        }
+
+        $order->status = $status;
+        $order->save();
+
+        return response()->json(['success' => $msg]);
     }
 }

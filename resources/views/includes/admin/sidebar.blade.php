@@ -40,6 +40,11 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('orders.index') }}"><i class="sidebar-item-icon ti-list"></i>
+                    <span class="nav-label">Orders</span>
+                </a>
+            </li>
+            <li>
                 <a href="/admin/posts"><i class="sidebar-item-icon ti-pencil"></i>
                     <span class="nav-label">Posts</span>
                 </a>

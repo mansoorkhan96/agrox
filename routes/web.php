@@ -24,6 +24,11 @@ Route::resource('shop', 'ShopController');
 Route::post('/product-rating/{product}', 'ShopController@storeRating')->name('productRating.store');
 Route::post('/product-review/{product}', 'ShopController@createReview')->name('product.review');
 
+Route::get('/my-orders', 'ShopController@orders')->name('order.index');
+Route::get('/my-order/{order}', 'ShopController@showOrder')->name('order.show');
+Route::put('/my-order/{order}', 'ShopController@updateOrder')->name('order.update');
+
+
 Route::resource('cart', 'CartController');
 
 Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
@@ -35,6 +40,7 @@ Route::get('/profile/{user}', 'ProfilesController@show')->name('profile.show');
 
 Route::post('/reviews', 'ReviewsController@store')->name('review.store');
 
+
 Route::get('/admin', function () {
     return view('admin.index');
 });
@@ -45,6 +51,13 @@ Route::get('/admin/products/products', 'ProductsController@products');
 Route::get('/admin/products/trashed', 'ProductsController@trashed');
 Route::put('/admin/products/restore/{product}', 'ProductsController@restore');
 Route::resource('/admin/products', 'ProductsController');
+
+Route::get('/admin/orders/rejected', 'OrderController@rejected')->name('orders.rejected');
+Route::get('/admin/orders', 'OrderController@index')->name('orders.index');
+Route::get('/admin/orders/{order}', 'OrderController@show')->name('orders.show');
+Route::put('/admin/orders/{order}', 'OrderController@complete')->name('orders.complete');
+Route::delete('/admin/orders/{order}', 'OrderController@reject')->name('orders.reject');
+Route::put('/admin/orders/restore/{order}', 'OrderController@restore')->name('orders.restore');
 
 Route::get('/admin/posts/trashed', 'PostsController@trashed');
 Route::put('/admin/posts/restore/{product}', 'PostsController@restore');

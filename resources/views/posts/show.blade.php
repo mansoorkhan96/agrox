@@ -33,6 +33,28 @@
                 
                 <p> {!! $post->body !!} </p>
                 <hr class="my-4">
+
+                <div class="flexbox">
+                    <div>
+                        <h5>Attachments: </h5>
+                        @if ($post->attachments)
+                        @php
+                            $attachments = explode(',', $post->attachments)
+                        @endphp
+                            <ul class="list-unstyled">
+                                @foreach ($attachments as $key => $item)
+                                <li>
+                                    <a href="{{ asset('/storage/' . $item) }}" download> Attachment - {{$key + 1}}</a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        @else 
+                            <p class="lead">No Attachment</p>
+                        @endif
+                    </div>
+                </div>
+                <hr class="my-4">
+
                 <div class="flexbox">
                     <div>
                         <b>Categories: </b>

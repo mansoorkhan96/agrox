@@ -1,0 +1,18 @@
+Post Like,
+Farmer Tag {show posts by tag}Link On side
+
+categories clickable with pagination
+
+search for product, blog, forum, consultant
+
+index($id = null) {
+    if(id) {
+        items = useritems
+
+        return
+    }
+
+    items = allitems
+
+    return
+}

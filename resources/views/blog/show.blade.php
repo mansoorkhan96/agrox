@@ -30,7 +30,6 @@
                         <span class="comment">
                             <i class="ion-chatbubble-working"></i> {{ count($comments) }}
                         </span>
-                        
 
                         <ul style="display: inline-block;" class="post-meta w-30">
                             <li style="display: inline-block; color: #5fbd74" class="star-outer"> <i class="star fa fa-star"></i> </li>
@@ -49,6 +48,23 @@
                     <h1 class="entry-title">{{ $post->title }}</h1>
                     <div class="entry-content">
                         {!! $post->body !!}
+                    </div>
+                    <div class="attachments mb-3 mt-3 p-3" style="border-top: 1px solid #f1eeea; border-bottom: 1px solid #f1eeea;">
+                        <h5>Attachments</h5>
+                        @if ($post->attachments)
+                        @php
+                            $attachments = explode(',', $post->attachments)
+                        @endphp
+                            <ul class="list-unstyled">
+                                @foreach ($attachments as $key => $item)
+                                <li>
+                                    <a href="{{ asset('/storage/' . $item) }}" download> Attachment - {{$key + 1}}</a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        @else 
+                            <p class="lead">No Attachment</p>
+                        @endif
                     </div>
                     <div class="entry-footer">
                         <div class="row">
@@ -136,11 +152,29 @@
                     <div class="widget widget-product-categories">
                         <h3 class="widget-title">Post Categories</h3>
                         <ul class="product-categories">
-                            @forelse ($categoriesPostCount as $item)
-                            <li><a href="#">{{ $item->name }}</a> <span class="count">{{ $item->posts_count }}</span></li>  
+                            @forelse ($categoriesPostCount as $category)
+                            <li>
+                                <a class="{{ request()->category == $category->slug ? 'active' : '' }}" href="{{ route('blog.index', ['category' => $category->slug]) }}">{{ $category->name }}</a>
+                                <span class="count">{{ $category->posts_count }}</span>
+                            </li>
                             @empty
                                 
                             @endforelse
+                        </ul>
+                    </div>
+                    <div class="widget widget-product-categories">
+                        <h3 class="widget-title">Tags</h3>
+                        <ul class="product-categories">
+                            <li>
+                                <a href="{{ route('blog.index', ['tag' =>'success_story']) }}">
+                                    Succes Story
+                                </a>
+                            </li>  
+                            <li>
+                                <a href="{{ route('blog.index', ['tag' => 'farmer_experience']) }}">
+                                    Farmer Experience
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <div class="widget widget_posts_widget">
@@ -223,8 +257,8 @@
                                         <img alt="" src="{{ avatar(auth()->user()->avatar) }}" />
                                     </div>
                                     <div class="comment-author-info">
-                                        <span class="comment-author-name">{{ $comment->user->name }}</span>
-                                        <a href="#" class="comment-date">{{ date('F, j Y', time()) }}</a>
+                                        <span class="comment-author-name">{{ auth()->user()->name }}</span>
+                                        <a href="" class="comment-date">{{ date('F, j Y', time()) }}</a>
                                         <p>${$('#comment').val()}</p>
                                     </div>
                                     <div class="reply">

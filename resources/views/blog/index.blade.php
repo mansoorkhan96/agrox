@@ -4,6 +4,7 @@
 <div class="section pt-7 pb-7">
     <div class="container">
         <div class="row">
+            <h5 class="pl-3 mb-2">{{ $title }}</h5>
             <div class="col-md-9">
                 <div class="blog-list">
                     @forelse ($posts as $post)
@@ -23,7 +24,7 @@
                                         <span>{{ date('F, j Y', strtotime($post['created_at'])) }}</span>
                                     </span>
                                     <span class="comment">
-                                        <i class="ion-chatbubble-working"></i> 0
+                                        <i class="ion-chatbubble-working"></i> {{ $post['discussions_count'] }}
                                     </span>
                                 </div>
                                 <a href="{{ route('blog.show', $post['slug']) }}">
@@ -43,11 +44,7 @@
                     @endforelse
                 </div>
                 <div class="pagination"> 
-                    <a class="prev page-numbers" href="#">Prev</a>
-                    <a class="page-numbers" href="#">1</a>
-                    <span class="page-numbers current">2</span> 
-                    <a class="page-numbers" href="#">3</a> 
-                    <a class="next page-numbers" href="#">Next</a>
+                    {{ $posts->appends(request()->input())->links() }}
                 </div>
             </div>
             <div class="col-md-3">
@@ -61,11 +58,29 @@
                     <div class="widget widget-product-categories">
                         <h3 class="widget-title">Post Categories</h3>
                         <ul class="product-categories">
-                            @forelse ($categoriesPostCount as $item)
-                            <li><a href="#">{{ $item->name }}</a> <span class="count">{{ $item->posts_count }}</span></li>  
+                            @forelse ($categoriesPostCount as $category)
+                            <li>
+                                <a class="{{ request()->category == $category->slug ? 'active' : '' }}" href="{{ route('blog.index', ['category' => $category->slug]) }}">{{ $category->name }}</a>
+                                <span class="count">{{ $category->posts_count }}</span>
+                            </li>  
                             @empty
                                 
                             @endforelse
+                        </ul>
+                    </div>
+                    <div class="widget widget-product-categories">
+                        <h3 class="widget-title">Tags</h3>
+                        <ul class="product-categories">
+                            <li>
+                                <a class="{{ request()->tag == 'success_story' ? 'active' : '' }}" href="{{ route('blog.index', ['tag' =>'success_story']) }}">
+                                    Succes Story
+                                </a>
+                            </li>  
+                            <li>
+                                <a class="{{ request()->tag == 'farmer_experience' ? 'active' : '' }}" href="{{ route('blog.index', ['tag' => 'farmer_experience']) }}">
+                                    Farmer Experience
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <div class="widget widget_posts_widget">

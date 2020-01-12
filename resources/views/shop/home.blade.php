@@ -3,6 +3,7 @@
 @section('content')
 <div class="section pt-7 pb-7">
     <div class="container">
+        <h5 class="mb-2">{{ $title }}</h5>
         <div class="row">
             <div class="col-md-9 col-md-push-3">
                 <div class="shop-filter">
@@ -82,7 +83,7 @@
                     @endforelse
                 </div>
                 <div class="pagination"> 
-                    {{ $products->links() }}
+                    {{ $products->appends(request()->input())->links() }}
                 </div>
             </div>
             <div class="col-md-3 col-md-pull-9">
@@ -96,8 +97,8 @@
                     <div class="widget widget-product-categories">
                         <h3 class="widget-title">Product Categories</h3>
                         <ul class="product-categories">
-                            @forelse ($categoriesProductCount as $item)
-                            <li><a href="#">{{ $item->name }}</a> <span class="count">{{ $item->products_count }}</span></li>  
+                            @forelse ($categoriesProductCount as $category)
+                            <li><a class="{{ request()->category == $category->slug ? 'active' : '' }}" href="{{ route('shop.index', ['category' => $category->slug]) }}">{{ $category->name }}</a> <span class="count">{{ $category->products_count }}</span></li>  
                             @empty
                                 
                             @endforelse
