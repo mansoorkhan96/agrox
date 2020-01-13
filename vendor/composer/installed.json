@@ -979,68 +979,6 @@
         ]
     },
     {
-        "name": "hardevine/shoppingcart",
-        "version": "2.7.1",
-        "version_normalized": "2.7.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/hardevine/LaravelShoppingcart.git",
-            "reference": "4ea0f3219ec2bbdd0b3b44eb943857cc9d9607b0"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/hardevine/LaravelShoppingcart/zipball/4ea0f3219ec2bbdd0b3b44eb943857cc9d9607b0",
-            "reference": "4ea0f3219ec2bbdd0b3b44eb943857cc9d9607b0",
-            "shasum": ""
-        },
-        "require": {
-            "illuminate/events": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6",
-            "illuminate/session": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6",
-            "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6"
-        },
-        "require-dev": {
-            "mockery/mockery": "~0.9.0",
-            "orchestra/testbench": "~3.1",
-            "phpunit/phpunit": "~5.0|~6.0|~7.0"
-        },
-        "suggest": {
-            "gloudemans/notify": "Simple flash notifications for Laravel"
-        },
-        "time": "2019-11-28T16:00:39+00:00",
-        "type": "library",
-        "extra": {
-            "laravel": {
-                "providers": [
-                    "Gloudemans\\Shoppingcart\\ShoppingcartServiceProvider"
-                ],
-                "aliases": {
-                    "Cart": "Gloudemans\\Shoppingcart\\Facades\\Cart"
-                }
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Gloudemans\\Shoppingcart\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Rob Gloudemans",
-                "email": "info@robgloudemans.nl"
-            }
-        ],
-        "description": "Laravel Shoppingcart",
-        "keywords": [
-            "laravel",
-            "shoppingcart"
-        ]
-    },
-    {
         "name": "jakub-onderka/php-console-color",
         "version": "v0.2",
         "version_normalized": "0.2.0.0",

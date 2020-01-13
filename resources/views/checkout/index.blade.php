@@ -120,13 +120,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse (Cart::content() as $item)
+                            @forelse (MCart::content() as $item)
                             <tr>
                                 <td class="product-name">
-                                    {{ $item->model->name }}&nbsp;<strong class="product-quantity">× {{$item->qty}} </strong>
+                                    {{ $item['name'] }}&nbsp;<strong class="product-quantity">× {{ $item['qty'] }} </strong>
                                 </td>
                                 <td class="product-total">
-                                    Rs {{ $item->model->price * $item->qty }}
+                                    Rs {{ $item['price'] * $item['qty'] }}
                                 </td>
                             </tr>
                             @empty
@@ -136,7 +136,7 @@
                         <tfoot>
                             <tr>
                                 <th>Subtotal</th>
-                                <td>Rs {{ Cart::subtotal() }}</td>
+                                <td>Rs {{ MCart::total() }}</td>
                             </tr>
                             <tr>
                                 <th>Shipping Charges</th>
@@ -144,7 +144,7 @@
                             </tr>
                             <tr class="order-total">
                                 <th>Total</th>
-                                <td><strong>Rs {{ Cart::total() + 200 }}</strong></td>
+                                <td><strong>Rs {{ MCart::total() + 200 }}</strong></td>
                             </tr>
                         </tfoot>
                     </table>

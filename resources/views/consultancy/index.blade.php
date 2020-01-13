@@ -88,7 +88,7 @@
         </div>
     </div>
 </div>
-
+@if (! $consultancies->isEmpty())
 <div class="modal fade" id="create-message-modal">
     <div class="modal-dialog" role="document">
         {{ Form::open(['route' => 'message.store', 'class' => 'modal-content', 'method' => 'POST']) }}
@@ -116,6 +116,7 @@
         {{ Form::close() }}}
     </div>
 </div>
+@endif
 <div class="modal fade" id="new-mail-modal">
     <div class="modal-dialog" role="document">
         {{ Form::open(['route' => 'consultancies.store', 'class' => 'modal-content', 'method' => 'POST']) }}

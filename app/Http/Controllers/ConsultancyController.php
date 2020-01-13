@@ -22,9 +22,16 @@ class ConsultancyController extends Controller
         if(auth()->user()->role_id != 1 && auth()->user()->role_id != 3) {
 
             $consultancies = Consultancy::where('consumer', auth()->user()->id)->get();
-            $inbox = PrivateMessage::where('consultancy_id', $this->consultancy_id($consultancies))->latest()->with('from')->get()->toArray();
+            
+            $inbox = [];
+            if(! $consultancies->isEmpty()) {
+                $inbox = PrivateMessage::where('consultancy_id', $this->consultancy_id($consultancies))->latest()->with('from')->get()->toArray();
+            }
 
-            $to = $this->findConsultant($consultancies->toArray());
+            $to = null;
+            if(! $consultancies->isEmpty()) {
+                $to = $this->findConsultant($consultancies->toArray());
+            }
 
         } else if(auth()->user()->role_id == 3) {
 
@@ -32,7 +39,9 @@ class ConsultancyController extends Controller
             $inbox = PrivateMessage::where('consultancy_id', $this->consultancy_id($consultancies))->with('from')->latest()->get();
 
         } else if(auth()->user()->role_id == 1) {
-            //optinal
+            //optional
+
+            
             $consultancies = Consultancy::all();
             $inbox = PrivateMessage::where('consultancy_id', $this->consultancy_id($consultancies))->latest()->get();
 

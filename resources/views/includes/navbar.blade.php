@@ -136,23 +136,23 @@
                     <div class="btn-wrap">
                         <div class="mini-cart-wrap">
                             <div class="mini-cart">
-                                <div class="mini-cart-icon" data-count="{{ Cart::instance('default')->count() }}">
+                                <div class="mini-cart-icon" data-count="{{ MCart::count() }}">
                                     <i class="ion-bag"></i>
                                 </div>
                             </div>
                             <div class="widget-shopping-cart-content">
                                 <ul class="cart-list">
-                                    @forelse (Cart::content() as $item)
+                                    @forelse (MCart::content() as $item)
                                     <li>
-                                        {{ Form::open(['route' => ['cart.destroy', $item->rowId], 'method' => 'DELETE']) }}
+                                        {{ Form::open(['route' => ['cart.destroy', $item['rowId']], 'method' => 'DELETE']) }}
                                             <button type="submit" class="remove">x</button>
                                         {{ Form::close() }}
                                         {{-- <a href="#" class="remove">×</a> --}}
-                                        <a href="{{ route('shop.show', $item->model->slug) }}">
-                                            <img src="{{ asset('/storage/' . $item->model->featured_image) }}" alt="" />
-                                            {{ $item->model->name }}&nbsp;
+                                        <a href="{{ route('shop.show', $item['slug']) }}">
+                                            <img src="{{ asset('/storage/' . $item['image']) }}" alt="" />
+                                            {{ $item['name'] }}&nbsp;
                                         </a>
-                                        <span class="quantity">{{ $item->qty }} × Rs {{ $item->model->price }}</span>
+                                        <span class="quantity">{{ $item['qty'] }} × Rs {{ $item['price'] }}</span>
                                     </li> 
                                     @empty
                                        Empty Cart 
@@ -160,11 +160,11 @@
                                 </ul>
                                 <p class="total">
                                     <strong>Subtotal:</strong> 
-                                    <span class="amount">Rs {{ Cart::subtotal() }}</span>
+                                    <span class="amount">Rs {{ MCart::total() }}</span>
                                 </p>
                                 <p class="buttons">
                                     <a href="{{ route('cart.index') }}" class="view-cart">View cart</a>
-                                    @if (Cart::count() > 0)
+                                    @if (MCart::count() > 0)
                                     <a href="{{ route('checkout.index') }}" class="checkout">Checkout</a>
                                     @endif
                                 </p>
@@ -204,7 +204,7 @@
                     <div class="mini-cart-wrap">
                         <a href="{{ route('cart.index') }}">
                             <div class="mini-cart">
-                                <div class="mini-cart-icon" data-count="{{ Cart::instance('default')->count() }}">
+                                <div class="mini-cart-icon" data-count="{{ MCart::count() }}">
                                     <i class="ion-bag"></i>
                                 </div>
                             </div>

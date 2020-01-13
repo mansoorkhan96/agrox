@@ -18,9 +18,9 @@ class CreatePrivateMessagesTable extends Migration
             $table->unsignedBigInteger('consultancy_id');
             $table->foreign('consultancy_id')->references('id')->on('consultancies');
             $table->unsignedBigInteger('consultant');
-            $table->foreign('consultant')->references('id')->on('users');
+            $table->foreign('to')->references('id')->on('users');
             $table->unsignedBigInteger('consumer');
-            $table->foreign('consumer')->references('id')->on('users');
+            $table->foreign('from')->references('id')->on('users');
             $table->text('message');
             $table->timestamps();
         });

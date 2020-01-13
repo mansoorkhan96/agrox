@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\OrderProduct;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Library\MCart;
 use Illuminate\Http\Request;
 use App\City;
 use App\Country;
@@ -19,7 +19,7 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        if(Cart::instance('default')->count() == 0) {
+        if(MCart::count() == 0) {
             return redirect()->route('shop.index');
         }
 
@@ -50,7 +50,7 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
-        if(Cart::instance('default')->count() == 0) {
+        if(MCart::count() == 0) {
             return redirect()->route('shop.index');
         }
 
@@ -66,21 +66,21 @@ class CheckoutController extends Controller
         ]);
 
         $data['user_id'] = auth()->user()->id;
-        $data['billing_subtotal'] = Cart::subtotal();
+        $data['billing_subtotal'] = MCart::total();
         $data['shipping_charges'] = 200;
-        $data['billing_total'] = Cart::total() + 200;
+        $data['billing_total'] = MCart::total() + 200;
 
         $order = Order::create($data);
 
-        foreach(Cart::content() as $item) {
+        foreach(MCart::content() as $item) {
             OrderProduct::create([
                 'order_id' => $order->id,
-                'product_id' => $item->model->id,
-                'quantity' => $item->qty
+                'product_id' => $item['id'],
+                'quantity' => $item['qty']
             ]);
         }
 
-        Cart::instance('default')->destroy();
+        MCart::destroy();
 
         return redirect()->route('pages.message')->with('message', 'Thank you! Your order has been successfully placed!');
     }

@@ -4,33 +4,33 @@
 <div class="section pt-7 pb-7">
     <div class="container">
         <div class="row">
-        @if (Cart::count() > 0)
+        @if (MCart::count() > 0)
             <div class="col-md-8">
                 <table class="table shop-cart">
                     <tbody>
-                        @forelse (Cart::content() as $item)
+                        @forelse (MCart::content() as $item)
                         <tr class="cart_item">
                             <td class="product-remove">
-                                {{ Form::open(['route' => ['cart.destroy', $item->rowId], 'method' => 'DELETE']) }}
+                                {{ Form::open(['route' => ['cart.destroy', $item['rowId']], 'method' => 'DELETE']) }}
                                     <button type="submit" class="remove">x</button>
                                 {{ Form::close() }}
                             </td>
                             <td class="product-thumbnail">
-                                <a href="{{ route('shop.show', $item->model->slug) }}">
-                                    <img src="{{ '/storage/' . $item->model->featured_image }}" alt="">
+                                <a href="{{ route('shop.show', $item['slug']) }}">
+                                    <img src="{{ '/storage/' . $item['image'] }}" alt="">
                                 </a>
                             </td>
                             <td class="product-info">
-                                <a href="{{ route('shop.show', $item->model->slug) }}">{{ $item->model->name }}</a>
-                                <span class="sub-title">{{ $item->model->details }}</span>
+                                <a href="{{ route('shop.show', $item['slug']) }}">{{ $item['name'] }}</a>
+                                <span class="sub-title">{{ $item['details'] }}</span>
                             </td>
                             <td class="product-quantity">
                                 <div class="quantity">
-                                    <input type="number" min="1" cart-row-id="{{ $item->rowId }}" name="number" value="{{ $item->qty }}" class="input-text qty text cart-quantity" size="4">
+                                    <input type="number" min="1" cart-row-id="{{ $item['rowId'] }}" name="number" value="{{ $item['qty'] }}" class="input-text qty text cart-quantity" size="4">
                                 </div>
                             </td>
                             <td class="product-subtotal">
-                                <span class="amount">Rs {{ $item->model->price }}</span>
+                                <span class="amount">Rs {{ $item['price'] }}</span>
                             </td>
                         </tr>
                         @empty
@@ -50,7 +50,7 @@
                         <tbody>
                             <tr class="cart-subtotal">
                                 <th>Subtotal</th>
-                                <td>Rs {{ Cart::subtotal() }}</td>
+                                <td>Rs {{ MCart::total() }}</td>
                             </tr>
                             <tr class="shipping">
                                 <th>Shipping</th>
@@ -58,7 +58,7 @@
                             </tr>
                             <tr class="order-total">
                                 <th>Total</th>
-                                <td><strong>Rs {{ Cart::total() +200 }}</strong></td>
+                                <td><strong>Rs {{ MCart::total() + 200 }}</strong></td>
                             </tr>
                         </tbody>
                     </table>

@@ -71,8 +71,11 @@
                             </div>
                             {{ Form::open(['action' => 'CartController@store', 'method' => 'POST', 'id' => 'add_to_cart']) }}
                                 {{ Form::hidden('id', $product['id']) }}
+                                {{ Form::hidden('image', $product['featured_image']) }}
                                 {{ Form::hidden('name', $product['name']) }}
+                                {{ Form::hidden('details', $product['details']) }}
                                 {{ Form::hidden('price', $product['price']) }}
+                                {{ Form::hidden('slug', $product['slug']) }}
                                 <button type="submit" class="single-add-to-cart">ADD TO CART</button>
                             {{ Form::close() }}
                         </div>

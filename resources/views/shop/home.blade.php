@@ -68,8 +68,11 @@
                                 <div class="product-action-list">
                                     {{ Form::open(['action' => 'CartController@store', 'method' => 'POST', 'id' => 'add_to_cart']) }}
                                         {{ Form::hidden('id', $product['id']) }}
+                                        {{ Form::hidden('image', $product['featured_image']) }}
                                         {{ Form::hidden('name', $product['name']) }}
+                                        {{ Form::hidden('details', $product['details']) }}
                                         {{ Form::hidden('price', $product['price']) }}
+                                        {{ Form::hidden('slug', $product['slug']) }}
                                         <span class="add-to-cart">
                                             <button type="submit" class="organik-btn small" data-placement="top" title="Add to cart">Add To Cart</button>
                                         </span>

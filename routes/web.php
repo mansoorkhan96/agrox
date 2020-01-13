@@ -11,6 +11,46 @@
 |
 */
 
+use App\Library\MCart;
+use Illuminate\Support\Facades\Session;
+
+Route::get('/test', function() {
+    // $added = MCart::add(
+    //     297, 
+    //     'product_images/B4mHRe37vBUbfXTrHgmRF1aOVSmZHVyiXNiiqrGo.jpeg,product_images/044CrWSP3GwfFnUduIQNYJDnTwuVc22VjEX5Haw3.jpeg',
+    //     'produc- 297',
+    //     'lorem isum 297',
+    //     5,
+    //     200,
+    //     'produc-slug-297'
+    // );
+
+    // dd($added);
+    // dd(session()->all());
+    dd(Session::get('mcart'));
+
+    // dd(MCart::update(
+    //     '7abf9af15a2df49339dcefc3600cfb2dd7709edfa72719893c38af4d9cd4b0e5',
+    //     'qty',
+    //     23
+    // ));
+
+    // dd(MCart::total());
+
+    // MCart::destroy();
+
+    // dd(MCart::count());
+
+    // dd(Mcart::remove('f7b6a8ba9a82588495cdb6ac53a6d8968e92fb47f8a7340ff80509cf8762c16c'));
+    
+    
+    // dd(Session::get('mcart'));
+    // Session::forget('mcart');
+    // if($added) {
+    //     dd(Session::get('mcart'));
+    // }
+});
+
 Route::get('/', 'PagesController@home');
 Route::get('/message', 'PagesController@message')->name('pages.message');
 
@@ -38,7 +78,7 @@ Route::get('/profile/{user}/edit', 'ProfilesController@edit')->name('profile.edi
 Route::put('/profile/{user}', 'ProfilesController@update')->name('profile.update');
 Route::get('/profile/{user}', 'ProfilesController@show')->name('profile.show');
 
-Route::post('/reviews', 'ReviewsController@store')->name('review.store');
+Route::get('/reviews', 'ReviewsController@index')->name('review.index');
 
 
 Route::get('/admin', function () {
