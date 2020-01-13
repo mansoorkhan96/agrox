@@ -493,6 +493,9 @@
     <!-- PAGE LEVEL SCRIPTS-->
     <script src="{{ asset('assets/js/scripts/dashboard_visitors.js') }}"></script>
     <script src="{{ asset('assets/vendors/dataTables/datatables.min.js') }}"></script>
+
+    {{-- Mailbox --}}
+    <script src="{{ asset('assets/js/scripts/mailbox.js') }}"></script>
     
     @yield('datatables')
 

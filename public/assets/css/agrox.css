@@ -33,3 +33,20 @@
     border-radius: 50%;
     line-height: 1;
 }
+
+.table-inbox tr.unread {
+    font-weight: 600;
+}
+
+.table-inbox tr>td:first-child {
+    padding-left: 1.5rem
+}
+
+.table-inbox tr>td:last-child {
+    padding-right: 1rem
+}
+
+.topic-active {
+    color: #18c5a9;
+    font-weight: 600;
+}

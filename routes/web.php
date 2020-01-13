@@ -63,6 +63,9 @@ Route::get('/admin/posts/trashed', 'PostsController@trashed');
 Route::put('/admin/posts/restore/{product}', 'PostsController@restore');
 Route::resource('/admin/posts', 'PostsController');
 
+Route::resource('/admin/consultancies', 'ConsultancyController');
+Route::post('admin/private-message', 'PrivateMessageController@store')->name('message.store');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
