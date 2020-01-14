@@ -22,114 +22,20 @@
                 <div class="header-right">
                     <nav class="menu">
                         <ul class="main-menu">
-                            <li class="active dropdown">
-                                <a href="#">Home</a>
-                                <ul class="sub-menu">
-                                    <li><a href="index.html">Organik Main</a></li>
-                                    <li><a href="index-fresh.html">Organik Fresh</a></li>
-                                    <li><a href="index-shop.html">Organik Shop</a></li>
-                                    <li><a href="index-store.html">Organik Store</a></li>
-                                    <li><a href="index-farm.html">Organik Farm</a></li>
-                                    <li><a href="index-house.html">Organik House</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#">Pages</a>
-                                <ul class="sub-menu">
-                                    <li class="menu-item-has-children">
-                                        <a href="#">About Us</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="about-us.html">About us 01</a></li>
-                                            <li><a href="about-us-2.html">About us 02</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="gallery-freestyle.html">Gallery Freestyle</a></li>
-                                    <li><a href="gallery-grid.html">Gallery Grid</a></li>
-                                    <li><a href="404.html">404</a></li>
-                                </ul>
+                            <li class="active">
+                                <a href="{{ route('home') }}">Home</a>
                             </li>
                             <li>
-                                <a href="shortcodes.html">Shortcodes</a>
-                            </li>
-                            <li class="dropdown mega-menu">
-                                <a href="#">Shop</a>
-                                <ul class="sub-menu">
-                                    <li>
-                                        <div class="mega-menu-content">
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <div class="pt-4 pb-4">
-                                                        <h3>Shop Pages</h3>
-                                                        <ul>
-                                                            <li><a href="my-account.html">My Account</a></li>
-                                                            <li><a href="cart-empty.html">Empty Cart</a></li>
-                                                            <li><a href="cart.html">Cart</a></li>
-                                                            <li><a href="checkout.html">Check Out</a></li>
-                                                            <li><a href="wishlist.html">Wishlist</a></li>
-                                                            <li><a href="shop.html">Shop</a></li>
-                                                            <li><a href="shop-list.html">Shop List</a></li>
-                                                            <li><a href="shop-detail.html">Single Product</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <div class="pt-4 pb-4">
-                                                        <h3>Fruits</h3>
-                                                        <ul>
-                                                            <li><a href="#">Seville Orange</a></li>
-                                                            <li><a href="#">Aurore Grape</a></li>
-                                                            <li><a href="#">Tieton Cherry</a></li>
-                                                            <li class="new"><a href="#">Tomato Juice</a></li>
-                                                            <li><a href="#">Cauliflower</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <div class="pt-4 pb-4">
-                                                        <h3>Featured</h3>
-                                                        <ul>
-                                                            <li><a href="#">Sprouting Broccoli</a></li>
-                                                            <li class="sale"><a href="#">Chinese Cabbage</a></li>
-                                                            <li><a href="#">Cara Orange</a></li>
-                                                            <li><a href="#">Cauliflower</a></li>
-                                                            <li><a href="#">Tomato Juice</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <div class="pt-4 pb-4">
-                                                        <h3>Best Seller</h3>
-                                                        <ul>
-                                                            <li><a href="#">Uvina Grape</a></li>
-                                                            <li><a href="#">Seville Orange</a></li>
-                                                            <li><a href="#">Aurore Grape</a></li>
-                                                            <li><a href="#">Tieton Cherry</a></li>
-                                                            <li class="new"><a href="#">Tomato Juice</a></li>
-                                                            <li><a href="#">Sprouting Broccoli</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="pt-4 pb-4">
-                                                        <img src="{{ asset('images/megamenu_ads.jpg') }}" alt="" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#">Blog</a>
-                                <ul class="sub-menu">
-                                    <li><a href="blog.html">Blog List</a></li>
-                                    <li><a href="blog-classic.html">Blog Classic</a></li>
-                                    <li><a href="blog-masonry.html">Blog Masonry</a></li>
-                                    <li><a href="blog-detail.html">Blog Single</a></li>
-                                </ul>
+                                <a href="{{ route('shop.index') }}">Shop</a>
                             </li>
                             <li>
-                                <a href="contact-us.html">Contact</a>
+                                <a href="{{ route('blog.index') }}">Blog</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('pages.contact') }}">Contact</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('pages.about') }}">About Us</a>
                             </li>
                         </ul>
                     </nav>

@@ -19,7 +19,7 @@
                         <span class="categories">
                             <i class="ion-folder"></i> 
                             @forelse ($post_categories as $category)
-                                <a href="#">{{ $category }}</a>
+                            <a href="{{ route('blog.index', ['category' => $category->slug]) }}">{{ $category->name }}</a>
                                 @if (! $loop->last)
                                     , 
                                 @endif
@@ -71,7 +71,7 @@
                             <div class="col-md-6">
                                 <div class="tags"> 
                                     @forelse ($post_categories as $category)
-                                        <a href="#">{{ $category }}</a>
+                                        <a href="{{ route('blog.index', ['category' => $category->slug]) }}">{{ $category->name }}</a>
                                     @empty
                                         Uncategorized
                                     @endforelse
@@ -118,7 +118,7 @@
                                 @endforelse
                             </ul>
                         </div>
-                        
+                        @if (Auth::check())
                         <div class="single-comment-form">
                             <div>
                                 <h2 class="mb-1 comment-title" style="display:inline-block">Leave A Comment</h2>
@@ -138,6 +138,9 @@
                                 </div>
                             {{ Form::close() }}
                         </div>
+                        @else
+                        <p class="lead"><a style="color:#5fbd74" href="{{ route('login') }}">Login</a> to share our comments</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -201,9 +204,10 @@
     </div>
 </div>
 @endsection
-
+@if (Auth::check())
+    
 @section('page_script')
-    <script>
+<script>
         $(document).ready(function() {
 
             $('.star-outer').click(function() {
@@ -278,3 +282,4 @@
         });
     </script>
 @endsection
+@endif

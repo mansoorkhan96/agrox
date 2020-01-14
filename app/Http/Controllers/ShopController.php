@@ -204,6 +204,10 @@ class ShopController extends Controller
      */
     public function orders()
     {
+        if(! Auth::check()) {
+            return redirect('login');
+        }
+
         $orders = auth()->user()->orders()->with('products')->get();
 
         $categoriesProductCount = DB::table('categories')
@@ -226,7 +230,7 @@ class ShopController extends Controller
     public function showOrder(Order $order)
     {
         if(auth()->user()->id !== $order->user_id) {
-            abort(419, 'Unauthorized request');
+            abort(401, 'Unauthorized request');
         }
 
         $categoriesProductCount = DB::table('categories')

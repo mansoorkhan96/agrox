@@ -30,7 +30,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/handleAuth';
 
     /**
      * Create a new controller instance.
@@ -70,15 +70,6 @@ class LoginController extends Controller
         $socialProvider = SocialProvider::where('provider_id', $socialUser->getId())->first();
 
         if(!$socialProvider){
-            //create a new user and provider
-            //dd($socialUser->getName());
-            // $user = User::firstOrCreate(
-            //     ['avatar' => $socialUser->getAvatar() ?? ''],
-            //     ['email' => $socialUser->getEmail()],
-            //     ['name' => $socialUser->getName()]
-            // );
-            // $avatarUrl = $this->graphUrl.'/'.$this->version.'/'.$socialUser->getId().'/picture';
-            // dd($socialUser->getAvatar());
             $user = User::firstOrCreate(
                 [
                     'avatar' => $socialUser->getAvatar(),
@@ -95,6 +86,7 @@ class LoginController extends Controller
             $user = $socialProvider->user;
             
         auth()->login($user);
-        return redirect('/home');
+
+        return redirect($this->redirectTo);
     }
 }

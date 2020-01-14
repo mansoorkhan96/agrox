@@ -2,7 +2,7 @@
 
 use App\Role;
 
-/**
+    /**
      * Generate image path for user profile
      *
      * @param [mixed] $source
@@ -21,8 +21,18 @@ use App\Role;
         return asset('images/no-image.jpg');
     }
 
-    function roleName(int $id) 
+    /**
+     * Returns Role Name on success, string (Unknown) otherwise
+     *
+     * @param [int] $id
+     * @return string
+     */
+    function roleName($id) 
     {
-        return Role::find($id)->first()->name;
+        if($id == null) {
+            return 'Unknown';
+        }
+
+        return Role::where('id', $id)->first()->name;
     }
 ?>

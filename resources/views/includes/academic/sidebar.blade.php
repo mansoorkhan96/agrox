@@ -2,23 +2,8 @@
     <div id="sidebar-collapse">
         <ul class="side-menu metismenu">
             <li class="">
-                <a href="{{ route('admin.index') }}"><i class="sidebar-item-icon ti-home"></i>
+                <a href="{{ route('dashboard.index') }}"><i class="sidebar-item-icon ti-home"></i>
                     <span class="nav-label">Dashboard</span></a>
-            </li>
-            <li>
-                <a href="/dashboard/categories"><i class="sidebar-item-icon ti-menu"></i>
-                    <span class="nav-label">Categories</span>
-                </a>
-            </li>
-            <li>
-                <a href="/dashboard/products"><i class="sidebar-item-icon ti-shopping-cart"></i>
-                    <span class="nav-label">Products</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('orders.index') }}"><i class="sidebar-item-icon ti-list"></i>
-                    <span class="nav-label">Orders</span>
-                </a>
             </li>
             <li>
                 <a href="/dashboard/posts"><i class="sidebar-item-icon ti-pencil"></i>
@@ -28,11 +13,6 @@
             <li>
                 <a href="/dashboard/consultancies"><i class="sidebar-item-icon ti-comments"></i>
                     <span class="nav-label">Consultancies</span>
-                </a>
-            </li>
-            <li>
-                <a href=""><i class="sidebar-item-icon ti-shopping-cart"></i>
-                    <span class="nav-label">Ecommerce</span>
                 </a>
             </li>
             <li>

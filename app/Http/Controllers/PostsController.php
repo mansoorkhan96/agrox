@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Discussion;
 use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
@@ -99,8 +100,9 @@ class PostsController extends Controller
     public function show(Post $post)
     {
         $post_categories = $post->categories()->where('category_post.post_id', $post->id)->pluck('name');
+        $comments = $post->discussions()->with('user')->get()->toArray();
 
-        return view('posts.show', compact(['post', 'post_categories']));
+        return view('posts.show', compact(['post', 'post_categories', 'comments']));
     }
 
     /**
@@ -209,5 +211,25 @@ class PostsController extends Controller
         }
 
         abort(419);
+    }
+
+    public function createComment(Request $request, Post $post) {
+        $request->validate([
+            'comment' => 'required'
+        ]);
+        
+        Discussion::create([
+            'user_id' => auth()->user()->id,
+            'post_id' => $post->id,
+            'discussion' => $request->comment
+        ]);
+
+        return back()->with('success', 'Your comment was saved!');
+    }
+
+    public function deleteComment($id) {
+        Discussion::where('id', $id)->delete();
+
+        return back()->with('success', 'Comment was deleted!');
     }
 }

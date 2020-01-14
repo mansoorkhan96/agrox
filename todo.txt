@@ -16,3 +16,17 @@ index($id = null) {
 
     return
 }
+
+dont bring discussions in blog
+
+
+Pros: {
+    Cart Library,
+    Helpers,
+    Provider table seperation,
+    Policies,
+    ACL Management,
+    Dynamic Pagination,
+    Ajax only Requests,
+    
+}

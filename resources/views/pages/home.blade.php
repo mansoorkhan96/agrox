@@ -6,11 +6,11 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="mt-3 mb-3">
-                    <img src="{{ asset('images/oranges.png') }}" alt="" />
+                    <img src="{{ asset('images/oranges.jpeg') }}" alt="" />
                 </div>
             </div>
             <div class="col-sm-6">
-                <div class="mb-1 section-pretitle default-left">Welcome to</div>
+                <div class="mt-4 mb-1 section-pretitle">Welcome to</div>
                 <h2 class="section-title mtn-2 mb-3">AgroX Store</h2>
                 <p class="mb-4">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non ad quisquam ducimus beatae? Quo praesentium reiciendis distinctio velit? Suscipit odio quae consectetur magni voluptatibus doloremque vero eum id labore rem fugiat, deserunt doloribus illum fuga iusto numquam recusandae modi rerum.
@@ -153,7 +153,7 @@
                                 <span>{{ date('F, j y', strtotime($post->created_at)) }}</span>
                             </span>
                             <span class="comment">
-                                <i class="ion-chatbubble-working"></i> 0
+                                <i class="ion-chatbubble-working"></i> {{$post->discussions_count}}
                             </span>
                         </div>
                         <a href="{{ route('blog.show', $post->slug) }}">

@@ -1475,7 +1475,7 @@ header.header-4.scrolling-menu #logo {
     background: #a8d5ec;
 }
 .section-bg-1 {
-	background-image:url(../images/background/bg_1.jpg);
+	/* background-image:url(../images/background/bg_1.jpg); */
 	background-position: center;
 }
 .section-bg-2 {

@@ -51,7 +51,11 @@ Route::get('/test', function() {
     // }
 });
 
-Route::get('/', 'PagesController@home');
+Route::get('/handleAuth', 'HandleAuthController@index');
+
+Route::get('/', 'PagesController@home')->name('home');
+Route::get('/about', 'PagesController@about')->name('pages.about');
+Route::get('/contact', 'PagesController@contact')->name('pages.contact');
 Route::get('/message', 'PagesController@message')->name('pages.message');
 
 Route::resource('blog', 'BlogController');
@@ -80,10 +84,14 @@ Route::get('/profile/{user}', 'ProfilesController@show')->name('profile.show');
 
 Route::get('/reviews', 'ReviewsController@index')->name('review.index');
 
+Route::get('/test', function() {
+return view('admin.index');
+});
 
-Route::get('/dashboard', function () {
-    return view('admin.index');
-})->name('dashboard.index');
+Route::get('/dashboard/admin', 'AdminController@index')->name('admin.index');
+Route::get('/dashboard/farmer', 'FarmerController@index')->name('farmer.index');
+Route::get('/dashboard/consultant', 'ConsultantController@index')->name('consultant.index');
+Route::get('/dashboard/academic', 'AcademicController@index')->name('academic.index');
 
 Route::resource('/dashboard/categories', 'CategoriesController');
 
@@ -100,7 +108,9 @@ Route::delete('/dashboard/orders/{order}', 'OrderController@reject')->name('orde
 Route::put('/dashboard/orders/restore/{order}', 'OrderController@restore')->name('orders.restore');
 
 Route::get('/dashboard/posts/trashed', 'PostsController@trashed');
-Route::put('/dashboard/posts/restore/{product}', 'PostsController@restore');
+Route::put('/dashboard/posts/restore/{post}', 'PostsController@restore');
+Route::post('/dashboard/create-comment/{post}', 'PostsController@createComment')->name('post.createcomment');
+Route::delete('/dashboard/delete-comment/{post}', 'PostsController@deleteComment')->name('post.deletecomment');
 Route::resource('/dashboard/posts', 'PostsController');
 
 Route::resource('/dashboard/consultancies', 'ConsultancyController');
@@ -111,7 +121,7 @@ Route::post('/dashboard/private-message', 'PrivateMessageController@store')->nam
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
 
 // OAuth Routes

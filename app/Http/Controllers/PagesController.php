@@ -16,7 +16,7 @@ class PagesController extends Controller
      */
     public function home()
     {
-        $posts = Post::where('post_type', 'post')->latest()->take(3)->get();
+        $posts = Post::where('post_type', 'post')->withCount('discussions')->latest()->take(3)->get();
 
         $products = Product::where('featured', true)->inRandomOrder()->latest()->take(8)->get()->toArray();
 
@@ -38,9 +38,9 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function about()
     {
-        //
+        return view('pages.about');
     }
 
     /**
@@ -49,9 +49,9 @@ class PagesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function contact(Request $request)
     {
-        //
+        return view('pages.contact');
     }
 
     /**

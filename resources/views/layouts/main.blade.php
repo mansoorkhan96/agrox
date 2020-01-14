@@ -24,74 +24,24 @@
 		
 	</head>
 	<body>
-		{{-- <div class="noo-spinner">
-			<div class="spinner">
-				<div class="cube1"></div>
-				<div class="cube2"></div>
-			</div>
-		</div> --}}
 		<!-- Mobile Screen -->
 		<div id="menu-slideout" class="slideout-menu hidden-md-up">
 			<div class="mobile-menu">
 				<ul id="mobile-menu" class="menu">
-					<li class="dropdown">
-						<a href="#">Home</a>
-						<i class="sub-menu-toggle fa fa-angle-down"></i>
-						<ul class="sub-menu">
-							<li class="active"><a href="index.html">Organik Main</a></li>
-							<li><a href="index-fresh.html">Organik Fresh</a></li>
-							<li><a href="index-shop.html">Organik Shop</a></li>
-							<li><a href="index-store.html">Organik Store</a></li>
-							<li><a href="index-farm.html">Organik Farm</a></li>
-							<li><a href="index-house.html">Organik House</a></li>
-						</ul>
-					</li>
-					<li class="dropdown">
-						<a href="#">Pages</a>
-						<i class="sub-menu-toggle fa fa-angle-down"></i>
-						<ul class="sub-menu">
-							<li class="dropdown">
-								<a href="#">About Us</a>
-								<i class="sub-menu-toggle fa fa-angle-down"></i>
-								<ul class="sub-menu">
-									<li><a href="about-us.html">About us 01</a></li>
-									<li><a href="about-us-2.html">About us 02</a></li>
-								</ul>
-							</li>
-							<li><a href="gallery-freestyle.html">Gallery Freestyle</a></li>
-							<li><a href="gallery-grid.html">Gallery Grid</a></li>
-							<li><a href="404.html">404</a></li>
-						</ul>
+					<li>
+						<a href="{{ route('home') }}">Home</a>
 					</li>
 					<li>
-						<a href="shortcodes.html">Shortcodes</a>
-					</li>
-					<li class="dropdown">
-						<a href="#">Shop</a>
-						<i class="sub-menu-toggle fa fa-angle-down"></i>
-						<ul class="sub-menu">
-							<li><a href="my-account.html">My Account</a></li>
-							<li><a href="cart-empty.html">Empty Cart</a></li>
-							<li><a href="cart.html">Cart</a></li>
-							<li><a href="checkout.html">Check Out</a></li>
-							<li><a href="wishlist.html">Wishlist</a></li>
-							<li><a href="shop.html">Shop</a></li>
-							<li><a href="shop-list.html">Shop List</a></li>
-							<li><a href="shop-detail.html">Single Product</a></li>
-						</ul>
-					</li>
-					<li class="dropdown">
-						<a href="#">Blog</a>
-						<i class="sub-menu-toggle fa fa-angle-down"></i>
-						<ul class="sub-menu">
-							<li><a href="blog.html">Blog List</a></li>
-							<li><a href="blog-classic.html">Blog Classic</a></li>
-							<li><a href="blog-masonry.html">Blog Masonry</a></li>
-							<li><a href="blog-detail.html">Blog Single</a></li>
-						</ul>
+						<a href="{{ route('shop.index') }}">Shop</a>
 					</li>
 					<li>
-						<a href="contact-us.html">Contact</a>
+						<a href="{{ route('blog.index') }}">Blog</a>
+					</li>
+					<li>
+						<a href="{{ route('pages.contact') }}">Contact</a>
+					</li>
+					<li>
+						<a href="{{ route('pages.about') }}">About Us</a>
 					</li>
 				</ul>
 			</div>
@@ -102,22 +52,39 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="topbar-text">
-								<span>Work time: Monday - Friday: 08AM-06PM</span> 
-								<span>Saturday - Sunday: 10AM-06PM</span>
+								<span>AgroX</span> 
+								<span>Agricultural Exploration</span>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="topbar-menu">
 								<ul class="topbar-menu">
-									<li class="dropdown">
-										<a href="#">Languages</a>
-										<ul class="sub-menu">
-											<li><a href="#">English</a></li>
-											<li><a href="#">Français</a></li>
-										</ul>
-									</li>
+									@auth
+										@if (auth()->user()->role_id == 1)
+											<li><a href="{{ route('admin.index') }}">Dashboard</a></li>
+										@elseif (auth()->user()->role_id == 2)
+											<li><a href="{{ route('farmer.index') }}">Dashboard</a></li>
+										@elseif (auth()->user()->role_id == 3)
+											<li><a href="{{ route('consulant.index') }}">Dashboard</a></li>
+										@elseif (auth()->user()->role_id == 4)
+											<li><a href="{{ route('academic.index') }}">Dashboard</a></li>
+										@else
+											<li><a href="{{ route('order.index') }}">My Orders</a></li>
+										@endif
+										<li>
+											<a href="{{ route('logout') }}" 
+											onclick="event.preventDefault();
+											document.getElementById('logout-form').submit();">
+												LogOut
+											</a>
+										</li>
+										<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+											@csrf
+										</form>
+									@else 
 									<li><a href="{{ route('login') }}">Login</a></li>
-									<li><a href="#">Register</a></li>
+									<li><a href="{{ route('register') }}">Register</a></li>
+									@endauth
 								</ul>
 							</div>
 						</div>
@@ -149,10 +116,10 @@
 							<div class="widget">
 								<h3 class="widget-title">Infomation</h3>
 								<ul>
-									<li><a href="#">New Products</a></li>
-									<li><a href="#">Top Sellers</a></li>
-									<li><a href="#">Our Blog</a></li>
-									<li><a href="#">About Our Shop</a></li>
+									<li><a href="{{ route('shop.index') }}">New Products</a></li>
+									<li><a href="{{ route('shop.index') }}">Top Sellers</a></li>
+									<li><a href="{{ route('blog.index') }}">Our Blog</a></li>
+									<li><a href="{{ route('pages.about') }}">About Our Shop</a></li>
 								</ul>
 							</div>
 						</div>
@@ -160,10 +127,10 @@
 							<div class="widget">
 								<h3 class="widget-title">Useful Link</h3>
 								<ul>
-									<li><a href="#">Our Team</a></li>
-									<li><a href="#">Our Blog</a></li>
-									<li><a href="#">About Us</a></li>
-									<li><a href="#">Secure Shopping</a></li>
+									<li><a href="{{ route('pages.about') }}">Our Team</a></li>
+									<li><a href="{{ route('blog.index') }}">Our Blog</a></li>
+									<li><a href="{{ route('pages.about') }}">About Us</a></li>
+									<li><a href="{{ route('shop.index') }}">Secure Shopping</a></li>
 								</ul>
 							</div>
 						</div>
@@ -186,7 +153,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-8">
-							Copyright © 2017 <a href="#">Organic Store</a> - All Rights Reserved.
+							Copyright © {{date('Y')}} <a href="{{ route('home') }}">AgroX</a> - All Rights Reserved.
 						</div>
 						<div class="col-md-4">
 							<img src="{{ asset('images/footer_payment.png') }}" alt="" />

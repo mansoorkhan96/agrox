@@ -17,6 +17,10 @@
                         </div>
                         <div>
                             <p class="lead">{{ roleName($user->role_id) }}</p>
+                            @if ($user->id == auth()->user()->id)
+                            <p class="lead">
+                                <a href="{{ route('profile.edit', auth()->user()->id) }}">Edit Profile</a></p>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -33,36 +37,32 @@
             <div class="ibox-body">
                 <h5 class="font-strong mb-4">GENERAL INFORMATION</h5>
                 <div class="row mb-2">
-                    <div class="col-6 text-muted">First Name:</div>
-                    <div class="col-6">Lynn</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-6 text-muted">Last Name:</div>
-                    <div class="col-6">Weaver</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-6 text-muted">Age:</div>
-                    <div class="col-6">26</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-6 text-muted">Position:</div>
-                    <div class="col-6">Web Designer</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-6 text-muted">City:</div>
-                    <div class="col-6">New York, USA</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-6 text-muted">Address:</div>
-                    <div class="col-6">228 Park Ave Str.</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-6 text-muted">Phone:</div>
-                    <div class="col-6">+1-202-555-0134</div>
+                    <div class="col-6 text-muted">Name:</div>
+                    <div class="col-6">{{ $user->name }}</div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-6 text-muted">Email:</div>
-                    <div class="col-6">lweaver@gmail.com</div>
+                    <div class="col-6">{{ $user->email }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6 text-muted">Phone:</div>
+                    <div class="col-6">{{ $user->phone }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6 text-muted">City:</div>
+                    <div class="col-6">{{ $location['name'] ?? '' }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6 text-muted">Province:</div>
+                    <div class="col-6">{{ $location['province']['name'] ?? '' }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6 text-muted">Country:</div>
+                    <div class="col-6">{{ $location['province']['country']['name'] ?? '' }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6 text-muted">Street Address:</div>
+                    <div class="col-6">{{ $user->address }}</div>
                 </div>
             </div>
         </div>
@@ -71,8 +71,7 @@
         <div class="ibox">
             <div class="ibox-body">
                 <h5 class="font-strong mb-4">BIOGRAPHY</h5>
-                <p>Lorem Ipsum Aliqua id consequat laborum incididunt adipiscing ut consectetur dolor voluptate non est ex dolore voluptate fugiat adipiscing qui deserunt nisi magna irure tempor non cupidatat amet fugiat est ad sint adipiscing
-                    est officia cillum consectetur reprehenderit non.</p>
+                <p>{{ $user->bio }}</p>
             </div>
         </div>
         

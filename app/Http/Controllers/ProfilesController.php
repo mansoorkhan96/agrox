@@ -10,6 +10,7 @@ use App\Province;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class ProfilesController extends Controller
 {
@@ -52,7 +53,11 @@ class ProfilesController extends Controller
      */
     public function show(User $user)
     {
-        return view('profiles.show', compact('user'));
+        $location = $user->city()->get()->toArray();
+
+        $location = Arr::collapse($location);
+
+        return view('profiles.show', compact(['user', 'location']));
     }
 
     /**
@@ -63,9 +68,21 @@ class ProfilesController extends Controller
      */
     public function edit(User $user)
     {
+        if($user->id != auth()->user()->id) {
+            abort(401, 'Cannot access this page!, Unauthorized Request');
+        }
+
+        $location = $user->city()->get()->toArray();
+
+        $location = Arr::collapse($location);
+
         $proficiencies = Proficiency::pluck('proficiency', 'id');
 
-        $roles = Role::pluck('name', 'id');
+        if(auth()->user()->role_id == 1) {
+            $roles = Role::pluck('name', 'id');
+        } else {
+            $roles = Role::where('id', '!=', '1')->pluck('name', 'id');
+        }
 
         $countries = Country::pluck('name', 'id');
 
@@ -73,7 +90,7 @@ class ProfilesController extends Controller
 
         $cities = City::pluck('name', 'id');
 
-        return view('profiles.edit', compact(['user', 'proficiencies', 'roles', 'countries', 'provinces', 'cities']));
+        return view('profiles.edit', compact(['user', 'proficiencies', 'roles', 'countries', 'provinces', 'cities', 'location']));
     }
 
     /**

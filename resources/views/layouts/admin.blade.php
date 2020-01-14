@@ -33,7 +33,15 @@
         @include('includes.admin.header')
         <!-- END HEADER-->
         <!-- START SIDEBAR-->
-        @include('includes.admin.sidebar')
+        @if (auth()->user()->role_id == 1)
+            @include('includes.admin.sidebar')
+        @elseif (auth()->user()->role_id == 2)
+            @include('includes.farmer.sidebar')
+        @elseif (auth()->user()->role_id == 3)
+            @include('includes.consultant.sidebar')
+        @elseif (auth()->user()->role_id == 4)
+            @include('includes.academic.sidebar')
+        @endif
         <!-- END SIDEBAR-->
         <div class="content-wrapper">
             <!-- START PAGE CONTENT-->

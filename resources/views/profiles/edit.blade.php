@@ -33,7 +33,7 @@
 
                     <div class="form-group mb-4">
                         <label>Country</label>
-                        {{ Form::select('country', $countries, null, ['placeholder' => 'Select Your Country', 'class' => 'form-control']) }}
+                        {{ Form::select('country', $countries, $location['province']['country_id'] ?? null, ['placeholder' => 'Select Your Country', 'class' => 'form-control']) }}
                         @error('country')
                         <label for="country" class="text-danger">{{ $message }}</label>
                         @enderror
@@ -63,17 +63,17 @@
                             @enderror
                     </div>
                     <div class="form-group mb-4">
+                        <label>Province</label>
+                        {{ Form::select('province_id', $provinces, $location['province_id'] ?? null, ['placeholder' => 'Select Your Province', 'class' => 'form-control']) }}
+                        @error('province_id')
+                        <label for="province_id" class="text-danger">{{ $message }}</label>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-4">
                         <label>Proficiency</label>
                         {{ Form::select('proficiency_id', $proficiencies, $user->proficiency_id, ['placeholder' => 'Select Your Proficiency', 'class' => 'form-control']) }}
                         @error('proficiency_id')
                         <label for="proficiency_id" class="text-danger">{{ $message }}</label>
-                        @enderror
-                    </div>
-                    <div class="form-group mb-4">
-                        <label>Province</label>
-                        {{ Form::select('province_id', $proficiencies, null, ['placeholder' => 'Select Your Province', 'class' => 'form-control']) }}
-                        @error('province_id')
-                        <label for="province_id" class="text-danger">{{ $message }}</label>
                         @enderror
                     </div>
                 </div>

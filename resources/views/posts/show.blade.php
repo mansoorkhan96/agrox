@@ -66,78 +66,40 @@
                     </div>
                 </div>
                 <hr class="my-4">
-                <h5 class="font-strong mb-3"><i class="fa fa-comment-o mr-2"></i>5 comments</h5>
+                <h5 class="font-strong mb-3"><i class="fa fa-comment-o mr-2"></i>{{ count($comments) }} comment(s)</h5>
                 <ul class="media-list">
+                    @forelse ($comments as $item)
                     <li class="media">
-                        <a class="media-img" href="javascript:;">
-                            <img src="assets/img/users/u10.jpg" alt="image" width="45" />
+                        <a class="media-img" href="{{ route('profile.show', $item['user']['id']) }}">
+                            <img src="{{ avatar($item['user']['avatar']) }}" alt="image" width="45" />
                         </a>
                         <div class="media-body">
                             <div class="media-heading">
-                                <a class="comment-author" href="javascript:;">Stella Obrien</a><small class="text-muted ml-2">5 days ago</small>
+                                <a class="comment-author" href="{{ route('profile.show', $item['user']['id']) }}">{{ $item['user']['name'] }}</a><small class="text-muted ml-2">{{ date('F, j Y', strtotime($item['user']['created_at'])) }}</small>
                                 <div class="pull-right font-13">
-                                    <a class="text-muted mr-2" data-toggle="tooltip" data-original-title="Like"><i class="fa fa-heart"></i></a>
-                                    <a class="text-muted" data-toggle="tooltip" data-original-title="Reply"><i class="fa fa-reply"></i></a>
+                                    {{ Form::open(['route' => ['post.deletecomment', $item['id']], 'method' =>'delete']) }}
+                                        <button type="submit" class="no-btn text-muted mr-2">
+                                            <i class="fa fa-trash font-18"></i>
+                                        </button>
+                                    {{ Form::close() }}
                                 </div>
                             </div>
-                            <p class="m-0">Aliquam nec dui fermentum, fermentum est sed, molestie ligula. Donec ullamcorper eget purus eget vehicula. Morbi risus est, rhoncus vel faucibus eget,</p>
+                            <p class="m-0">{{ $item['discussion'] }}</p>
                         </div>
                     </li>
-                    <li class="media">
-                        <a class="media-img" href="javascript:;">
-                            <img src="assets/img/users/u2.jpg" alt="image" width="45" />
-                        </a>
-                        <div class="media-body">
-                            <div class="media-heading">
-                                <a class="comment-author" href="javascript:;">Becky Brooks</a><small class="text-muted ml-2">2 days ago</small>
-                                <div class="pull-right font-13">
-                                    <a class="text-muted mr-2" data-toggle="tooltip" data-original-title="Like"><i class="fa fa-heart"></i></a>
-                                    <a class="text-muted" data-toggle="tooltip" data-original-title="Reply"><i class="fa fa-reply"></i></a>
-                                </div>
-                            </div>
-                            <p>Aliquam nec dui fermentum, fermentum est sed, molestie ligula. Donec ullamcorper eget purus eget vehicula. Morbi risus est, rhoncus vel faucibus eget,</p>
-                            <div class="media">
-                                <a class="media-img" href="javascript:;">
-                                    <img src="assets/img/users/u11.jpg" alt="image" width="45" />
-                                </a>
-                                <div class="media-body">
-                                    <div class="media-heading">
-                                        <a class="comment-author" href="javascript:;">Tyrone Carroll</a><small class="text-muted ml-2">Just now</small>
-                                        <div class="pull-right font-13">
-                                            <a class="text-muted mr-2" data-toggle="tooltip" data-original-title="Like"><i class="fa fa-heart"></i></a>
-                                            <a class="text-muted" data-toggle="tooltip" data-original-title="Reply"><i class="fa fa-reply"></i></a>
-                                        </div>
-                                    </div>
-                                    <p class="m-0">Aliquam nec dui fermentum, fermentum est sed, molestie ligula. Donec ullamcorper eget purus eget vehicula. Morbi risus est, rhoncus vel faucibus eget,</p>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="media">
-                        <a class="media-img" href="javascript:;">
-                            <img src="assets/img/users/u6.jpg" alt="image" width="45" />
-                        </a>
-                        <div class="media-body">
-                            <div class="media-heading">
-                                <a class="comment-author" href="javascript:;">Connor Perez</a><small class="text-muted ml-2">1 hour ago</small>
-                                <div class="pull-right font-13">
-                                    <a class="text-muted mr-2" data-toggle="tooltip" data-original-title="Like"><i class="fa fa-heart"></i></a>
-                                    <a class="text-muted" data-toggle="tooltip" data-original-title="Reply"><i class="fa fa-reply"></i></a>
-                                </div>
-                            </div>
-                            <p>Aliquam nec dui fermentum, fermentum est sed, molestie ligula. Donec ullamcorper eget purus eget vehicula. Morbi risus est, rhoncus vel faucibus eget,</p>
-                        </div>
-                    </li>
+                    @empty
+                        <p class="lead">No Comments</p>
+                    @endforelse
                 </ul>
                 <h5 class="font-strong mt-4 mb-3">Leave A Comment</h5>
-                <form>
+                {{ Form::open(['route' => ['post.createcomment', $post->id], 'method' => 'post']) }}
                     <div class="form-group">
-                        <textarea class="form-control" rows="5" placeholder="Comment here"></textarea>
+                        <textarea class="form-control" name="comment" required rows="5" placeholder="Comment here"></textarea>
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-primary" type="button">SUBMIT</button>
+                        <button class="btn btn-primary" type="submit">SUBMIT</button>
                     </div>
-                </form>
+                {{ Form::close() }}
             </div>
         </div>
     </div>

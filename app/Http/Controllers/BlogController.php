@@ -28,7 +28,7 @@ class BlogController extends Controller
         $popular = Post::inRandomOrder()->latest()->take(5)->get()->toArray();
 
         if(request()->tag) {
-            $posts = Post::where('tag', request()->tag)->withCount('discussions')->paginate(1);
+            $posts = Post::where('tag', request()->tag)->withCount('discussions')->paginate(4);
 
             $title = Str::title(request()->tag);
             $title = 'Tag: ' . str_replace('_', ' ', $title);
@@ -37,7 +37,7 @@ class BlogController extends Controller
 
             $posts = Post::whereHas('categories', function($query) {
                 $query->where('slug', request()->category);
-            })->withCount('discussions')->paginate(1);
+            })->withCount('discussions')->paginate(4);
 
             $title = Str::title(request()->tag);
             $title = 'Category: ' . Str::title(str_replace('-', ' ', request()->category));
@@ -97,7 +97,7 @@ class BlogController extends Controller
             $userRating = $post->userRating()->first() ? $post->userRating()->first()->rating : '';
         }
 
-        $post_categories = $post->categories()->where('category_post.post_id', $post->id)->pluck('name');
+        $post_categories = $post->categories()->where('category_post.post_id', $post->id)->get();
 
         $categoriesPostCount = DB::table('categories')
             ->join('category_post', 'categories.id', '=', 'category_post.category_id')

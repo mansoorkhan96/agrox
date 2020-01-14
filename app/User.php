@@ -61,4 +61,8 @@ class User extends Authenticatable
     public function messages() {
         return $this->hasMany('App\PrivateMessage');
     }
+
+    public function city() {
+        return $this->belongsTo('App\City')->with('province');
+    }
 }

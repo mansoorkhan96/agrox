@@ -32,16 +32,16 @@
                 @if ($item->status == 'Pending')
                     @if(! empty($accepter) && $accepter == auth()->user()->id)
                     {{ Form::open(['route' => ['consultancies.accept', $item->id], 'class' =>'d-inline ', 'method' => 'put']) }}
-                        <button title="Accept Thread Request" type="submit" class="no-btn text-success font-20"><i class="ti-check"></i></button>
+                        <button title="Accept Thread Request" type="submit" class="no-btn text-success font-18"><i class="ti-check"></i></button>
                     {{ Form::close() }}
                     {{ Form::open(['route' => ['consultancies.reject', $item->id], 'class' =>'d-inline ', 'method' => 'put']) }}
-                        <button title="Reject Thread Request" type="submit" class="no-btn text-danger font-20"><i class="ti-close"></i></button>
+                        <button title="Reject Thread Request" type="submit" class="no-btn text-danger font-18"><i class="ti-close"></i></button>
                     {{ Form::close() }}
                     @endif
                 @elseif ($item->status == 'Rejected')
                     @if(! empty($accepter) && $accepter == auth()->user()->id)
                     {{ Form::open(['route' => ['consultancies.accept', $item->id], 'class' =>'d-inline ', 'method' => 'put']) }}
-                        <button title="Accept Thread Request" type="submit" class="no-btn text-success font-20"><i class="ti-check"></i></button>
+                        <button title="Accept Thread Request" type="submit" class="no-btn text-success font-18"><i class="ti-check"></i></button>
                     {{ Form::close() }}
                     @endif                   
                 @endif
@@ -79,39 +79,7 @@
                     @endforelse
                 </tbody>
             </table>
-            {{-- <ul class="pagination justify-content-end p-4">
-                <li class="page-item">
-                    <a class="page-link page-link-solid" href="javascript:;" aria-label="First">
-                        <span aria-hidden="true"><i class="la la-angle-double-left"></i></span>
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link page-link-solid" href="javascript:;" aria-label="Previous">
-                        <span aria-hidden="true"><i class="la la-angle-left"></i></span>
-                    </a>
-                </li>
-                <li class="page-item active">
-                    <a class="page-link" href="javascript:;">1</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="javascript:;">2</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="javascript:;">3</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="javascript:;">4</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="javascript:;"><i class="la la-ellipsis-h"></i></a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link page-link-solid" href="javascript:;" aria-label="Next"><i class="la la-angle-right"></i></a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link page-link-solid" href="javascript:;" aria-label="Last"><i class="la la-angle-double-right"></i></a>
-                </li>
-            </ul> --}}
+            
         </div>
     </div>
 </div>
