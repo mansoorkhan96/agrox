@@ -13,10 +13,10 @@
                     <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
                     <input class="form-control form-control-rounded form-control-solid" id="key-search" type="text" placeholder="Search ...">
                 </div>
-                <a class="btn btn-success btn-air" href="/admin/posts/create">
+                <a class="btn btn-success btn-air" href="/dashboard/posts/create">
                     <i class="la la-plus"></i> Add New
                 </a>
-                <a class="btn btn-warning ml-2 btn-air" href="/admin/orders/rejected">
+                <a class="btn btn-warning ml-2 btn-air" href="/dashboard/orders/rejected">
                     <i class="la la-trash"></i> Rejected
                 </a>
             </div>

@@ -1,8 +1,8 @@
 <header class="header">
     <div class="page-brand">
         <a href="index.html">
-            <span class="brand">AdminCa</span>
-            <span class="brand-mini">AC</span>
+            <span class="brand">AgroX</span>
+            <span class="brand-mini">AX</span>
         </a>
     </div>
     <div class="flexbox flex-1">
@@ -24,9 +24,7 @@
         <!-- END TOP-LEFT TOOLBAR-->
         <!-- START TOP-RIGHT TOOLBAR-->
         <ul class="nav navbar-toolbar">
-            <li class="timeout-toggler">
-                <a class="nav-link toolbar-icon" data-toggle="modal" data-target="#session-dialog" href="javascript:;"><i class="ti-alarm-clock timeout-toggler-icon rel"><span class="notify-signal"></span></i></a>
-            </li>
+            
             <li class="dropdown dropdown-inbox">
                 <a class="nav-link dropdown-toggle toolbar-icon" data-toggle="dropdown" href="javascript:;"><i class="ti-email"></i>
                     <span class="envelope-badge">7</span>
@@ -164,25 +162,24 @@
             </li>
             <li class="dropdown dropdown-user">
                 <a class="nav-link dropdown-toggle link" data-toggle="dropdown">
-                    <span>Super User</span>
-                    <img src="{{ asset('assets/img/users/admin-image.png') }}" alt="image" />
+                    <span>{{ auth()->user()->name }}</span>
+                    <img src="{{ avatar(asset('/storage/' . auth()->user()->avatar)) }}" alt="image" />
                 </a>
                 <div class="dropdown-menu dropdown-arrow dropdown-menu-right admin-dropdown-menu">
                     <div class="dropdown-arrow"></div>
                     <div class="dropdown-header">
                         <div class="admin-avatar">
-                            <img src="{{ asset('assets/img/users/admin-image.png') }}" alt="image" />
+                            <img src="{{ avatar(asset('/storage/' . auth()->user()->avatar)) }}" alt="image" />
                         </div>
                         <div>
-                            <h5 class="font-strong text-white">Super User</h5>
+                            <h5 class="font-strong text-white">{{ auth()->user()->name }}</h5>
                             <div>
-                                <span class="admin-badge mr-3"><i class="ti-alarm-clock mr-2"></i>30m.</span>
-                                <span class="admin-badge"><i class="ti-lock mr-2"></i>Safe Mode</span>
+                                <h6 class="font-strong text-white">{{ roleName(auth()->user()->role_id) }}</h6>
                             </div>
                         </div>
                     </div>
                     <div class="admin-menu-features">
-                        <a class="admin-features-item" href="{{ route('profile.show', 1) }}"><i class="ti-user"></i>
+                        <a class="admin-features-item" href="{{ route('profile.show', auth()->user()->id) }}"><i class="ti-user"></i>
                             <span>PROFILE</span>
                         </a>
                         <a class="admin-features-item" href="javascript:;"><i class="ti-support"></i>
@@ -193,13 +190,19 @@
                         </a>
                     </div>
                     <div class="admin-menu-content">
-                        <div class="text-muted mb-2">Your Wallet</div>
-                        <div><i class="ti-wallet h1 mr-3 text-light"></i>
-                            <span class="h1 text-success"><sup>$</sup>12.7k</span>
-                        </div>
+                        
                         <div class="d-flex justify-content-between mt-2">
-                            <a class="text-muted" href="javascript:;">Earnings history</a>
-                            <a class="d-flex align-items-center" href="javascript:;">Logout<i class="ti-shift-right ml-2 font-20"></i></a>
+                            <a 
+                                class="d-flex align-items-center" 
+                                href="{{ route('logout') }}" 
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                                    Logout
+                                <i class="ti-shift-right ml-2 font-20"></i>
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </div>
                     </div>
                 </div>

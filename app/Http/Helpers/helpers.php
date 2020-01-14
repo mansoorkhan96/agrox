@@ -1,5 +1,8 @@
 <?php
-    /**
+
+use App\Role;
+
+/**
      * Generate image path for user profile
      *
      * @param [mixed] $source
@@ -16,5 +19,10 @@
         }
 
         return asset('images/no-image.jpg');
+    }
+
+    function roleName(int $id) 
+    {
+        return Role::find($id)->first()->name;
     }
 ?>

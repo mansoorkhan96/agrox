@@ -81,30 +81,33 @@ Route::get('/profile/{user}', 'ProfilesController@show')->name('profile.show');
 Route::get('/reviews', 'ReviewsController@index')->name('review.index');
 
 
-Route::get('/admin', function () {
+Route::get('/dashboard', function () {
     return view('admin.index');
-});
+})->name('dashboard.index');
 
-Route::resource('/admin/categories', 'CategoriesController');
+Route::resource('/dashboard/categories', 'CategoriesController');
 
-Route::get('/admin/products/products', 'ProductsController@products');
-Route::get('/admin/products/trashed', 'ProductsController@trashed');
-Route::put('/admin/products/restore/{product}', 'ProductsController@restore');
-Route::resource('/admin/products', 'ProductsController');
+Route::get('/dashboard/products/products', 'ProductsController@products');
+Route::get('/dashboard/products/trashed', 'ProductsController@trashed');
+Route::put('/dashboard/products/restore/{product}', 'ProductsController@restore');
+Route::resource('/dashboard/products', 'ProductsController');
 
-Route::get('/admin/orders/rejected', 'OrderController@rejected')->name('orders.rejected');
-Route::get('/admin/orders', 'OrderController@index')->name('orders.index');
-Route::get('/admin/orders/{order}', 'OrderController@show')->name('orders.show');
-Route::put('/admin/orders/{order}', 'OrderController@complete')->name('orders.complete');
-Route::delete('/admin/orders/{order}', 'OrderController@reject')->name('orders.reject');
-Route::put('/admin/orders/restore/{order}', 'OrderController@restore')->name('orders.restore');
+Route::get('/dashboard/orders/rejected', 'OrderController@rejected')->name('orders.rejected');
+Route::get('/dashboard/orders', 'OrderController@index')->name('orders.index');
+Route::get('/dashboard/orders/{order}', 'OrderController@show')->name('orders.show');
+Route::put('/dashboard/orders/{order}', 'OrderController@complete')->name('orders.complete');
+Route::delete('/dashboard/orders/{order}', 'OrderController@reject')->name('orders.reject');
+Route::put('/dashboard/orders/restore/{order}', 'OrderController@restore')->name('orders.restore');
 
-Route::get('/admin/posts/trashed', 'PostsController@trashed');
-Route::put('/admin/posts/restore/{product}', 'PostsController@restore');
-Route::resource('/admin/posts', 'PostsController');
+Route::get('/dashboard/posts/trashed', 'PostsController@trashed');
+Route::put('/dashboard/posts/restore/{product}', 'PostsController@restore');
+Route::resource('/dashboard/posts', 'PostsController');
 
-Route::resource('/admin/consultancies', 'ConsultancyController');
-Route::post('admin/private-message', 'PrivateMessageController@store')->name('message.store');
+Route::resource('/dashboard/consultancies', 'ConsultancyController');
+Route::put('/dashboard/consultancies/reject/{consultancy}', 'ConsultancyController@reject')->name('consultancies.reject');
+Route::put('/dashboard/consultancies/accept/{consultancy}', 'ConsultancyController@accept')->name('consultancies.accept');
+
+Route::post('/dashboard/private-message', 'PrivateMessageController@store')->name('message.store');
 
 Auth::routes();
 

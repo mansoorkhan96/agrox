@@ -27,7 +27,7 @@
                     <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
                     <input class="form-control form-control-rounded form-control-solid" id="key-search" type="text" placeholder="Search ...">
                 </div>
-                <a class="btn btn-success btn-air" href="/admin/categories/create">
+                <a class="btn btn-success btn-air" href="/dashboard/categories/create">
                     <i class="la la-plus"></i> Add New
                 </a>
             </div>

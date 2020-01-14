@@ -23,7 +23,10 @@ class CreateConsultanciesTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories');
             $table->string('title')->unique();
             $table->text('description')->nullable();
+            $table->enum('status', ['Pending', 'Accepted', 'Rejected'])->default('Pending');
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 

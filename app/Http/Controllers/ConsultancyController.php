@@ -18,39 +18,62 @@ class ConsultancyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { 
+    {
+        /**
+         * recipient of the message
+         * 
+         * [type] @int
+         * 
+         */
+        $to = null;
+
+        /**
+         * consultant (the accepter of the thread)
+         * 
+         * [type] @int
+         * 
+         */
+        $accepter = null;
+
+        /**
+         * an array that contains all the messages for a perticular topic
+         * 
+         * [type] @array
+         * 
+         */
+        $inbox = [];
+
         if(auth()->user()->role_id != 1 && auth()->user()->role_id != 3) {
 
-            $consultancies = Consultancy::where('consumer', auth()->user()->id)->get();
+            $consultancies = Consultancy::latest()->where('consumer', auth()->user()->id)->get();
             
-            $inbox = [];
             if(! $consultancies->isEmpty()) {
-                $inbox = PrivateMessage::where('consultancy_id', $this->consultancy_id($consultancies))->latest()->with('from')->get()->toArray();
+                $inbox = PrivateMessage::where('consultancy_id', $this->consultancy_id($consultancies))->latest()->with(['from', 'consultancies'])->get()->toArray();
             }
 
-            $to = null;
             if(! $consultancies->isEmpty()) {
                 $to = $this->findConsultant($consultancies->toArray());
+                $accepter = $this->findConsultant($consultancies->toArray());
             }
 
         } else if(auth()->user()->role_id == 3) {
 
-            $consultancies = Consultancy::where('consultant', auth()->user()->id)->get();
-            $inbox = PrivateMessage::where('consultancy_id', $this->consultancy_id($consultancies))->with('from')->latest()->get();
+            $consultancies = Consultancy::latest()->where('consultant', auth()->user()->id)->get();
 
-        } else if(auth()->user()->role_id == 1) {
-            //optional
+            if(! $consultancies->isEmpty()) {
+                $inbox = PrivateMessage::where('consultancy_id', $this->consultancy_id($consultancies))->with(['from', 'consultancies'])->latest()->get()->toArray();
+            }
 
-            
-            $consultancies = Consultancy::all();
-            $inbox = PrivateMessage::where('consultancy_id', $this->consultancy_id($consultancies))->latest()->get();
-
+            if(! $consultancies->isEmpty()) {
+                $to = $this->findConsumer($consultancies->toArray());
+                $accepter = $this->findConsultant($consultancies->toArray());
+            }
         }
 
         $consultants = User::where('role_id', 3)->pluck('name', 'id');
         $categories = Category::pluck('name', 'id');
 
-        return view('consultancy.index', compact(['consultancies', 'inbox', 'consultants', 'categories', 'to']));
+        return view('consultancy.index', compact(['consultancies', 'inbox', 'consultants', 'categories', 'to', 'accepter']));
     }
 
     /**
@@ -127,9 +150,40 @@ class ConsultancyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Consultancy $consultancy)
     {
-        //
+        PrivateMessage::where('consultancy_id', $consultancy->id)->delete();
+        $consultancy->delete();
+
+        return back()->with('success', 'Thread Deleted with all messages');
+    }
+
+    /**
+     * Accept the specified Consultancy.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function accept(Consultancy $consultancy)
+    {
+        $consultancy->status = 'Accepted';
+        $consultancy->save();
+
+        return back()->with('success', 'Thread request accepted!');
+    }
+
+    /**
+     * Accept the specified Consultancy.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function reject(Consultancy $consultancy)
+    {
+        $consultancy->status = 'Rejected';
+        $consultancy->save();
+
+        return back()->with('success', 'Thread request rejected!');
     }
 
     private function consultancy_id($consultancies) {
@@ -154,6 +208,22 @@ class ConsultancyController extends Controller
             }, $consultancies);
 
             return $GLOBALS['only'];
+            
+        } else {
+            $consultant = $consultancies[0]['consultant'];
+        }
+
+        return $consultant;
+    }
+
+    private function findConsumer($consultancies) {
+        if(request()->topic) {
+
+            $consultant = array_filter($consultancies, function($item) {
+                if($item['id'] == request()->topic) {
+                    return $item['consultant'];
+                }
+            });
             
         } else {
             $consultant = $consultancies[0]['consultant'];

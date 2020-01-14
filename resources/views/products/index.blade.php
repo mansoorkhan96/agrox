@@ -27,10 +27,10 @@
                     <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
                     <input class="form-control form-control-rounded form-control-solid" id="key-search" type="text" placeholder="Search ...">
                 </div>
-                <a class="btn btn-success btn-air" href="/admin/products/create">
+                <a class="btn btn-success btn-air" href="/dashboard/products/create">
                     <i class="la la-plus"></i> Add New
                 </a>
-                <a class="btn btn-warning ml-2 btn-air" href="/admin/products/trashed">
+                <a class="btn btn-warning ml-2 btn-air" href="/dashboard/products/trashed">
                     <i class="la la-trash"></i> Trashed
                 </a>
             </div>
@@ -73,7 +73,7 @@
 
             function products() {
                 $.ajax({
-                    url: '/admin/products/products',
+                    url: '/dashboard/products/products',
                 }).done(function(data) {
                     $('#table-data').html(data);
                 });

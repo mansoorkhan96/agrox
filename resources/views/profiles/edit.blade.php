@@ -78,6 +78,13 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group mb-4">
+                <label>Biography</label> <br>
+                {{ Form::textarea('bio', $user->bio, ['rows' => 4, 'placeholder' => 'Your biography', 'class' => 'form-control']) }}
+                @error('bio')
+                    <label for="bio" class="text-danger">{{ $message }}</label>
+                @enderror
+            </div>
             <div class="form-group mb-0">
                 <label>Avatar (Profile Picture)</label> <br>
                 <label class="btn btn-primary file-input mr-2">

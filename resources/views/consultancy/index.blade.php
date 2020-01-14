@@ -10,15 +10,41 @@
 </div>
 <div class="row">
     <div class="col-lg-3 col-md-4">
-        <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#new-mail-modal" href="javascript:;">
+        @if(auth()->user()->role_id !== 3)
+        <a class="mb-5 btn btn-primary btn-block" data-toggle="modal" data-target="#new-mail-modal" href="javascript:;">
             <span class="btn-icon"><i class="la la-pencil"></i>Create Thread</span>
         </a>
-        <h6 class="mt-5 mb-2">Consultancy Topics/Threads</h6>
+        @endif
+        <h6 class="mb-2">Consultancy Topics/Threads</h6>
         <ul class="list-group list-group-divider">
             @forelse ($consultancies as $item)
             <li class="list-group-item flexbox">
-                <a style="width: 90%" class="flexbox-b {{ request()->topic == $item->id ? 'topic-active' : '' }}" href="{{ route('consultancies.index', ['topic' => $item->id]) }}">{{ $item->title }}</a>
-                <button class="btn btn-warning btn-icon-only btn-circle btn-sm btn-air"><i class="ti-trash"></i></button>
+                <a style="width: 80%" class="flexbox-b {{ request()->topic == $item->id ? 'topic-active' : '' }}" href="{{ route('consultancies.index', ['topic' => $item->id]) }}">
+                    @if ($item->status == 'Pending')
+                    <span class="badge badge-pill badge-primary">P</span>&nbsp;
+                    @elseif($item->status == 'Rejected')
+                    <span class="badge badge-pill badge-warning">R</span>&nbsp;
+                    @elseif($item->status == 'Accepted')
+                    <span class="badge badge-pill badge-success">A</span>&nbsp;
+                    @endif
+                    {{ $item->title }}
+                </a>
+                @if ($item->status == 'Pending')
+                    @if(! empty($accepter) && $accepter == auth()->user()->id)
+                    {{ Form::open(['route' => ['consultancies.accept', $item->id], 'class' =>'d-inline ', 'method' => 'put']) }}
+                        <button title="Accept Thread Request" type="submit" class="no-btn text-success font-20"><i class="ti-check"></i></button>
+                    {{ Form::close() }}
+                    {{ Form::open(['route' => ['consultancies.reject', $item->id], 'class' =>'d-inline ', 'method' => 'put']) }}
+                        <button title="Reject Thread Request" type="submit" class="no-btn text-danger font-20"><i class="ti-close"></i></button>
+                    {{ Form::close() }}
+                    @endif
+                @elseif ($item->status == 'Rejected')
+                    @if(! empty($accepter) && $accepter == auth()->user()->id)
+                    {{ Form::open(['route' => ['consultancies.accept', $item->id], 'class' =>'d-inline ', 'method' => 'put']) }}
+                        <button title="Accept Thread Request" type="submit" class="no-btn text-success font-20"><i class="ti-check"></i></button>
+                    {{ Form::close() }}
+                    @endif                   
+                @endif
             </li>
             @empty
             <li class="list-group-item flexbox">
@@ -31,8 +57,9 @@
         <div class="ibox" id="mailbox-container">
             <div class="flexbox-b p-4">
                 <h5 class="font-strong m-0 mr-3">INBOX</h5>
-               
-                <button class="d-block create-message btn btn-primary btn-air ml-auto p-2" data-toggle="modal" data-target="#create-message-modal"><i class="la la-pencil"></i> Compose</button>
+                @if(! empty($accepter) && $accepter == auth()->user()->id)
+                    <button class="d-block create-message btn btn-primary btn-air ml-auto p-2" data-toggle="modal" data-target="#create-message-modal"><i class="la la-pencil"></i> Compose</button>
+                @endif
             </div>
             
             <table class="table table-hover table-inbox" id="table-inbox">
@@ -52,7 +79,7 @@
                     @endforelse
                 </tbody>
             </table>
-            <ul class="pagination justify-content-end p-4">
+            {{-- <ul class="pagination justify-content-end p-4">
                 <li class="page-item">
                     <a class="page-link page-link-solid" href="javascript:;" aria-label="First">
                         <span aria-hidden="true"><i class="la la-angle-double-left"></i></span>
@@ -84,7 +111,7 @@
                 <li class="page-item">
                     <a class="page-link page-link-solid" href="javascript:;" aria-label="Last"><i class="la la-angle-double-right"></i></a>
                 </li>
-            </ul>
+            </ul> --}}
         </div>
     </div>
 </div>
@@ -188,6 +215,18 @@
                 let message = $(this).prev().val();
                 $('#message-text').text(message);
             });
+
+            $(document).on('click', '.accept-request', function(e) {
+                e.preventDefault();
+                let id = $(this).attr('data-id');
+
+                let url = "{{ route('consultancies.accept', ':id') }}";
+                url = url.replace(':id', id);
+
+                $.ajax
+            });
         });
+
+
     </script>
 @endsection

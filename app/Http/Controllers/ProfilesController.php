@@ -50,9 +50,9 @@ class ProfilesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('profiles.show', compact('user'));
     }
 
     /**
@@ -87,18 +87,20 @@ class ProfilesController extends Controller
     {
 
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:190'],
             'role_id' => ['required', 'integer'],
             'city_id' => ['required', 'integer'],
+            'bio' => ['nullable'],
             'address' => ['required'],
             'phone' => ['required'],
             'proficiency_id' => ['required', 'integer'],
-            'avatar' => ['required', 'image', 'max:1990']
+            'avatar' => ['nullable', 'image', 'max:1990']
         ]);
 
         
-
-        $data['avatar'] = request('avatar')->store('profiles', 'public');
+        if(request()->hasFile('avatar')) {
+            $data['avatar'] = request('avatar')->store('profiles', 'public');
+        }
 
         auth()->user()->update($data);
 

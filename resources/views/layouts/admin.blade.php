@@ -37,6 +37,8 @@
         <!-- END SIDEBAR-->
         <div class="content-wrapper">
             <!-- START PAGE CONTENT-->
+            @yield('page-header')
+            
             <div class="page-content fade-in-up">
                 @yield('content')
             </div>
