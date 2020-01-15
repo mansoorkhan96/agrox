@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Http\Middleware\FarmerRoleCheck;
 use App\Order;
+use App\OrderProduct;
 use App\Post;
 use App\Product;
 use App\User;
@@ -25,11 +26,32 @@ class FarmerController extends Controller
     }
 
     public function index() {
-        $ordersCount = Order::whereDate('created_at', Carbon::today())->count();
-        $salesSum = Order::whereDate('created_at', Carbon::today())->sum('billing_subtotal');
+
+        // $orders = Order::whereHas('product', function($query) {
+        //     $query->where('seller_id', auth()->user()->id);
+        // })->with('product')->get()->toArray();
+
+        $orders = Order::whereHas('product', function($query) {
+            $query->where('seller_id', auth()->user()->id);
+        })->with('products')->get();
+
+        $salesSum = 0;
+        foreach($orders as $order) {
+            foreach($order->products as $product) {
+                $salesSum += $product->price * $product->pivot->quantity;
+            }
+        }
+
+
+        $ordersCount = Order::whereDate('created_at', Carbon::today())->whereHas('product', function($query) {
+            $query->where('seller_id', auth()->user()->id);
+        })->with('product')->count();
+
         $newCustomersCount = User::whereDate('created_at', Carbon::today())->count();
 
-        $latestOrders = Order::latest()->take(10)->get();
+        $latestOrders = Order::whereHas('product', function($query) {
+            $query->where('seller_id', auth()->user()->id);
+        })->latest()->take(10)->with('product')->get();
 
         $popularCategories = Category::withCount('products')->latest('products_count')->take(10)->get();
 

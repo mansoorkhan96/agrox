@@ -62,10 +62,11 @@
                                     <button title="Set Order as Complete" type="submit" class="no-btn text-light font-16"><i class="ti-check"></i></button>
                                 {{ Form::close() }}
                                 @endif
-
+                                @if ($status != 'Complete')
                                 {{ Form::open(['route' => ['orders.reject', $id], 'class' =>'d-inline ', 'method' => 'delete']) }}
                                     <button type="submit" title="Reject Order" class="no-btn text-light font-16"><i class="ti-trash"></i></button>
                                 {{ Form::close() }}
+                                @endif
                             </td>
                         </tr>
                     @empty

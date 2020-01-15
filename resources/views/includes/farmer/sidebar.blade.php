@@ -2,7 +2,7 @@
     <div id="sidebar-collapse">
         <ul class="side-menu metismenu">
             <li class="">
-                <a href="{{ route('dashboard.index') }}"><i class="sidebar-item-icon ti-home"></i>
+                <a href="{{ route('farmer.index') }}"><i class="sidebar-item-icon ti-home"></i>
                     <span class="nav-label">Dashboard</span></a>
             </li>
             <li>

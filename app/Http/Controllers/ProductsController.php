@@ -23,7 +23,11 @@ class ProductsController extends Controller
     }
 
     public function products() {
-        $products = Product::with(['user', 'categories'])->latest()->get()->toArray();
+        if(auth()->user()->role_id != 1) {
+            $products = Product::where('user_id', auth()->user()->id)->with(['user', 'categories'])->latest()->get()->toArray();
+        } else {
+            $products = Product::with(['user', 'categories'])->latest()->get()->toArray();
+        }
 
         return view('products.products', compact('products'));
     }
@@ -83,10 +87,10 @@ class ProductsController extends Controller
         if($product = Product::create($data)) {
             $product->categories()->attach($categories);
             
-            return redirect('/admin/products')->with('success', 'Product added successfully');
+            return redirect('/dashboard/products')->with('success', 'Product added successfully');
         }
 
-        return redirect('/admin/products')->with('error', 'Could not add product');
+        return redirect('/dashboard/products')->with('error', 'Could not add product');
     }
 
     /**
@@ -163,10 +167,10 @@ class ProductsController extends Controller
         if(Product::where('id', $product->id)->update($data)) {
             $product->categories()->sync($categories);
             
-            return redirect('/admin/products')->with('success', 'Product updated successfully');
+            return redirect('/dashboard/products')->with('success', 'Product updated successfully');
         }
 
-        return redirect('/admin/products')->with('error', 'Could not update product');
+        return redirect('/dashboard/products')->with('error', 'Could not update product');
     }
 
     /**
@@ -181,10 +185,10 @@ class ProductsController extends Controller
             $products = Product::with(['user', 'categories'])->latest()->get()->toArray();
 
             return view('products.products', compact('products'));
-            // return redirect('/admin/products')->with('success', 'Product deleted successfully');
+            // return redirect('/dashboard/products')->with('success', 'Product deleted successfully');
         }
 
-        // return redirect('/admin/products')->with('Could not delete product');
+        // return redirect('/dashboard/products')->with('Could not delete product');
         return response()->json('status', false);
     }
 

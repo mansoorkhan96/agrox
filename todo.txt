@@ -1,9 +1,9 @@
-Post Like,
-Farmer Tag {show posts by tag}Link On side
-
-categories clickable with pagination
-
-search for product, blog, forum, consultant
+FrontRemaining: {
+    Search for product, blog, forum, consultant
+    Stock Management
+    
+}
+Image-Thumbnails
 
 index($id = null) {
     if(id) {
@@ -23,10 +23,38 @@ dont bring discussions in blog
 Pros: {
     Cart Library,
     Helpers,
-    Provider table seperation,
+    Social Provider table seperation,
+    Dynamic Pagination,
+    Archives Tag, Category
+    (Front-End) -> Slug Based Blog and Shop {
+        user friendly
+        search engine friendly
+    }
+
+
+    Laravel Cache (Dont load frequent requent from db every time load it from cache)
     Policies,
     ACL Management,
-    Dynamic Pagination,
-    Ajax only Requests,
-    
+    Ajax only Requests(For Api),
+    Indexes (Optimized DB Queries)
+}
+
+
+Users {
+    admin: mafalda@example.com
+    password: password
+
+
+    customer: price.bill@example.com
+    password: password
+
+
+    farmer: braulio.schroeder@example.net
+    password: mansoorkhan
+
+    consultant: lawrence.abbott@example.com
+    password: password
+
+    academic: eolson@example.net
+    password: password
 }

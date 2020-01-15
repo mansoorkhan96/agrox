@@ -19,7 +19,11 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['user', 'categories'])->latest()->get()->toArray();
+        if(auth()->user()->role_id != 1) {
+            $posts = Post::where('user_id', auth()->user()->id)->with(['user', 'categories'])->latest()->get()->toArray();
+        } else {
+            $posts = Post::with(['user', 'categories'])->latest()->get()->toArray();
+        }
 
         return view('posts.index', compact('posts'));
     }
@@ -64,6 +68,10 @@ class PostsController extends Controller
             'attachments.*.mimetypes' => 'Attachment(s) must be of type: [Image, Word File, Excel File, PPT File, Video]',
             'attachments.*.file' => 'Attachment(s) must be a file'
         ]);
+
+        if($data['post_type'] == 'Discussion') {
+            $data['tag'] = null;
+        }
             
         $data['slug'] = Str::slug($data['title']) . '-' . strtolower(Str::random(10));
 
@@ -76,7 +84,7 @@ class PostsController extends Controller
             }
         }
         
-        $data['user_id'] = 1;
+        $data['user_id'] = auth()->user()->id;
         $data['attachments'] = implode(',', $attachments);
 
         $categories = $data['categories'];
@@ -85,10 +93,10 @@ class PostsController extends Controller
         if($post = Post::create($data)) {
             $post->categories()->attach($categories);
             
-            return redirect('/admin/posts')->with('success', 'Post added successfully!');
+            return redirect('/dashboard/posts')->with('success', 'Post added successfully!');
         }
 
-        return redirect('/admin/posts')->with('error', 'Could not add Post!');
+        return redirect('/dashboard/posts')->with('error', 'Could not add Post!');
     }
 
     /**
@@ -168,7 +176,7 @@ class PostsController extends Controller
             $data['attachments'] = implode(',', $attachments);
         }
         
-        $data['user_id'] = 1;
+        $data['user_id'] = auth()->user()->id;
 
         $categories = $data['categories'];
         unset($data['categories']);
@@ -176,10 +184,10 @@ class PostsController extends Controller
         if(Post::where('id', $post->id)->update($data)) {
             $post->categories()->sync($categories);
             
-            return redirect('/admin/posts')->with('success', 'Post update successfully!');
+            return redirect('/dashboard/posts')->with('success', 'Post update successfully!');
         }
 
-        return redirect('/admin/posts')->with('error', 'Could not update Post!');
+        return redirect('/dashboard/posts')->with('error', 'Could not update Post!');
     }
 
     /**
@@ -191,10 +199,10 @@ class PostsController extends Controller
     public function destroy(Post $post)
     {
         if($post->delete()) {
-            return redirect()->route('posts.index')->with('success', 'Post moved to Trash!');
+            return back()->with('success', 'Post moved to Trash!');
         }
 
-        return redirect()->route('posts.index')->with('error', 'Could not delete the post!');
+        return back()->with('error', 'Could not delete the post!');
     }
 
     public function trashed() {

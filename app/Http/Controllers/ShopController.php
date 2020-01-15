@@ -22,6 +22,7 @@ class ShopController extends Controller
      */
     public function index()
     {
+        $pagination = 1;
 
         $categoriesProductCount = DB::table('categories')
             ->join('category_product', 'categories.id', '=', 'category_product.category_id')
@@ -34,11 +35,11 @@ class ShopController extends Controller
         if(request()->category) {
             $products = Product::whereHas('categories', function($query) {
                 $query->where('slug', request()->category);
-            })->with('reviews')->latest()->paginate(6);
+            })->with('reviews')->latest()->paginate($pagination);
 
             $title = 'Category: ' . Category::where('slug', request()->category)->first()->name;
         } else {
-            $products = Product::with('reviews')->latest()->paginate(6);
+            $products = Product::with('reviews')->latest()->paginate($pagination);
             $title = 'Popular Products';
         }
 

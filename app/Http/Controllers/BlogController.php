@@ -19,16 +19,17 @@ class BlogController extends Controller
      */
     public function index()
     {
+        $pagination = 1;
         $categoriesPostCount = DB::table('categories')
             ->join('category_post', 'categories.id', '=', 'category_post.category_id')
             ->select(DB::raw(('categories.id, categories.name, categories.slug, COUNT(category_post.post_id) AS posts_count')))
             ->groupBy('categories.id')
             ->get()->toArray();
 
-        $popular = Post::inRandomOrder()->latest()->take(5)->get()->toArray();
+        $popular = Post::inRandomOrder()->where('post_type', 'post')->latest()->take(5)->get()->toArray();
 
         if(request()->tag) {
-            $posts = Post::where('tag', request()->tag)->withCount('discussions')->paginate(4);
+            $posts = Post::where('tag', request()->tag)->where('post_type', 'post')->withCount('discussions')->paginate($pagination);
 
             $title = Str::title(request()->tag);
             $title = 'Tag: ' . str_replace('_', ' ', $title);
@@ -37,13 +38,13 @@ class BlogController extends Controller
 
             $posts = Post::whereHas('categories', function($query) {
                 $query->where('slug', request()->category);
-            })->withCount('discussions')->paginate(4);
+            })->where('post_type', 'post')->withCount('discussions')->paginate($pagination);
 
             $title = Str::title(request()->tag);
             $title = 'Category: ' . Str::title(str_replace('-', ' ', request()->category));
             
         } else {
-            $posts = Post::withCount('discussions')->paginate(6);
+            $posts = Post::where('post_type', 'post')->withCount('discussions')->paginate($pagination);
             $title = 'Latest Posts';
         }
 
@@ -105,7 +106,7 @@ class BlogController extends Controller
             ->groupBy('categories.id')
             ->get()->toArray();
 
-        $popular = Post::inRandomOrder()->latest()->take(5)->get()->toArray();
+        $popular = Post::inRandomOrder()->where('post_type', 'post')->latest()->take(5)->get()->toArray();
 
         return view('blog.show', compact(['post', 'categoriesPostCount', 'popular', 'post_categories', 'userRating', 'postRating', 'comments']));
     }

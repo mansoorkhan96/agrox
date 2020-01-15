@@ -65,10 +65,11 @@
 										@elseif (auth()->user()->role_id == 2)
 											<li><a href="{{ route('farmer.index') }}">Dashboard</a></li>
 										@elseif (auth()->user()->role_id == 3)
-											<li><a href="{{ route('consulant.index') }}">Dashboard</a></li>
+											<li><a href="{{ route('consultant.index') }}">Dashboard</a></li>
 										@elseif (auth()->user()->role_id == 4)
 											<li><a href="{{ route('academic.index') }}">Dashboard</a></li>
 										@else
+											<li><a href="{{ route('profile.show', auth()->user()->id) }}"><img class="img-circle front-profile" src="{{ avatar(auth()->user()->avatar) }}" alt=""></a></li>
 											<li><a href="{{ route('order.index') }}">My Orders</a></li>
 										@endif
 										<li>

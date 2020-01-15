@@ -81,7 +81,9 @@ class CheckoutController extends Controller
         $data['billing_total'] = MCart::total() + 200;
 
         $order = Order::create($data);
-
+        
+        // seller_id goes in order_product
+        
         foreach(MCart::content() as $item) {
             OrderProduct::create([
                 'order_id' => $order->id,

@@ -150,3 +150,11 @@ table.shop-cart tbody tr.cart_item td.product-remove button:hover {
 .product-categories a.active {
     font-weight: 900;
 }
+
+
+.front-profile {
+    width: 35px;
+    height: 35px;
+    margin-top: -10px;
+    margin-bottom: -5px;
+}
