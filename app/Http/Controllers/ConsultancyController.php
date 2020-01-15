@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\DB;
 class ConsultancyController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -198,16 +208,16 @@ class ConsultancyController extends Controller
 
     private function findConsultant($consultancies) {
         if(request()->topic) {
-            $GLOBALS['only'] = null;
+            $GLOBALS['consultant'] = null;
 
             $consultant = array_map(function($item) {
                 if($item['id'] == request()->topic) {
-                    $GLOBALS['only'] = $item['consultant'];
+                    $GLOBALS['consultant'] = $item['consultant'];
                     return;
                 }
             }, $consultancies);
 
-            return $GLOBALS['only'];
+            return $GLOBALS['consultant'];
             
         } else {
             $consultant = $consultancies[0]['consultant'];
@@ -218,17 +228,19 @@ class ConsultancyController extends Controller
 
     private function findConsumer($consultancies) {
         if(request()->topic) {
+            $GLOBALS['consumer'] = null;
 
-            $consultant = array_filter($consultancies, function($item) {
+            $consultant = array_map(function($item) {
                 if($item['id'] == request()->topic) {
-                    return $item['consultant'];
+                    $GLOBALS['consumer'] = $item['consumer'];
+                    return;
                 }
-            });
+            }, $consultancies);
+
+            return $GLOBALS['consumer'];
             
         } else {
-            $consultant = $consultancies[0]['consultant'];
+            return $consultancies[0]['consumer'];
         }
-
-        return $consultant;
     }
 }

@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 class PostRating extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Store a newly created resource in storage or update the existing one.
      *
      * @param  \Illuminate\Http\Request  $request

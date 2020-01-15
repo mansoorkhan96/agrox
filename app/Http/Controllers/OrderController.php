@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\AdminRoleCheck;
+use App\Http\Middleware\FarmerRoleCheck;
 use App\Order;
 use App\Product;
 use Illuminate\Http\Request;
@@ -9,6 +11,18 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        
+        $this->middleware(AdminRoleCheck::class) OR $this->middleware(FarmerRoleCheck::class);
+    }
+
     /**
      * Display a listing of the orders.
      *

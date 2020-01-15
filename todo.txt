@@ -1,7 +1,7 @@
 FrontRemaining: {
     Search for product, blog, forum, consultant
     Stock Management
-    
+    Form submmiting twice on dubble click
 }
 Image-Thumbnails
 

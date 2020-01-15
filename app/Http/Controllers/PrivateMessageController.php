@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 
 class PrivateMessageController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function store() {
         $data = request()->validate([
             'consultancy_id' => 'required',

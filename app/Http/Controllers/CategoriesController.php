@@ -3,11 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Middleware\AdminRoleCheck;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class CategoriesController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(AdminRoleCheck::class);
+        
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -48,10 +61,10 @@ class CategoriesController extends Controller
         $data['slug'] = Str::slug($data['name'], '-') . '-' . strtolower(Str::random(10));
 
         if(Category::create($data)) {
-            return redirect('/admin/categories')->with('success', 'Category added successfully');
+            return back()->with('success', 'Category added successfully');
         }
         
-        return redirect('/admin/categories')->with('error', 'Failed! Could not add Category');
+        return back()->with('error', 'Failed! Could not add Category');
     }
 
     /**
@@ -95,10 +108,10 @@ class CategoriesController extends Controller
         $data['slug'] = Str::slug($data['name'], '-') . '-' . strtolower(Str::random(10));
 
         if(Category::where('id', $category->id)->update($data)) {
-            return redirect('/admin/categories')->with('success', 'Category updated successfully');
+            return back()->with('success', 'Category updated successfully');
         }
 
-        return redirect('/admin/categories')->with('error', 'Failed! Could not update Category');
+        return back()->with('error', 'Failed! Could not update Category');
     }
 
     /**
@@ -110,9 +123,9 @@ class CategoriesController extends Controller
     public function destroy(Category $category)
     {
         if($category->delete()) {
-            return redirect('/admin/categories')->with('success', 'Category deleted succussfully');
+            back()->with('success', 'Category deleted succussfully');
         }
 
-        return redirect('/admin/categories')->with('error', 'Failed! Could not delete Category');
+        back()->with('error', 'Failed! Could not delete Category');
     }
 }

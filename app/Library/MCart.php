@@ -155,17 +155,11 @@ class MCart {
     }
 
     private static function exists($id) {
-        /**
-         * Check if cart is exists
-         * 
-         */
+        
         if(session()->has('mcart')) {
 
             foreach(session()->get('mcart') as $item) {
-                /**
-                 * Check if item with specified exists
-                 * 
-                 */
+                
                 if($item['id'] == $id) {
                     return true;
                 }

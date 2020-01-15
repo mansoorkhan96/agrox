@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Middleware\AdminRoleCheck;
+use App\Http\Middleware\FarmerRoleCheck;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -10,6 +12,19 @@ use Illuminate\Support\Str;
 
 class ProductsController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        
+        $this->middleware(AdminRoleCheck::class) OR $this->middleware(FarmerRoleCheck::class);
+        
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -193,7 +208,11 @@ class ProductsController extends Controller
     }
 
     public function trashed() {
-        $products = Product::onlyTrashed()->with(['user', 'categories'])->get()->toArray();
+        if(auth()->user()->role_id != 1) {
+            $products = Product::onlyTrashed()->where('user_id', auth()->user()->id)->with(['user', 'categories'])->get()->toArray();
+        } else {
+            $products = Product::onlyTrashed()->with(['user', 'categories'])->get()->toArray();
+        }
 
         return view('products.trashed', compact('products'));
     }
