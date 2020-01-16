@@ -2,7 +2,19 @@ FrontRemaining: {
     Search for product, blog, forum, consultant
     Stock Management
     Form submmiting twice on dubble click
+
 }
+like
+cart db
+password reset
+stock
+user num posts, likes
+search discussions
+profile approval
+list of users
+active inactive accounts use softdeletes
+top selling product
+
 Image-Thumbnails
 
 index($id = null) {

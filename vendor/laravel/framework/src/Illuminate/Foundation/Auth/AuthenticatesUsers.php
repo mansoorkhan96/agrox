@@ -155,9 +155,14 @@ trait AuthenticatesUsers
      */
     public function logout(Request $request)
     {
+        $cartData = session()->get('mcart');
+
         $this->guard()->logout();
 
         $request->session()->invalidate();
+
+        session()->put('mcart', $cartData);
+        session()->save();
 
         return $this->loggedOut($request) ?: redirect('/');
     }
