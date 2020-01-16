@@ -58,24 +58,26 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6 form-group mb-4">
+                            @if (auth()->user()->role_id == 5)
+                                {{ Form::hidden('post_type', 'discussion') }}
+                            @else
                             <label>Post Type</label>
                             {{ Form::select('post_type', ['post' => 'Post', 'discussion' => 'Discussion'], $post->post_type, ['class' => 'form-control form-control-solid', 'placeholder' => 'Select Post Type']) }}
                             @error('post_type')
                                 <label for="post_type" class="col-form-label text-danger">{{ $message }}</label>
                             @enderror
+                            @endif
                         </div>
                         <div class="col-sm-6 form-group mb-4">
+                            @if (auth()->user()->role_id != 5)
                             <label>Tag</label>
                             {{ Form::select('tag', ['success_story' => 'Success-Story', 'farmer_experience' => 'Farmer-Experience'], $post->tag, ['class' => 'form-control form-control-solid', 'placeholder' => 'Select a Tag']) }}
                             @error('tag')
                                 <label for="tag" class="col-form-label text-danger">{{ $message }}</label>
                             @enderror
+                            @endif
                         </div>
                     </div>
-                    {{-- <div class="form-group mb-4">
-                        <label>Tags</label>
-                        <input class="tagsinput form-control form-control-solid" type="text" placeholder="Tags" value="Fashion,Dress,Broadway,Autumn collection,Shop">
-                    </div> --}}
                     <div class="form-group mb-4">
                         <label>Excerpt</label>
                         {{ Form::textarea('excerpt', $post->excerpt, ['class' => 'form-control form-control-solid', 'placeholder' => 'Short Description', 'rows' => 3]) }}

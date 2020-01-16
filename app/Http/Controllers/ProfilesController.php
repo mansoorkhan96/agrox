@@ -63,6 +63,9 @@ class ProfilesController extends Controller
      */
     public function show(User $user)
     {
+        if(auth()->user()->role_id != 1 && $user->id != auth()->user()->id) {
+            abort(401);
+        }
         $location = $user->city()->get()->toArray();
 
         $location = Arr::collapse($location);
@@ -78,8 +81,8 @@ class ProfilesController extends Controller
      */
     public function edit(User $user)
     {
-        if($user->id != auth()->user()->id) {
-            abort(401, 'Cannot access this page!, Unauthorized Request');
+        if(auth()->user()->role_id != 1 && $user->id != auth()->user()->id) {
+            abort(401);
         }
 
         $location = $user->city()->get()->toArray();
@@ -112,7 +115,6 @@ class ProfilesController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $data = $request->validate([
             'name' => ['required', 'string', 'max:190'],
             'role_id' => ['required', 'integer'],

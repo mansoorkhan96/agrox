@@ -33,7 +33,7 @@ class FarmerController extends Controller
 
         $orders = Order::whereHas('product', function($query) {
             $query->where('seller_id', auth()->user()->id);
-        })->with('products')->get();
+        })->whereDate('created_at', Carbon::today())->with('products')->get();
 
         $salesSum = 0;
         foreach($orders as $order) {

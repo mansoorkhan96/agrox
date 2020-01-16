@@ -12,28 +12,24 @@
                             <span class="font-13">{{ date('M', strtotime($post->created_at)) }}</span>
                         </div>
                         <div class="d-inline-flex">
-                            <span class="text-muted pl-3 pr-3 text-center" style="border-right:1px solid rgba(0,0,0,.1);"><i class="fa fa-heart-o d-block font-16 mb-2"></i>04</span>
-                            <span class="text-muted pl-3 pr-3 text-center"><i class="fa fa-comment-o d-block font-16 mb-2"></i>{{ count($comments) }}</span>
+                            <span class="text-muted pl-3 pr-3 text-center"><i class="fa fa-comment-o d-block font-16 mb-2"></i>56</span>
                         </div>
                     </div>
-                    <div>
-                        <button class="btn btn-outline-secondary btn-icon-only btn-circle btn-air mr-2"><i class="fa fa-facebook"></i></button>
-                        <button class="btn btn-outline-secondary btn-icon-only btn-circle btn-air mr-2"><i class="fa fa-twitter"></i></button>
-                        <button class="btn btn-outline-secondary btn-icon-only btn-circle btn-air mr-2"><i class="fa fa-dribbble"></i></button>
-                        <button class="btn btn-outline-secondary btn-icon-only btn-circle btn-air"><i class="fa fa-linkedin"></i></button>
-                    </div>
+                    
                 </div>
                 <h1 class="text-center my-5">{{ $post->title }}</h1>
                 <p>{{ $post->excerpt }}</p>
                 <div class="row">
+                @if ($post->featured_image)
                     <div class="col-lg-6 mb-4 mt-4">
                         <img src="{{ asset('/storage/' . $post->featured_image) }}" alt="image" />
                     </div>
+                @endif
                 </div>
                 
                 <p> {!! $post->body !!} </p>
                 <hr class="my-4">
-
+                
                 <div class="flexbox">
                     <div>
                         <h5>Attachments: </h5>
@@ -54,7 +50,6 @@
                     </div>
                 </div>
                 <hr class="my-4">
-
                 <div class="flexbox">
                     <div>
                         <b>Categories: </b>
@@ -74,36 +69,37 @@
                         <p class="pt-2 pl-3 pr-3 pb-3">{{ $author->bio }} </p>
                     </div>
                 </div>
+                
+                
                 <hr class="my-4">
-                <h5 class="font-strong mb-3"><i class="fa fa-comment-o mr-2"></i>{{ count($comments) }} comment(s)</h5>
+                <h5 class="font-strong mb-3"><i class="fa fa-comment-o mr-2"></i>{{ count($comments) }} Ansers(s)</h5>
                 <ul class="media-list">
                     @forelse ($comments as $item)
                     <li class="media">
-                        <a class="media-img" href="{{ route('profile.show', $item['user']['id']) }}">
+                        <a class="media-img" href="javascript:;">
                             <img src="{{ avatar($item['user']['avatar']) }}" alt="image" width="45" />
                         </a>
                         <div class="media-body">
                             <div class="media-heading">
-                                <a class="comment-author" href="{{ route('profile.show', $item['user']['id']) }}">{{ $item['user']['name'] }}</a><small class="text-muted ml-2">{{ date('F, j Y', strtotime($item['user']['created_at'])) }}</small>
+                                <a class="comment-author" href="javascript:;">{{ $item['user']['name'] }}</a><small class="text-muted ml-2">{{ date('F, j Y', strtotime($item['user']['created_at'])) }}</small>
                                 <div class="pull-right font-13">
-                                    {{ Form::open(['route' => ['post.deletecomment', $item['id']], 'method' =>'delete']) }}
-                                        <button type="submit" class="no-btn text-muted mr-2">
-                                            <i class="fa fa-trash font-18"></i>
-                                        </button>
-                                    {{ Form::close() }}
+                                    
                                 </div>
                             </div>
-                            <p class="m-0">{{ $item['discussion'] }}</p>
+                            <p class="m-0">{!! $item['discussion'] !!}</p>
                         </div>
                     </li>
                     @empty
-                        <p class="lead">No Comments</p>
+                        <p class="lead">No Answers</p>
                     @endforelse
                 </ul>
-                <h5 class="font-strong mt-4 mb-3">Leave A Comment</h5>
+                <h5 class="font-strong mt-4 mb-3">Your Answer</h5>
                 {{ Form::open(['route' => ['post.createcomment', $post->id], 'method' => 'post']) }}
                     <div class="form-group">
-                        <textarea class="form-control" name="comment" required rows="5" placeholder="Comment here"></textarea>
+                        {{ Form::textarea('comment', null, ['class' => 'form-control', 'placeholder' => 'Write Your Answer', 'id' => 'summernote', 'data-plugin'=>'summernote', 'data-air-mode' => 'true']) }}
+                        @error('comment')
+                            <label for="comment" class="col-form-label text-danger">{{ $message }}</label>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary" type="submit">SUBMIT</button>
@@ -113,4 +109,16 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('page_script')
+    <script src="{{ asset('assets/vendors/summernote/dist/summernote.min.js') }}"></script>
+    <script>
+        $(function() {
+            $('#summernote').summernote();
+            $('#summernote_air').summernote({
+                airMode: true
+            });
+        });
+    </script>
 @endsection

@@ -86,14 +86,13 @@
                             </div>
                             <div class="col-md-10">
                                 <h3 class="name">{{ $post->user->name }}</h3>
-                                <div class="desc">We are online market of organic fruits, vegetables, juices and dried fruits. We bring fresh, seasonal products from our family farm right to your doorstep.</div>
+                                <div class="desc">{{ $post->user->bio }}</div>
                             </div>
                         </div>
                     </div>
                     <div class="comments-area">
                         <div class="single-comments-list mt-0">
                             <div class="mb-2">
-                                
                                 <h2 class="comment-title">{{ count($comments) }} comment(s) for {{ $post->title }}</h2>
                             </div>
                             <ul class="comment-list">

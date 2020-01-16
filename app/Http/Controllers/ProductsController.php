@@ -127,6 +127,10 @@ class ProductsController extends Controller
      */
     public function edit(Product $product)
     {
+        if(auth()->user()->role_id != 1 && $product->user_id != auth()->user()->id) {
+            abort(401);
+        }
+
         $categories = Category::with('parent')->get()->toArray();
 
         $product_categories = Product::with('categories')->where('id', $product->id)->get()->toArray();
@@ -144,6 +148,10 @@ class ProductsController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        if(auth()->user()->role_id != 1 && $product->user_id != auth()->user()->id) {
+            abort(401);
+        }
+
         $data = $request->validate([
             'name' => ['required'],
             'categories' => ['required'],
@@ -196,6 +204,10 @@ class ProductsController extends Controller
      */
     public function destroy(Product $product)
     {
+        if(auth()->user()->role_id != 1 && $product->user_id != auth()->user()->id) {
+            abort(401);
+        }
+
         if($product->delete()) {
             $products = Product::with(['user', 'categories'])->latest()->get()->toArray();
 

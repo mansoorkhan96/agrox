@@ -32,6 +32,9 @@
                                 <a href="{{ route('blog.index') }}">Blog</a>
                             </li>
                             <li>
+                                <a href="{{ route('forum.index') }}">Forum</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('pages.contact') }}">Contact</a>
                             </li>
                             <li>

@@ -29,10 +29,14 @@ class PostsController extends Controller
      */
     public function index()
     {
+        if(auth()->user()->role_id == 5) {
+            abort(401);
+        }
+
         if(auth()->user()->role_id != 1) {
-            $posts = Post::where('user_id', auth()->user()->id)->with(['user', 'categories'])->latest()->get()->toArray();
+            $posts = Post::where('post_type', 'post')->where('user_id', auth()->user()->id)->with(['user', 'categories'])->latest()->get()->toArray();
         } else {
-            $posts = Post::with(['user', 'categories'])->latest()->get()->toArray();
+            $posts = Post::where('post_type', 'post')->with(['user', 'categories'])->latest()->get()->toArray();
         }
 
         return view('posts.index', compact('posts'));
@@ -58,6 +62,11 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+        if(request()->post_type == 'discussion') {
+            $featured_image_rule = ['nullable', 'image', 'max:1990'];
+        } else {
+            $featured_image_rule = ['required', 'image', 'max:1990'];
+        }
         $data = $request->validate([
             'title' => ['required'],
             'categories' => ['required'],
@@ -65,7 +74,7 @@ class PostsController extends Controller
             'tag' => ['nullable', 'alpha_dash'],
             'excerpt' => ['required'],
             'body' => ['required'],
-            'featured_image' => ['required', 'image', 'max:1990'],
+            'featured_image' => $featured_image_rule,
             'attachments.*' => [
                 'nullable',
                 'file',
@@ -79,13 +88,16 @@ class PostsController extends Controller
             'attachments.*.file' => 'Attachment(s) must be a file'
         ]);
 
-        if($data['post_type'] == 'Discussion') {
+        if($data['post_type'] == 'discussion') {
             $data['tag'] = null;
         }
             
         $data['slug'] = Str::slug($data['title']) . '-' . strtolower(Str::random(10));
-
-        $data['featured_image'] = request('featured_image')->store('product_images', 'public');
+        if(request()->hasFile('featured_image')) {
+            $data['featured_image'] = request('featured_image')->store('product_images', 'public');
+        } else {
+            $data['featured_image'] = null;
+        }
 
         $attachments = [];
         if($request->hasFile('attachments')) {
@@ -100,13 +112,18 @@ class PostsController extends Controller
         $categories = $data['categories'];
         unset($data['categories']);
 
+        $redirect = '/dashboard/posts';
+        if($data['post_type'] == 'discussion') {
+            $redirect = '/forum';
+        }
+
         if($post = Post::create($data)) {
             $post->categories()->attach($categories);
             
-            return redirect('/dashboard/posts')->with('success', 'Post added successfully!');
+            return redirect($redirect)->with('success', 'Item added successfully!');
         }
 
-        return redirect('/dashboard/posts')->with('error', 'Could not add Post!');
+        return redirect($redirect)->with('error', 'Could not add Item!');
     }
 
     /**
@@ -119,8 +136,12 @@ class PostsController extends Controller
     {
         $post_categories = $post->categories()->where('category_post.post_id', $post->id)->pluck('name');
         $comments = $post->discussions()->with('user')->get()->toArray();
+        $author = $post->user()->first();
 
-        return view('posts.show', compact(['post', 'post_categories', 'comments']));
+        if($post->post_type == 'discussion') {
+            return view('forum.show', compact(['post', 'post_categories', 'comments', 'author']));
+        }
+        return view('posts.show', compact(['post', 'post_categories', 'comments', 'author']));
     }
 
     /**
@@ -131,6 +152,10 @@ class PostsController extends Controller
      */
     public function edit(Post $post)
     {
+        if(auth()->user()->role_id != 1 && $post->user_id != auth()->user()->id) {
+            abort(401);
+        }
+
         $categories = Category::with('parent')->get()->toArray();
 
         $post_categories = $post->categories()->where('category_post.post_id', $post->id)->pluck('category_post.category_id')->toArray();
@@ -150,6 +175,16 @@ class PostsController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        if(auth()->user()->role_id != 1 && $post->user_id != auth()->user()->id) {
+            abort(401);
+        }
+
+        if(request()->post_type == 'discussion') {
+            $featured_image_rule = ['nullable', 'image', 'max:1990'];
+        } else {
+            $featured_image_rule = ['required', 'image', 'max:1990'];
+        }
+
         $data = $request->validate([
             'title' => ['required'],
             'categories' => ['required'],
@@ -157,7 +192,7 @@ class PostsController extends Controller
             'tag' => ['nullable', 'alpha_dash'],
             'excerpt' => ['required'],
             'body' => ['required'],
-            'featured_image' => ['image', 'max:1990'],
+            'featured_image' => $featured_image_rule,
             'attachments.*' => [
                 'nullable',
                 'file',
@@ -177,6 +212,10 @@ class PostsController extends Controller
             $data['featured_image'] = request('featured_image')->store('product_images', 'public');
         }
 
+        if($data['post_type'] == 'discussion') {
+            $data['tag'] = null;
+        }
+
         $attachments = [];
         if($request->hasFile('attachments')) {
             foreach($request->file('attachments') as $image) {
@@ -191,13 +230,18 @@ class PostsController extends Controller
         $categories = $data['categories'];
         unset($data['categories']);
 
+        $redirect = '/dashboard/posts';
+        if($data['post_type'] == 'discussion') {
+            $redirect = '/forum';
+        }
+
         if(Post::where('id', $post->id)->update($data)) {
             $post->categories()->sync($categories);
             
-            return redirect('/dashboard/posts')->with('success', 'Post update successfully!');
+            return redirect($redirect)->with('success', 'Item update successfully!');
         }
 
-        return redirect('/dashboard/posts')->with('error', 'Could not update Post!');
+        return redirect($redirect)->with('error', 'Could not update Item!');
     }
 
     /**
@@ -208,6 +252,10 @@ class PostsController extends Controller
      */
     public function destroy(Post $post)
     {
+        if(auth()->user()->role_id != 1 && $post->user_id != auth()->user()->id) {
+            abort(401);
+        }
+
         if($post->delete()) {
             return back()->with('success', 'Post moved to Trash!');
         }
@@ -216,7 +264,11 @@ class PostsController extends Controller
     }
 
     public function trashed() {
-        $posts = Post::onlyTrashed()->with(['user', 'categories'])->get()->toArray();
+        if(auth()->user()->role_id != 1) {
+            $posts = Post::onlyTrashed()->where('user_id', auth()->user()->id)->with(['user', 'categories'])->get()->toArray();
+        } else {
+            $posts = Post::onlyTrashed()->with(['user', 'categories'])->get()->toArray();
+        }
 
         return view('posts.trashed', compact('posts'));
     }

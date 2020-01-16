@@ -26,6 +26,11 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('forum.index') }}"><i class="sidebar-item-icon ti-comments"></i>
+                    <span class="nav-label">Forum</span>
+                </a>
+            </li>
+            <li>
                 <a href=""><i class="sidebar-item-icon ti-shopping-cart"></i>
                     <span class="nav-label">Ecommerce</span>
                 </a>

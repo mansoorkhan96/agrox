@@ -58,6 +58,9 @@ Route::get('/about', 'PagesController@about')->name('pages.about');
 Route::get('/contact', 'PagesController@contact')->name('pages.contact');
 Route::get('/message', 'PagesController@message')->name('pages.message');
 
+Route::get('/forum', 'ForumController@index')->name('forum.index');
+Route::get('/forum/{post}', 'PostsController@show')->name('forum.show');
+
 Route::resource('blog', 'BlogController');
 Route::post('/rating/{post}', 'PostRating@store')->name('postRating.store');
 Route::post('/create-comment/{post}', 'BlogController@createComment')->name('comment.create');

@@ -37,6 +37,8 @@ class AdminController extends Controller
 
         $newCustomers = User::whereDate('created_at', Carbon::today())->get();
 
+        $forums = Post::latest()->where('post_type', 'discussion')->withCount('discussions')->with('user')->get();
+
         return view('admin.index', compact([
             'ordersCount',
             'salesSum',
@@ -45,6 +47,7 @@ class AdminController extends Controller
             'popularCategories',
             'latestPosts',
             'newCustomers',
+            'forums'
         ]));
     }
 }

@@ -21,7 +21,7 @@ class CreateConsultanciesTable extends Migration
             $table->foreign('consumer')->references('id')->on('users');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->string('title')->unique();
+            $table->string('title');
             $table->text('description')->nullable();
             $table->enum('status', ['Pending', 'Accepted', 'Rejected'])->default('Pending');
             $table->timestamps();

@@ -173,111 +173,38 @@
     <div class="col-xl-8">
         <div class="ibox ibox-fullheight">
             <div class="ibox-head">
-                <div class="ibox-title">Forum Topics</div>
+                <div class="ibox-title">Latest Forum Topics</div>
                 <div class="ibox-tools">
                     <a class="dropdown-toggle font-18" data-toggle="dropdown"><i class="ti-ticket"></i></a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item"><i class="ti-pencil mr-2"></i>Create</a>
-                        <a class="dropdown-item"><i class="ti-pencil-alt mr-2"></i>Edit</a>
-                        <a class="dropdown-item"><i class="ti-close mr-2"></i>Remove</a>
+                        <a href="{{ route('posts.create') }}" class="dropdown-item"><i class="ti-pencil mr-2"></i>Create</a>
                     </div>
                 </div>
             </div>
             <div class="ibox-body">
-                <ul class="media-list media-list-divider scroller mr-2" data-height="470px">
+                <ul class="media-list media-list-divider scroller mr-2" >
+                    @forelse ($forums as $post)
                     <li class="media">
                         <div class="media-body d-flex">
                             <div class="flex-1">
                                 <h5 class="media-heading">
-                                    <a href="javascript:;">How to install new Adminca</a>
+                                    <a href="{{ route('forum.show', $post->id) }}">{{ $post->title }}</a>
                                 </h5>
-                                <p class="font-13 text-light mb-1">Cillum in incididunt reprehenderit qui reprehenderit nulla</p>
+                                <p class="font-13 text-light mb-1">{{ Str::limit($post->excerpt, 200) }}</p>
                                 <div class="d-flex align-items-center font-13">
-                                    <img class="img-circle mr-2" src="assets/img/users/u11.jpg" alt="image" width="22" />
-                                    <a class="mr-2 text-success" href="javascript:;">Tyrone Carroll</a>
-                                    <span class="text-muted">18 mins ago</span>
+                                    <img class="img-circle mr-2" src="{{ avatar($post->user->avatar) }}" alt="image" width="22" />
+                                    <a class="mr-2 text-success" href="javascript:;">{{ $post->user->name }}</a>
+                                    <span class="text-muted">{{ date('h:i A', strtotime($post->created_at)) }}</span>
                                 </div>
                             </div>
                             <div class="text-right" style="width:100px;">
-                                <span class="badge badge-primary badge-pill mb-2">Open</span>
-                                <div><small class="text-muted font-12"><i class="fa fa-reply mr-2"></i>2 reply</small></div>
+                                <div><small class="text-muted font-12"><i class="fa fa-reply mr-2"></i>{{ $post->discussions_count }} answer(s)</small></div>
                             </div>
                         </div>
-                    </li>
-                    <li class="media">
-                        <div class="media-body d-flex">
-                            <div class="flex-1">
-                                <h5 class="media-heading">
-                                    <a href="javascript:;">How to compile SaSS</a>
-                                </h5>
-                                <p class="font-13 text-light mb-1">Cillum in incididunt reprehenderit qui reprehenderit nulla</p>
-                                <div class="d-flex align-items-center font-13">
-                                    <img class="img-circle mr-2" src="assets/img/users/u10.jpg" alt="image" width="22" />
-                                    <a class="mr-2 text-success" href="javascript:;">Stella Obrien</a>
-                                    <span class="text-muted">45 mins ago</span>
-                                </div>
-                            </div>
-                            <div class="text-right" style="width:100px;">
-                                <span class="badge badge-success badge-pill mb-2">Pending</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="media">
-                        <div class="media-body d-flex">
-                            <div class="flex-1">
-                                <h5 class="media-heading">
-                                    <a href="javascript:;">I need help to update bower</a>
-                                </h5>
-                                <p class="font-13 text-light mb-1">Cillum in incididunt reprehenderit qui reprehenderit nulla</p>
-                                <div class="d-flex align-items-center font-13">
-                                    <img class="img-circle mr-2" src="assets/img/users/u6.jpg" alt="image" width="22" />
-                                    <a class="mr-2 text-success" href="javascript:;">Connor Perez</a>
-                                    <span class="text-muted">1 hrs ago</span>
-                                </div>
-                            </div>
-                            <div class="text-right" style="width:100px;">
-                                <span class="badge badge-primary badge-pill mb-2">In Progress</span>
-                                <div><small class="text-muted font-12"><i class="fa fa-reply mr-2"></i>2 reply</small></div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="media">
-                        <div class="media-body d-flex">
-                            <div class="flex-1">
-                                <h5 class="media-heading">
-                                    <a href="javascript:;">IE7 problem</a>
-                                </h5>
-                                <p class="font-13 text-light mb-1">Cillum in incididunt reprehenderit qui reprehenderit nulla</p>
-                                <div class="d-flex align-items-center font-13">
-                                    <img class="img-circle mr-2" src="assets/img/users/u2.jpg" alt="image" width="22" />
-                                    <a class="mr-2 text-success" href="javascript:;">Becky Brooks</a>
-                                    <span class="text-muted">2 hrs ago</span>
-                                </div>
-                            </div>
-                            <div class="text-right" style="width:100px;">
-                                <span class="badge badge-success badge-pill mb-2">Pending</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="media">
-                        <div class="media-body d-flex">
-                            <div class="flex-1">
-                                <h5 class="media-heading">
-                                    <a href="javascript:;">I need help to install Adminca Angular</a>
-                                </h5>
-                                <p class="font-13 text-light mb-1">Cillum in incididunt reprehenderit qui reprehenderit nulla</p>
-                                <div class="d-flex align-items-center font-13">
-                                    <img class="img-circle mr-2" src="assets/img/users/u5.jpg" alt="image" width="22" />
-                                    <a class="mr-2 text-success" href="javascript:;">Bob Gonzalez</a>
-                                    <span class="text-muted">2 days ago</span>
-                                </div>
-                            </div>
-                            <div class="text-right" style="width:100px;">
-                                <span class="badge badge-secondary badge-pill mb-2">Closed</span>
-                                <div><small class="text-muted font-12"><i class="fa fa-reply mr-2"></i>3 reply</small></div>
-                            </div>
-                        </div>
-                    </li>
+                    </li>    
+                    @empty
+                    <p class="lead">No Forum Topics</p>  
+                    @endforelse
                 </ul>
             </div>
         </div>
