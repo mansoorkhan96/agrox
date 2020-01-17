@@ -3,7 +3,11 @@
 
 <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+		{{-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *;**script-src 'self' http://localhost:8000 'unsafe-inline' 'unsafe-eval';** "> --}}
+
+		{{-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://localhost:8000; object-src 'self'" /> --}}
+
         <meta name="csrf-token" content="{{ csrf_token() }}">
 		<link rel="shortcut icon" href="images/favicon.ico"/>
         <title>{{ config('app.name', 'Laravel') }}</title>

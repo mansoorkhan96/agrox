@@ -57,7 +57,8 @@
         <div class="ibox" id="mailbox-container">
             <div class="flexbox-b p-4">
                 <h5 class="font-strong m-0 mr-3">INBOX</h5>
-                @if(! empty($accepter) && $accepter == auth()->user()->id)
+                
+                @if(!empty($inbox) OR $accepter == auth()->user()->id)
                     <button class="d-block create-message btn btn-primary btn-air ml-auto p-2" data-toggle="modal" data-target="#create-message-modal"><i class="la la-pencil"></i> Compose</button>
                 @endif
             </div>
