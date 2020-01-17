@@ -13,13 +13,13 @@ class MCart {
      * @param [string] $image
      * @param [string] $name
      * @param [string] $details
-     * @param [integer] $qty
-     * @param [integer] $price
+     * @param [int] $qty
+     * @param [int] $price
      * @param [string] $slug
      * 
      * @return boolean true if item successfully added to the cart, false otherwise.
      */
-    public static function add($id, $image, $name, $details, int $qty, int $price, $slug): bool {
+    public static function add($id, $image, $name, $details, int $qty, int $price, $slug) {
         if(self::exists($id)) {
             return false;
         }
@@ -45,7 +45,7 @@ class MCart {
      *
      * @return array of cart items if items exist in the cart, empty array otherwise.
      */
-    public static function content():array {
+    public static function content() {
         if(session()->has('mcart')) {
             return session()->get('mcart');
         }
@@ -56,9 +56,9 @@ class MCart {
     /**
      * Get count of items for current cart session.
      *
-     * @return integer items count, 0 otherwise.
+     * @return int items count, 0 otherwise.
      */
-    public static function count():integer {
+    public static function count() {
         $count = 0;
 
         if(self::content() > 0) {
@@ -107,7 +107,7 @@ class MCart {
      * @param [string] $rowId
      * @return boolean true on success, false otherwise.
      */
-    public static function remove($rowId):bool {
+    public static function remove($rowId) {
         $items = [];
         $deletion = false;
 
@@ -146,9 +146,9 @@ class MCart {
     /**
      * Get total price of cart items
      *
-     * @return integer price if cart items exist, 0 otherwise
+     * @return int price if cart items exist, 0 otherwise
      */
-    public static function total():int {
+    public static function total() {
         $total = 0;
         foreach(self::content() as $item) {
             $total += ($item['price'] * $item['qty']);
@@ -163,7 +163,7 @@ class MCart {
      * @param [array] $storeItem
      * @return boolean true on success, false otherwise
      */
-    private static function store($storeItem):bool {
+    private static function store($storeItem) {
         $items = [];
 
         if(session()->has('mcart')) {
@@ -191,7 +191,7 @@ class MCart {
      * @param [int] $id
      * @return boolean true if item exists, false otherwise.
      */
-    private static function exists($id):bool {
+    private static function exists($id) {
         
         if(session()->has('mcart')) {
 
