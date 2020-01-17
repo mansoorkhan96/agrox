@@ -5,15 +5,21 @@ namespace App\Library;
 use Illuminate\Support\Facades\Session;
 
 class MCart {
-    // private $item = null;
-    // private static $count = 0;
-    // private static $total = 0;
-    
-    // public static function hello() {
-    //     dd('class run');
-    // }
 
-    public static function add($id, $image, $name, $details, int $qty, $price, $slug) {
+    /**
+     * Add items to the cart if does not exits
+     *
+     * @param [int] $id
+     * @param [string] $image
+     * @param [string] $name
+     * @param [string] $details
+     * @param [integer] $qty
+     * @param [integer] $price
+     * @param [string] $slug
+     * 
+     * @return boolean true if item successfully added to the cart, false otherwise.
+     */
+    public static function add($id, $image, $name, $details, int $qty, int $price, $slug): bool {
         if(self::exists($id)) {
             return false;
         }
@@ -34,7 +40,12 @@ class MCart {
         }
     }
 
-    public static function content() {
+    /**
+     * Get cart contents
+     *
+     * @return array of cart items if items exist in the cart, empty array otherwise.
+     */
+    public static function content():array {
         if(session()->has('mcart')) {
             return session()->get('mcart');
         }
@@ -42,7 +53,12 @@ class MCart {
         return [];
     }
 
-    public static function count() {
+    /**
+     * Get count of items for current cart session.
+     *
+     * @return integer items count, 0 otherwise.
+     */
+    public static function count():integer {
         $count = 0;
 
         if(self::content() > 0) {
@@ -54,7 +70,16 @@ class MCart {
         return $count;
     }
 
-    public static function update($rowId, $name, $value) {
+    /**
+     * Update the specific cart item
+     *
+     * @param [string] $rowId
+     * @param [string] $name
+     * @param [mixed] $
+     * 
+     * @return boolean true on success, false otherwise.
+     */
+    public static function update($rowId, $name, $value):bool {
         $updattion = false;
         $items = [];
 
@@ -76,23 +101,13 @@ class MCart {
         return $updattion;
     }
 
-    public static function remove($rowId) {
-        // $item = array_map(function($item) use ($rowId) {
-            
-        //     if($item['rowId'] === $rowId) {
-        //         return $item;
-        //     }
-            
-        // }, session()->get('mcart'));
-
-        // $item = array_filter(session()->get('mcart'), function($item) use ($rowId) {
-
-        //     if($item['rowId'] === $rowId) {
-        //         return $item;
-        //     }
-            
-        // });
-
+    /**
+     * Removes an specific cart item.
+     *
+     * @param [string] $rowId
+     * @return boolean true on success, false otherwise.
+     */
+    public static function remove($rowId):bool {
         $items = [];
         $deletion = false;
 
@@ -118,12 +133,22 @@ class MCart {
         return $deletion;
     }
 
+    /**
+     * Destroy cart items
+     *
+     * @return void
+     */
     public static function destroy() {
         session()->forget('mcart');
         session()->save();
     }
 
-    public static function total() {
+    /**
+     * Get total price of cart items
+     *
+     * @return integer price if cart items exist, 0 otherwise
+     */
+    public static function total():int {
         $total = 0;
         foreach(self::content() as $item) {
             $total += ($item['price'] * $item['qty']);
@@ -132,7 +157,13 @@ class MCart {
         return $total;
     }
 
-    private static function store($storeItem) {
+    /**
+     * Store cart item
+     *
+     * @param [array] $storeItem
+     * @return boolean true on success, false otherwise
+     */
+    private static function store($storeItem):bool {
         $items = [];
 
         if(session()->has('mcart')) {
@@ -154,7 +185,13 @@ class MCart {
         return true;
     }
 
-    private static function exists($id) {
+    /**
+     * Checks if an item already exists in the cart
+     *
+     * @param [int] $id
+     * @return boolean true if item exists, false otherwise.
+     */
+    private static function exists($id):bool {
         
         if(session()->has('mcart')) {
 
@@ -169,6 +206,11 @@ class MCart {
         }
     }
 
+    /**
+     * Generate a unique hash (sha256)
+     *
+     * @return string hash
+     */
     private static function uniqueId() {
         return hash('sha256', uniqid());
     }
