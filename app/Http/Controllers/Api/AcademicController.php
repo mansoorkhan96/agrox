@@ -29,7 +29,7 @@ class AcademicController extends Controller
 
         $latestPosts = Post::where('post_type', 'post')->latest()->withCount('discussions')->take(6)->get();
 
-        return response()->json('academic.index', compact([
+        return view('academic.index', compact([
             'popularCategories',
             'latestPosts',
         ]));

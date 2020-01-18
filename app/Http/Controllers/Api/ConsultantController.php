@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\Http\Middleware\AcademicRoleCheck;
+use App\Http\Middleware\ConsultantRoleCheck;
 use App\Order;
 use App\Post;
 use App\Product;
@@ -11,7 +11,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
-class AcademicController extends Controller
+class ConsultantController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -21,7 +21,7 @@ class AcademicController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(AcademicRoleCheck::class);
+        $this->middleware(ConsultantRoleCheck::class);
     }
 
     public function index() {
@@ -29,7 +29,7 @@ class AcademicController extends Controller
 
         $latestPosts = Post::where('post_type', 'post')->latest()->withCount('discussions')->take(6)->get();
 
-        return response()->json('academic.index', compact([
+        return view('consultant.index', compact([
             'popularCategories',
             'latestPosts',
         ]));

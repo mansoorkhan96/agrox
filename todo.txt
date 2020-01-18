@@ -3,23 +3,37 @@ Repsonsiveness for phonegap: {
 
     Galaxy S to S5 series
 }
+
 FrontRemaining: {
     Search for product, blog, forum, consultant
     Stock Management
     Form submmiting twice on dubble click
-
 }
-like
-cart db
-password reset
-stock
-user num posts, likes
-search discussions
-profile approval
-list of users
-active inactive accounts use softdeletes
-top selling product
-only buyer should be able to review the product
+Web: {
+    like
+    cart db
+    password reset
+    stock: {
+        dont allow to buy if stock is zero
+        substract the quantity when orders are placed
+    }
+    user num posts, likes
+    search each part
+    profile approval
+    list of users
+    active inactive accounts use softdeletes
+    top selling product
+    only buyer should be able to review the product
+}
+Android: {
+    save profile to phone,
+    get relavant data to fill up the form: {
+        capture pics,
+        get address from current location to fill up the check out form
+    }
+    splash and icon
+    check if device is android then notify with beep()
+}
 
 Image-Thumbnails
 
@@ -50,7 +64,7 @@ Pros: {
     }
 
 
-    Laravel Cache (Dont load frequent requent from db every time load it from cache)
+    Laravel Cache (Dont load frequent request from db every time load it from cache)
     Policies,
     ACL Management,
     Ajax only Requests(For Api),
