@@ -81,10 +81,10 @@
                     </div>
                     <div class="entry-author">
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-xs-2 col-md-2">
                                 <img alt="" src="{{ avatar($post->user->avatar) }}" class="avatar" />
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-xs-10 col-md-10">
                                 <h3 class="name">{{ $post->user->name }}</h3>
                                 <div class="desc">{{ $post->user->bio }}</div>
                             </div>
@@ -138,7 +138,7 @@
                             {{ Form::close() }}
                         </div>
                         @else
-                        <p class="lead"><a style="color:#5fbd74" href="{{ route('login') }}">Login</a> to share our comments</p>
+                        <p class="lead"><a style="color:#5fbd74" href="{{ route('login') }}">Login</a> to share your comments</p>
                         @endif
                     </div>
                 </div>

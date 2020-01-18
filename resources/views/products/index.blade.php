@@ -6,21 +6,7 @@
         <h5 class="font-strong mb-4">Products</h5>
         <div class="flexbox mb-4">
             <div class="flexbox">
-                <label class="mb-0 mr-2">Type:</label>
-                <select class="selectpicker show-tick form-control" id="type-filter" title="Please select" data-style="btn-solid" data-width="150px">
-                    <option value="">All</option>
-                    <optgroup label="Electronics">
-                        <option>TV & Video</option>
-                        <option>Cameras & Photo</option>
-                        <option>Computers & Tablets</option>
-                    </optgroup>
-                    <optgroup label="Fashion">
-                        <option>Health & Beauty</option>
-                        <option>Shoes</option>
-                        <option>Handbags & Purses</option>
-                        <option>Jewelry and Watches</option>
-                    </optgroup>
-                </select>
+                
             </div>
             <div class="flexbox">
                 <div class="input-group-icon input-group-icon-left mr-3">
@@ -28,10 +14,10 @@
                     <input class="form-control form-control-rounded form-control-solid" id="key-search" type="text" placeholder="Search ...">
                 </div>
                 <a class="btn btn-success btn-air" href="/dashboard/products/create">
-                    <i class="la la-plus"></i> Add New
+                    <i class="la la-plus"></i> <span class="btn-text-pg">Add New</span>
                 </a>
                 <a class="btn btn-warning ml-2 btn-air" href="/dashboard/products/trashed">
-                    <i class="la la-trash"></i> Trashed
+                    <i class="la la-trash"></i> <span class="btn-text-pg">Trashed</span>
                 </a>
             </div>
         </div>
@@ -49,7 +35,44 @@
                     </tr>
                 </thead>
                 <tbody id="table-data">
-                    
+                    @forelse ($products as $product)
+                    @php
+                        extract($product)
+                    @endphp
+                        <tr>
+                            <td>{{ $id }}</td>
+                            <td>
+                                <img class="mr-3" src="{{ asset('/storage/' . $featured_image) }}" alt="image" width="60" /> {{$name}}</td>
+                            <td>
+                                @forelse ($categories as $category)
+                                    {{ $category['name'] }}
+                                    @if (! $loop->last)|@endif
+                                @empty
+                                    Uncategorized
+                                @endforelse
+                            </td>
+                            <td>{{ $price }}</td>
+                            <td>{{ $user['name'] }}</td>
+                            <td>
+                                @if($quantity < 1)
+                                <span class="badge badge-danger badge-pill">Out of stock</span>
+                                @elseif ($quantity <= 10)
+                                {{ $quantity }}<span class="badge d-inline ml-1 badge-warning badge-pill">Low stock</span>
+                                @else
+                                {{ $quantity }}
+                                @endif
+                                
+                            </td>
+                            <td>
+                                <a class="text-light mr-3 font-16" href="{{ route('products.edit', $id) }}"><i class="ti-pencil"></i></a>
+                                {{ Form::open(['route' => ['products.destroy', $id], 'class' =>'d-inline ', 'method' => 'delete']) }}
+                                    <button type="submit" class="no-btn text-light font-16"><i class="ti-trash"></i></button>
+                                {{ Form::close() }}
+                            </td>
+                        </tr>
+                    @empty
+                    <tr class="odd"><td valign="top" colspan="5" class="dataTables_empty">No records found</td></tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -59,45 +82,4 @@
 
 @section('datatables')
     @include('includes.datatables')
-@endsection
-
-@section('page_script')
-    <script>
-        $(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            products();
-
-            function products() {
-                $.ajax({
-                    url: '/dashboard/products/products',
-                }).done(function(data) {
-                    $('#table-data').html(data);
-                });
-            }
-
-            $(document).on('submit', '.delete-form', function(e) {
-                e.preventDefault();
-
-                let formData = $(this).serialize();
-                let id = $("input[name='id']", this).val();
-              
-                let url = "{{ route('products.destroy', ':id') }}";
-                url = url.replace(':id', id);
-                
-                $.ajax({
-                    url: url,
-                    method: 'DELETE'
-                }).done(function(data) {
-                    if(data.status != false) {
-                        $('#table-data').html(data);
-                        toastr.success("Product moved to Trash", 'Success');
-                    }
-                });
-            });
-        });
-    </script>
 @endsection

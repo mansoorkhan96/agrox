@@ -1,0 +1,33 @@
+@media only screen and (min-width: 320px) and (max-width: 489px) {
+    .header .admin-dropdown-menu {
+        width: 330px !important;
+    }
+
+    .forum-list .forum-excerpt {
+        display: none !important;
+    }
+
+    .forum-list .forum-heading {
+        font-size: 13px !important;
+    }
+
+    .forum-table-data {
+        font-size: 11px !important;
+    }
+
+    .form-table-excerpt {
+        display: none !important;
+    }
+
+    #datatable {
+        font-size: 10px !important;
+    }
+
+    .android {
+        display: none !important;
+    }
+    
+    .btn-text-pg {
+        display: none !important;
+    }
+}

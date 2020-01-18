@@ -52,6 +52,7 @@ class ConsultancyController extends Controller
          * 
          */
         $inbox = [];
+        $consultancies = Consultancy::latest()->get();
 
         if(auth()->user()->role_id != 1 && auth()->user()->role_id != 3) {
 

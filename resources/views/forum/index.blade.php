@@ -14,7 +14,7 @@
                     <input class="form-control form-control-rounded form-control-solid" id="key-search" type="text" placeholder="Search ...">
                 </div>
                 <a class="btn btn-success btn-air" href="/dashboard/posts/create">
-                    <i class="la la-plus"></i> Add New
+                    <i class="la la-plus"></i> <span class="btn-text-pg">Add New </span>
                 </a>
             </div>
         </div>
@@ -24,7 +24,7 @@
                     <tr>
                         <th>Title</th>
                         <th>Categories</th>
-                        <th>Excerpt</th>
+                        <th class="form-table-excerpt">Excerpt</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -34,9 +34,9 @@
                         extract($post)
                     @endphp
                         <tr>
-                            <td>
+                            <td class="forum-table-data">
                                 {{$title}}</td>
-                            <td>
+                            <td class="forum-table-data">
                                 @forelse ($categories as $category)
                                     {{ $category['name'] }}
                                     @if (! $loop->last)|@endif
@@ -44,7 +44,7 @@
                                     Uncategorized
                                 @endforelse
                             </td>
-                            <td width="35%">{{ Str::words($excerpt, 10) }}</td>
+                            <td class="forum-table-data form-table-excerpt" width="35%">{{ Str::words($excerpt, 10) }}</td>
                             <td>
                                 <a class="text-light mr-3 font-16" href="{{ route('forum.show', $id) }}"><i class="ti-eye"></i></a>
                                 <a class="text-light mr-3 font-16" href="{{ route('posts.edit', $id) }}"><i class="ti-pencil"></i></a>
@@ -71,15 +71,15 @@
                 </div>
             </div>
             <div class="ibox-body">
-                <ul class="media-list media-list-divider scroller mr-2" >
+                <ul class="forum-list media-list media-list-divider scroller mr-2" >
                     @forelse ($forums as $post)
                     <li class="media">
                         <div class="media-body d-flex">
                             <div class="flex-1">
                                 <h5 class="media-heading">
-                                    <a href="{{ route('forum.show', $post->id) }}">{{ $post->title }}</a>
+                                    <a class="forum-heading" href="{{ route('forum.show', $post->id) }}">{{ $post->title }}</a>
                                 </h5>
-                                <p class="font-13 text-light mb-1">{{ Str::limit($post->excerpt, 200) }}</p>
+                                <p class="forum-excerpt font-13 text-light mb-1">{{ Str::limit($post->excerpt, 200) }}</p>
                                 <div class="d-flex align-items-center font-13">
                                     <img class="img-circle mr-2" src="{{ avatar($post->user->avatar) }}" alt="image" width="22" />
                                     <a class="mr-2 text-success" href="javascript:;">{{ $post->user->name }}</a>

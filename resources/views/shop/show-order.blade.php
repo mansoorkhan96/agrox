@@ -17,7 +17,7 @@
                                 <table class="table table-custom">
                                     <tr>
                                         <td>
-                                            <p class="lead font-weight-bold">Name</p>
+                                            <p class="lead font-weight-bold">Name: </p>
                                         </td>
                                         <td>
                                             <p class="lead font-weight-bold">
@@ -27,7 +27,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <p class="lead font-weight-bold">Shipping Address</p>
+                                            <p class="lead font-weight-bold">Shipping Address: </p>
                                         </td>
                                         <td>
                                             <p class="lead font-weight-bold">
@@ -38,7 +38,7 @@
                                     <tr>
                                         <td>
                                             <p class="lead font-weight-bold">
-                                                Billing Address
+                                                Billing Address: 
                                             </p>
                                         </td>
                                         <td>
@@ -49,7 +49,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <p class="lead font-weight-bold">City</p>
+                                            <p class="lead font-weight-bold">City: </p>
                                         </td>
                                         <td>
                                             <p class="lead font-weight-bold">
@@ -59,7 +59,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <p class="lead font-weight-bold">Subtotal</p>
+                                            <p class="lead font-weight-bold">Subtotal: </p>
                                         </td>
                                         <td>
                                             <p class="lead font-weight-bold">
@@ -69,7 +69,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <p class="lead font-weight-bold">Shipping Fee</p>
+                                            <p class="lead font-weight-bold">Shipping Fee: </p>
                                         </td>
                                         <td>
                                             <p class="lead font-weight-bold">
@@ -79,7 +79,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <p class="lead font-weight-bold">Total</p>
+                                            <p class="lead font-weight-bold">Total: </p>
                                         </td>
                                         <td>
                                             <p class="lead font-weight-bold">

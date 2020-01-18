@@ -1,0 +1,15 @@
+@media only screen and (min-width: 320px) and (max-width: 489px) {
+    .product-info span.sub-title {
+        display: none !important;
+    }
+
+    .topbar-text {
+        display: none !important;
+    }
+
+    .table-custom .lead {
+        line-height: 1.2;
+        margin-bottom: 5px;
+    }
+}
+

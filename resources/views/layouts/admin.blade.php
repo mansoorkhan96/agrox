@@ -24,6 +24,7 @@
     <!-- THEME STYLES-->
     <link href="{{ asset('assets/css/main.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/agrox.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/phonegap.css') }}" rel="stylesheet" />
     <!-- PAGE LEVEL STYLES-->
 </head>
 
@@ -52,11 +53,8 @@
             </div>
             <!-- END PAGE CONTENT-->
             <footer class="page-footer">
-                <div class="font-13">2018 © <b>Adminca</b> - Save your time, choose the best</div>
-                <div>
-                    <a class="px-3 pl-4" href="http://themeforest.net/item/adminca-responsive-bootstrap-4-3-angular-4-admin-dashboard-template/20912589" target="_blank">Purchase</a>
-                    <a class="px-3" href="http://admincast.com/adminca/documentation.html" target="_blank">Docs</a>
-                </div>
+                <div class="font-13">{{ date('Y') }} © <b>AgroX</b> - Agricultural Exploration</div>
+                
                 <div class="to-top"><i class="fa fa-angle-double-up"></i></div>
             </footer>
         </div>

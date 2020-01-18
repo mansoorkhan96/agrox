@@ -14,7 +14,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <a href="index.html" id="logo">
+                <a href="{{ route('home') }}" id="logo">
                     <img class="logo-image" src="{{ asset('images/logo.png') }}" alt="AgroX Logo" />
                 </a>
             </div>
@@ -103,7 +103,7 @@
             </div>
             <div class="col-xs-8">
                 <div class="header-center">
-                    <a href="index.html" id="logo-2">
+                    <a href="{{ route('home') }}" id="logo-2">
                         <img class="logo-image" src="{{ asset('images/logo.png') }}" alt="AgroX Logo" />
                     </a>
                 </div>

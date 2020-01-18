@@ -48,7 +48,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('order.show', $order->id) }}" class="btn btn-sm btn-info">View</a>
+                                <a href="{{ route('order.show', $order->id) }}" class="btn btn-sm btn-info mb-1">View</a>
                                 @if ($order->status == 'Pending')
                                     <a href="#" data-action="Cancelled" order-id="{{ $order->id }}" id="order-action" class="btn btn-sm btn-default">Cancel</a>
                                 @elseif($order->status == 'Cancelled')

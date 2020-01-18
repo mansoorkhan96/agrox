@@ -93,7 +93,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade active in" id="tab-description">
                                     <p>
-                                        {{ $product->description }}
+                                        {!! $product->description !!}
                                     </p>
                                 </div>
                                 <div id="tab-reviews" class="tab-pane fade">

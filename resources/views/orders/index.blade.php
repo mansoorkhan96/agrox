@@ -14,10 +14,10 @@
                     <input class="form-control form-control-rounded form-control-solid" id="key-search" type="text" placeholder="Search ...">
                 </div>
                 <a class="btn btn-success btn-air" href="/dashboard/posts/create">
-                    <i class="la la-plus"></i> Add New
+                    <i class="la la-plus"></i> <span class="btn-text-pg">Add New </span>
                 </a>
                 <a class="btn btn-warning ml-2 btn-air" href="/dashboard/orders/rejected">
-                    <i class="la la-trash"></i> Rejected
+                    <i class="la la-trash"></i> <span class="btn-text-pg">Rejected </span>
                 </a>
             </div>
         </div>

@@ -8,10 +8,10 @@
                 <div class="commerce">
                     <h2 class="text-center">Login</h2>
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-6 mb-1">
                             <a href="auth/facebook" class="btn btn-facebook btn-md btn-block btn-primary" value="">Login &nbsp; with &nbsp; Facebook</a>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-6 mb-1">
                             <a href="auth/google" class="btn btn-google btn-md btn-block btn-danger" value="">Login &nbsp; with &nbsp; Google</a>
                         </div>
                     </div>

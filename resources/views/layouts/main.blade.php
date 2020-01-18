@@ -24,6 +24,7 @@
 		<link rel="stylesheet" href="{{ asset('css/custom.css') }}" type="text/css" media="all"/>
 		<link href="{{ asset('assets/vendors/toastr/toastr.min.css') }}" rel="stylesheet" />
 		<link rel="stylesheet" href="{{ asset('css/agrox.css') }}" type="text/css" media="all"/>
+		<link rel="stylesheet" href="{{ asset('css/phonegap.css') }}" type="text/css" media="all"/>
 		<link href="http://fonts.googleapis.com/css?family=Great+Vibes%7CLato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet"/>
 		
 	</head>

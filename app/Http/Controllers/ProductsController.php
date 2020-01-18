@@ -32,9 +32,13 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        //$products = Product::with(['user', 'categories'])->latest()->get()->toArray();
+        if(auth()->user()->role_id != 1) {
+            $products = Product::where('user_id', auth()->user()->id)->with(['user', 'categories'])->latest()->get()->toArray();
+        } else {
+            $products = Product::with(['user', 'categories'])->latest()->get()->toArray();
+        }
 
-        return view('products.index');
+        return view('products.index', compact('products'));
     }
 
     public function products() {
@@ -211,12 +215,12 @@ class ProductsController extends Controller
         if($product->delete()) {
             $products = Product::with(['user', 'categories'])->latest()->get()->toArray();
 
-            return view('products.products', compact('products'));
-            // return redirect('/dashboard/products')->with('success', 'Product deleted successfully');
+            // return view('products.products', compact('products'));
+            return back()->with('success', 'Product deleted successfully');
         }
 
-        // return redirect('/dashboard/products')->with('Could not delete product');
-        return response()->json('status', false);
+        return back()->with('Could not delete product');
+        //return response()->json('status', false);
     }
 
     public function trashed() {

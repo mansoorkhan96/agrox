@@ -7,7 +7,7 @@
             <td>{{ $id }}</td>
             <td>
                 <img class="mr-3" src="{{ asset('/storage/' . $featured_image) }}" alt="image" width="60" /> {{$name}}</td>
-            <td>
+            <td class="android">
                 @forelse ($categories as $category)
                     {{ $category['name'] }}
                     @if (! $loop->last)|@endif
