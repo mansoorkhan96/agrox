@@ -69,15 +69,19 @@
                             <div class="mb-3">
                                 <p>{{ $product->details }}</p>
                             </div>
-                            {{ Form::open(['action' => 'CartController@store', 'method' => 'POST', 'id' => 'add_to_cart']) }}
-                                {{ Form::hidden('id', $product['id']) }}
-                                {{ Form::hidden('image', $product['featured_image']) }}
-                                {{ Form::hidden('name', $product['name']) }}
-                                {{ Form::hidden('details', $product['details']) }}
-                                {{ Form::hidden('price', $product['price']) }}
-                                {{ Form::hidden('slug', $product['slug']) }}
-                                <button type="submit" class="single-add-to-cart">ADD TO CART</button>
-                            {{ Form::close() }}
+                            @if ($product->quantity > 0)
+                                {{ Form::open(['action' => 'CartController@store', 'method' => 'POST', 'id' => 'add_to_cart']) }}
+                                    {{ Form::hidden('id', $product['id']) }}
+                                    {{ Form::hidden('image', $product['featured_image']) }}
+                                    {{ Form::hidden('name', $product['name']) }}
+                                    {{ Form::hidden('details', $product['details']) }}
+                                    {{ Form::hidden('price', $product['price']) }}
+                                    {{ Form::hidden('slug', $product['slug']) }}
+                                    <button type="submit" class="single-add-to-cart">ADD TO CART</button>
+                                {{ Form::close() }}
+                            @else
+                                <span class="badge badge-warning">Not Available</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -123,6 +127,7 @@
                                             @endforelse
                                         </ul>
                                     </div>
+                                    @if($userCanReview === true)
                                     <div class="single-comment-form mt-0">
                                         <div class="mb-2">
                                             <h2 style="display:inline-block" class="comment-title">Review Product</h2>
@@ -150,6 +155,7 @@
                                             </div>
                                         {{ Form::close() }}
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -191,7 +197,7 @@
                 <div class="sidebar">
                     <div class="widget widget-product-search">
                         <form class="form-search">
-                            <input type="text" class="search-field" placeholder="Search products…" value="" name="s" />
+                            <input type="text" class="search-field" placeholder="Search products…" value="{{ request()->search_query ?? '' }}" name="search_query" />
                             <input type="submit" value="Search" />
                         </form>
                     </div>

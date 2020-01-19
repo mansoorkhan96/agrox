@@ -26,7 +26,7 @@ class AdminController extends Controller
 
     public function index() {
         $ordersCount = Order::whereDate('created_at', Carbon::today())->count();
-        $salesSum = Order::whereDate('created_at', Carbon::today())->sum('billing_subtotal');
+        $salesSum = Order::where('status', 'Complete')->whereDate('created_at', Carbon::today())->sum('billing_subtotal');
         $newCustomersCount = User::whereDate('created_at', Carbon::today())->count();
 
         $latestOrders = Order::latest()->take(10)->get();

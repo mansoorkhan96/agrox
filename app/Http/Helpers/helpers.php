@@ -1,5 +1,6 @@
 <?php
 
+use App\Proficiency;
 use App\Role;
 
     /**
@@ -25,14 +26,29 @@ use App\Role;
      * Returns Role Name on success, string (Unknown) otherwise
      *
      * @param [int] $id
-     * @return string
+     * @return string Role Name
      */
     function roleName($id) 
     {
         if($id == null) {
-            return 'Unknown';
+            return 'Null';
         }
 
         return Role::where('id', $id)->first()->name;
+    }
+
+    /**
+     * Returns Proficiency Name on success, string (Unknown) otherwise
+     *
+     * @param [int] $id
+     * @return string Proficiency Name
+     */
+    function proficiencyName($id) 
+    {
+        if($id == null) {
+            return 'Null';
+        }
+
+        return Proficiency::where('id', $id)->first()->proficiency;
     }
 ?>

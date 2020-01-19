@@ -23,7 +23,7 @@
                 </div>
                 <div>
                     <h3 class="font-strong text-primary">Rs {{ $salesSum }}</h3>
-                    <div class="text-muted">TODAY'S PROFIT</div>
+                    <div class="text-muted">TODAY'S SALES</div>
                 </div>
             </div>
         </div>

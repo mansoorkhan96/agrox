@@ -16,13 +16,23 @@
                             <span><i class="ti-calendar mr-2"></i>{{ date('F, j Y', strtotime($user->created_at)) }}</span>
                         </div>
                         <div>
-                            <p class="lead">{{ roleName($user->role_id) }}</p>
-                            @if ($user->id == auth()->user()->id)
+                            <p class="lead">Role: {{ roleName($user->role_id) }}</p>
+                            @can('update', $user)
                             <p class="lead">
                                 <a href="{{ route('profile.edit', auth()->user()->id) }}">Edit Profile</a></p>
-                            @endif
+                            @endcan
                         </div>
                     </div>
+                </div>
+                <div class="d-inline-flex">
+                    <div class="px-4 text-center">
+                        <div class="text-muted font-13">ARTICLES</div>
+                        <div class="h2 mt-2">{{ $userPostCount }}</div>
+                    </div>
+                    {{-- <div class="px-4 text-center">
+                        <div class="text-muted font-13">FOLLOWERS</div>
+                        <div class="h2 mt-2">540</div>
+                    </div> --}}
                 </div>
             </div>
         </div>

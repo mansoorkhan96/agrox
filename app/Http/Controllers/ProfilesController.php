@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\City;
 use App\Country;
 use App\Http\Controllers\Controller;
+use App\Post;
 use App\Proficiency;
 use App\Province;
 use App\Role;
@@ -21,7 +22,7 @@ class ProfilesController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        
     }
     
     /**
@@ -63,14 +64,17 @@ class ProfilesController extends Controller
      */
     public function show(User $user)
     {
-        if(auth()->user()->role_id != 1 && $user->id != auth()->user()->id) {
-            abort(401);
-        }
+        // if(auth()->user()->role_id != 1 && $user->id != auth()->user()->id) {
+        //     abort(401);
+        // }
+
+        $userPostCount = Post::where('user_id', $user->id)->count();
+
         $location = $user->city()->get()->toArray();
 
         $location = Arr::collapse($location);
 
-        return view('profiles.show', compact(['user', 'location']));
+        return view('profiles.show', compact(['user', 'location', 'userPostCount']));
     }
 
     /**
@@ -81,9 +85,11 @@ class ProfilesController extends Controller
      */
     public function edit(User $user)
     {
-        if(auth()->user()->role_id != 1 && $user->id != auth()->user()->id) {
-            abort(401);
-        }
+        // if(auth()->user()->role_id != 1 && $user->id != auth()->user()->id) {
+        //     abort(401);
+        // }
+
+        $this->authorize('update', $user);
 
         $location = $user->city()->get()->toArray();
 
@@ -113,8 +119,10 @@ class ProfilesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
+        $this->authorize('update', $user);
+
         $data = $request->validate([
             'name' => ['required', 'string', 'max:190'],
             'role_id' => ['required', 'integer'],
@@ -131,7 +139,7 @@ class ProfilesController extends Controller
             $data['avatar'] = request('avatar')->store('profiles', 'public');
         }
 
-        auth()->user()->update($data);
+        $user->update($data);
 
         return redirect()->route('profile.show', auth()->user()->id)->with('success', 'Profile Updated Successfully!');
     }

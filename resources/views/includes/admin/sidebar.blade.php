@@ -6,6 +6,11 @@
                     <span class="nav-label">Dashboard</span></a>
             </li>
             <li>
+                <a href="{{ route('users.index') }}"><i class="sidebar-item-icon ti-user"></i>
+                    <span class="nav-label">Users</span>
+                </a>
+            </li>
+            <li>
                 <a href="/dashboard/categories"><i class="sidebar-item-icon ti-menu"></i>
                     <span class="nav-label">Categories</span>
                 </a>

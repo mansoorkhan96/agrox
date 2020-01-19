@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Library\MCart;
+use App\Product;
 
 class CartController extends Controller
 {
@@ -83,9 +84,16 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-        MCart::update($id, 'qty', (int)$request->quantity);
+        $productQuantity = Product::findOrfail($request->productId)->quantity;
 
-        return response()->json(['status' => true, 'quantity' => $request->quantity]);
+        if($productQuantity < $request->quantity) {
+            return response()->json(['status' => false, 'message' => 'We currently do not have enough items in stock']);
+        } else {
+            MCart::update($id, 'qty', (int)$request->quantity);
+    
+            return response()->json(['status' => true, 'quantity' => $request->quantity]);
+        }
+
     }
 
     /**

@@ -22,22 +22,22 @@
                 <div class="header-right">
                     <nav class="menu">
                         <ul class="main-menu">
-                            <li class="active">
+                            <li class="{{ request()->is('/') ? 'active' : '' }}">
                                 <a href="{{ route('home') }}">Home</a>
                             </li>
-                            <li>
+                            <li class="{{ request()->is('shop') ? 'active' : '' }}">
                                 <a href="{{ route('shop.index') }}">Shop</a>
                             </li>
-                            <li>
+                            <li class="{{ request()->is('blog') ? 'active' : '' }}">
                                 <a href="{{ route('blog.index') }}">Blog</a>
                             </li>
-                            <li>
+                            <li class="{{ request()->is('forum') ? 'active' : '' }}">
                                 <a href="{{ route('forum.index') }}">Forum</a>
                             </li>
-                            <li>
+                            <li class="{{ request()->is('contact') ? 'active' : '' }}">
                                 <a href="{{ route('pages.contact') }}">Contact</a>
                             </li>
-                            <li>
+                            <li class="{{ request()->is('about') ? 'active' : '' }}">
                                 <a href="{{ route('pages.about') }}">About Us</a>
                             </li>
                         </ul>

@@ -19,7 +19,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $pagination = 1;
+        $pagination = 5;
         $categoriesPostCount = DB::table('categories')
             ->join('category_post', 'categories.id', '=', 'category_post.category_id')
             ->select(DB::raw(('categories.id, categories.name, categories.slug, COUNT(category_post.post_id) AS posts_count')))
@@ -43,6 +43,10 @@ class BlogController extends Controller
             $title = Str::title(request()->tag);
             $title = 'Category: ' . Str::title(str_replace('-', ' ', request()->category));
             
+        } else if(request()->search_query) {
+            $posts = Post::withCount('discussions')->where('post_type', 'post')->search(request()->search_query)->paginate($pagination);
+
+            $title = 'Searched For: ' . request()->search_query;
         } else {
             $posts = Post::where('post_type', 'post')->withCount('discussions')->paginate($pagination);
             $title = 'Latest Posts';

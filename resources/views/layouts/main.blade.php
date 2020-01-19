@@ -33,7 +33,7 @@
 		<div id="menu-slideout" class="slideout-menu hidden-md-up">
 			<div class="mobile-menu">
 				<ul id="mobile-menu" class="menu">
-					<li>
+					<li class="{{ request()->is('/') ? 'active' : '' }}">
 						<a href="{{ route('home') }}">Home</a>
 					</li>
 					<li>

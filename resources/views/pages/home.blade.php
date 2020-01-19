@@ -84,9 +84,13 @@
                     <div class="col-md-3 col-sm-6 product-item masonry-item text-center juice">
                         <div class="product-thumb">
                             <a href="{{ '/shop/' . $product['slug'] }}">
+                                @if ($product['quantity'] < 1)
+                                <span class="outofstock"><span>Out</span>of stock</span>
+                                @endif
                                 <img src="{{ asset('/storage/' . $product['featured_image']) }}" alt="" />
                             </a>
                             <div class="product-action">
+                                @if ($product['quantity'] > 0)
                                 {{ Form::open(['action' => 'CartController@store', 'method' => 'POST', 'id' => 'add_to_cart']) }}
                                     {{ Form::hidden('id', $product['id']) }}
                                     {{ Form::hidden('image', $product['featured_image']) }}
@@ -98,9 +102,7 @@
                                         <button type="submit" data-placement="top" title="Add to cart"></button>
                                     </span>
                                 {{ Form::close() }}
-                                {{-- <span class="add-to-cart">
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add to cart"></a>
-                                </span> --}}
+                                @endif
                             </div>
                         </div>
                         <div class="product-info">

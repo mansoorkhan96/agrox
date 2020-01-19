@@ -6,21 +6,7 @@
         <h5 class="font-strong mb-4">Posts</h5>
         <div class="flexbox mb-4">
             <div class="flexbox">
-                <label class="mb-0 mr-2">Type:</label>
-                <select class="selectpicker show-tick form-control" id="type-filter" title="Please select" data-style="btn-solid" data-width="150px">
-                    <option value="">All</option>
-                    <optgroup label="Electronics">
-                        <option>TV & Video</option>
-                        <option>Cameras & Photo</option>
-                        <option>Computers & Tablets</option>
-                    </optgroup>
-                    <optgroup label="Fashion">
-                        <option>Health & Beauty</option>
-                        <option>Shoes</option>
-                        <option>Handbags & Purses</option>
-                        <option>Jewelry and Watches</option>
-                    </optgroup>
-                </select>
+            
             </div>
             <div class="flexbox">
                 <div class="input-group-icon input-group-icon-left mr-3">

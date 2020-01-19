@@ -2,28 +2,13 @@ Repsonsiveness for phonegap: {
     (min-width: 320px) and (max-width: 489px);
 
     Galaxy S to S5 series
-}
+} 
 
-FrontRemaining: {
-    Search for product, blog, forum, consultant
-    Stock Management
-    Form submmiting twice on dubble click
-}
 Web: {
     like
     cart db
-    password reset
-    stock: {
-        dont allow to buy if stock is zero
-        substract the quantity when orders are placed
-    }
-    user num posts, likes
+    user num likes
     search each part
-    profile approval
-    list of users
-    active inactive accounts use softdeletes
-    top selling product
-    only buyer should be able to review the product
 }
 Android: {
     save profile to phone,
@@ -37,26 +22,13 @@ Android: {
 
 Image-Thumbnails
 
-index($id = null) {
-    if(id) {
-        items = useritems
-
-        return
-    }
-
-    items = allitems
-
-    return
-}
-
-dont bring discussions in blog
-
 
 Pros: {
     Cart Library,
     Helpers,
     Social Provider table seperation,
     Dynamic Pagination,
+    Policies,
     Archives Tag, Category
     (Front-End) -> Slug Based Blog and Shop {
         user friendly
@@ -65,12 +37,11 @@ Pros: {
 
 
     Laravel Cache (Dont load frequent request from db every time load it from cache)
-    Policies,
     ACL Management,
     Ajax only Requests(For Api),
     Indexes (Optimized DB Queries)
 }
-socifly
+
 
 Users {
     admin: mafalda@example.com

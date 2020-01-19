@@ -38,7 +38,7 @@
                         <div>
                             <h5 class="font-strong text-white">{{ auth()->user()->name }}</h5>
                             <div>
-                                <h6 class="font-strong text-white">{{ roleName(auth()->user()->role_id) }}</h6>
+                                <h6 class="font-strong text-white">Role: {{ roleName(auth()->user()->role_id) }}</h6>
                             </div>
                         </div>
                     </div>

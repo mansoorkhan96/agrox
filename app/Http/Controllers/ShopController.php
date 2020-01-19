@@ -7,6 +7,7 @@ use App\Product;
 use App\Category;
 use App\ProductReview;
 use App\Order;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $pagination = 1;
+        $pagination = 6;
 
         $categoriesProductCount = DB::table('categories')
             ->join('category_product', 'categories.id', '=', 'category_product.category_id')
@@ -38,6 +39,10 @@ class ShopController extends Controller
             })->with('reviews')->latest()->paginate($pagination);
 
             $title = 'Category: ' . Category::where('slug', request()->category)->first()->name;
+        } else if(request()->search_query) {
+            $products = Product::search(request()->search_query)->with('reviews')->latest()->paginate($pagination);
+
+            $title = 'Searched For: ' . request()->search_query;
         } else {
             $products = Product::with('reviews')->latest()->paginate($pagination);
             $title = 'Popular Products';
@@ -97,6 +102,18 @@ class ShopController extends Controller
     {
         $product = Product::where('slug', $slug)->firstOrFail();
 
+        $userCanReview = false;
+
+        if(Auth::check()) {
+            $userOrderProduct = DB::table('order_product')
+                ->join('orders', 'order_product.order_id', '=', 'orders.id')
+                ->where('orders.user_id', auth()->user()->id)
+                ->where('order_product.product_id', $product->id)
+                ->get();
+            
+            $userCanReview = $userOrderProduct->isNotEmpty();
+        }
+
         $ratings = $product->reviews()->count();
 
         $ratingsSum = $product->reviews()->sum('rating');
@@ -131,7 +148,16 @@ class ShopController extends Controller
             ->get()->toArray();
 
 
-        return view('shop.show', compact(['product', 'categoriesProductCount', 'mightAlsoLike', 'related_products', 'reviews', 'userRating', 'productRating']));
+        return view('shop.show', compact([
+            'product',
+            'categoriesProductCount',
+            'mightAlsoLike',
+            'related_products',
+            'reviews',
+            'userRating',
+            'productRating',
+            'userCanReview'
+        ]));
     }
 
     /**
@@ -180,7 +206,7 @@ class ShopController extends Controller
 
         $productRating = ($ratingsSum / $ratings);
 
-        return response()->json(['success' => 'producted Rated Successfully!', 'productRating' => $productRating]);
+        return response()->json(['success' => 'Product Rated Successfully!', 'productRating' => $productRating]);
     }
 
     public function createReview(Request $request, Product $product) {

@@ -26,7 +26,7 @@
                             </td>
                             <td class="product-quantity">
                                 <div class="quantity">
-                                    <input type="number" min="1" cart-row-id="{{ $item['rowId'] }}" name="number" value="{{ $item['qty'] }}" class="input-text qty text cart-quantity" size="4">
+                                    <input type="number" min="1" product-id="{{ $item['id'] }}" cart-row-id="{{ $item['rowId'] }}" name="number" value="{{ $item['qty'] }}" class="input-text qty text cart-quantity" size="4">
                                 </div>
                             </td>
                             <td class="product-subtotal">
@@ -96,15 +96,20 @@
 
                 let id = $(this).attr('cart-row-id');
                 let quantity = $(this).val();
+                let productId = $(this).attr('product-id');
 
                 $.ajax({
                     url: `/cart/${id}`,
                     method: 'PUT',
-                    data: {quantity: quantity}
+                    data: {
+                        quantity: quantity,
+                        productId: productId
+                    }
                 }).done(function(data) {
                     if(data.status == true) {
-                        $(this).val(data.quantity);
-                        toastr.success('Quantity was updated successfully!')
+                        toastr.success('Quantity was updated successfully!', 'Success')
+                    } else {
+                        toastr.error(data.message, 'Error');
                     }
                 }).fail(function(error) {
                     console.log(error)

@@ -14,42 +14,6 @@
 use App\Library\MCart;
 use Illuminate\Support\Facades\Session;
 
-Route::get('/test', function() {
-    // $added = MCart::add(
-    //     297, 
-    //     'product_images/B4mHRe37vBUbfXTrHgmRF1aOVSmZHVyiXNiiqrGo.jpeg,product_images/044CrWSP3GwfFnUduIQNYJDnTwuVc22VjEX5Haw3.jpeg',
-    //     'produc- 297',
-    //     'lorem isum 297',
-    //     5,
-    //     200,
-    //     'produc-slug-297'
-    // );
-
-    // dd($added);
-    // dd(session()->all());
-    dd(Session::get('mcart'));
-
-    // dd(MCart::update(
-    //     '7abf9af15a2df49339dcefc3600cfb2dd7709edfa72719893c38af4d9cd4b0e5',
-    //     'qty',
-    //     23
-    // ));
-
-    // dd(MCart::total());
-
-    // MCart::destroy();
-
-    // dd(MCart::count());
-
-    // dd(Mcart::remove('f7b6a8ba9a82588495cdb6ac53a6d8968e92fb47f8a7340ff80509cf8762c16c'));
-    
-    
-    // dd(Session::get('mcart'));
-    // Session::forget('mcart');
-    // if($added) {
-    //     dd(Session::get('mcart'));
-    // }
-});
 
 Route::get('/handleAuth', 'HandleAuthController@index');
 
@@ -88,7 +52,7 @@ Route::get('/profile/{user}', 'ProfilesController@show')->name('profile.show');
 Route::get('/reviews', 'ReviewsController@index')->name('review.index');
 
 Route::get('/test', function() {
-return view('admin.index');
+    return count(MCart::content());
 });
 
 Route::get('/dashboard/admin', 'AdminController@index')->name('admin.index');
@@ -97,6 +61,11 @@ Route::get('/dashboard/consultant', 'ConsultantController@index')->name('consult
 Route::get('/dashboard/academic', 'AcademicController@index')->name('academic.index');
 
 Route::resource('/dashboard/categories', 'CategoriesController');
+
+Route::get('/dashboard/users', 'UsersController@index')->name('users.index');
+Route::get('/dashboard/users/trashed', 'UsersController@trashed')->name('users.trashed');
+Route::delete('/dashboard/users/{user}', 'UsersController@destroy')->name('users.destroy');
+Route::put('/dashboard/users/{user}', 'UsersController@restore')->name('users.restore');
 
 Route::get('/dashboard/products/products', 'ProductsController@products');
 Route::get('/dashboard/products/trashed', 'ProductsController@trashed');

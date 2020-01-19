@@ -31,9 +31,9 @@
                             <div class="col-md-12">
                                 <label>Password <span class="required">*</span></label>
                                 <div class="form-wrap">
-                                    <input type="password" name="password" placeholder="Enter Password" name="your-pass" value="" size="40">
-                                    @error('email')
-                                        <label for="email" class="text-danger">{{ $message }}</label>
+                                    <input type="password" name="password" placeholder="Enter Password" value="" size="40">
+                                    @error('password')
+                                        <label for="password" class="text-danger">{{ $message }}</label>
                                     @enderror
                                 </div>
                             </div>

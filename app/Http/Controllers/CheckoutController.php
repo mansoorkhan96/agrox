@@ -8,6 +8,7 @@ use App\Library\MCart;
 use Illuminate\Http\Request;
 use App\City;
 use App\Country;
+use App\Product;
 use App\Province;
 
 class CheckoutController extends Controller
@@ -60,8 +61,13 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
+
         if(MCart::count() == 0) {
             return redirect()->route('shop.index');
+        }
+
+        if($this->productsNotAvailable()) {
+            return back()->with('error', 'Sorry! One of the items in your cart is no longer available.');
         }
 
         $data = $request->validate([
@@ -91,6 +97,8 @@ class CheckoutController extends Controller
                 'quantity' => $item['qty']
             ]);
         }
+
+        $this->decreaseQuantities();
 
         MCart::destroy();
 
@@ -140,5 +148,26 @@ class CheckoutController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function decreaseQuantities() {
+        foreach(MCart::content() as $item) {
+            $product = Product::find($item['id']);
+
+            $product->quantity = $product->quantity - $item['qty'];
+            $product->save();
+        }
+    }
+
+    private function productsNotAvailable() 
+    {
+        foreach(MCart::content() as $item) {
+            $product = Product::find($item['id']);
+            if($product->quantity < $item['qty']) {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

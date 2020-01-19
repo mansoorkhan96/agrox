@@ -51,7 +51,7 @@
                 <div class="sidebar">
                     <div class="widget widget-product-search">
                         <form class="form-search">
-                            <input type="text" class="search-field" placeholder="Search posts…" value="" name="s" />
+                            <input type="text" class="search-field" placeholder="Search products…" value="{{ request()->search_query ?? '' }}" name="search_query" />
                             <input type="submit" value="Search" />
                         </form>
                     </div>

@@ -19,9 +19,13 @@
 </script>
 
 @if (session('success'))
-    <script>toastr.success("{{session('success')}}", 'Success');</script>
+    <script>toastr.success("{{ session('success') }}", 'Success');</script>
+@endif
+
+@if (session('status'))
+    <script>toastr.success("{{ session('status') }}", 'Success');</script>
 @endif
 
 @if (session('error'))
-    <script>toastr.error("{{session('error')}}", 'Failed')</script>
+    <script>toastr.error("{{ session('error') }}", 'Failed')</script>
 @endif

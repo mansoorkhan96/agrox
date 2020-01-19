@@ -29,6 +29,9 @@
                         <div class="col-md-4 pl-0">
                             <div class="product-thumb">
                                 <a href="/shop/{{ $product->slug }}">
+                                    @if ($product->quantity < 1)
+                                        <span class="outofstock"><span>Out</span>of stock</span>
+                                    @endif
                                     <img src="{{ '/storage/' . $product->featured_image }}" alt="" />
                                 </a>
                             </div>
@@ -66,17 +69,19 @@
                                     <p>{{ $product->details }}</p>
                                 </div>
                                 <div class="product-action-list">
-                                    {{ Form::open(['action' => 'CartController@store', 'method' => 'POST', 'id' => 'add_to_cart']) }}
-                                        {{ Form::hidden('id', $product['id']) }}
-                                        {{ Form::hidden('image', $product['featured_image']) }}
-                                        {{ Form::hidden('name', $product['name']) }}
-                                        {{ Form::hidden('details', $product['details']) }}
-                                        {{ Form::hidden('price', $product['price']) }}
-                                        {{ Form::hidden('slug', $product['slug']) }}
-                                        <span class="add-to-cart">
-                                            <button type="submit" class="organik-btn small" data-placement="top" title="Add to cart">Add To Cart</button>
-                                        </span>
-                                    {{ Form::close() }}
+                                    @if ($product->quantity > 0)
+                                        {{ Form::open(['action' => 'CartController@store', 'method' => 'POST', 'id' => 'add_to_cart']) }}
+                                            {{ Form::hidden('id', $product['id']) }}
+                                            {{ Form::hidden('image', $product['featured_image']) }}
+                                            {{ Form::hidden('name', $product['name']) }}
+                                            {{ Form::hidden('details', $product['details']) }}
+                                            {{ Form::hidden('price', $product['price']) }}
+                                            {{ Form::hidden('slug', $product['slug']) }}
+                                            <span class="add-to-cart">
+                                                <button type="submit" class="organik-btn small" data-placement="top" title="Add to cart">Add To Cart</button>
+                                            </span>
+                                        {{ Form::close() }}
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -92,8 +97,8 @@
             <div class="col-md-3 col-md-pull-9">
                 <div class="sidebar">
                     <div class="widget widget-product-search">
-                        <form class="form-search">
-                            <input type="text" class="search-field" placeholder="Search products…" value="" name="s" />
+                        <form class="form-search" action="">
+                            <input type="text" class="search-field" placeholder="Search products…" value="{{ request()->search_query ?? '' }}" name="search_query" />
                             <input type="submit" value="Search" />
                         </form>
                     </div>
