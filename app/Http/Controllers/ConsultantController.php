@@ -27,7 +27,7 @@ class ConsultantController extends Controller
     public function index() {
         $popularCategories = Category::withCount('products')->latest('products_count')->take(10)->get();
 
-        $latestPosts = Post::where('post_type', 'post')->latest()->withCount('discussions')->take(6)->get();
+        $latestPosts = Post::where('post_type', 'post')->latest()->withCount('discussions')->withCount('likes')->take(6)->get();
 
         return view('consultant.index', compact([
             'popularCategories',

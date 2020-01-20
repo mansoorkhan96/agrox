@@ -29,10 +29,10 @@
                         <div class="text-muted font-13">ARTICLES</div>
                         <div class="h2 mt-2">{{ $userPostCount }}</div>
                     </div>
-                    {{-- <div class="px-4 text-center">
-                        <div class="text-muted font-13">FOLLOWERS</div>
-                        <div class="h2 mt-2">540</div>
-                    </div> --}}
+                    <div class="px-4 text-center">
+                        <div class="text-muted font-13">Post Likes</div>
+                        <div class="h2 mt-2">{{ $userPostLikeCount }}</div>
+                    </div>
                 </div>
             </div>
         </div>

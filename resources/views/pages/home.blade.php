@@ -157,6 +157,9 @@
                             <span class="comment">
                                 <i class="ion-chatbubble-working"></i> {{$post->discussions_count}}
                             </span>
+                            <span class="comment">
+                                <i class="ion-heart"></i> {{ $post->likes_count }}
+                            </span>
                         </div>
                         <a href="{{ route('blog.show', $post->slug) }}">
                             <h1 class="entry-title">{{ $post->title }}</h1>

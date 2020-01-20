@@ -23,6 +23,7 @@
                 <thead class="thead-default thead-lg">
                     <tr>
                         <th>ID</th>
+                        <th>Profile</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Role</th>
@@ -34,6 +35,11 @@
                     @forelse ($users as $user)
                         <tr>
                             <td>{{ $user->id }}</td>
+                            <td>
+                                <a href="{{ route('profile.show', $user->id) }}">
+                                    <img class="img-circle" src="{{ avatar($user->avatar) }}" alt="image" width="54">
+                                </a>
+                            </td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ roleName($user->role_id) }}</td>

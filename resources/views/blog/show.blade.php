@@ -30,12 +30,26 @@
                         <span class="comment">
                             <i class="ion-chatbubble-working"></i> {{ count($comments) }}
                         </span>
+                        <span class="comment">
+                            <i class="ion-heart"></i> {{ $post->likes_count }}
+                        </span>
 
                         <ul style="display: inline-block;" class="post-meta w-30">
                             <li style="display: inline-block; color: #5fbd74" class="star-outer"> <i class="star fa fa-star"></i> </li>
                             <li id="post-rating" style="display: inline-block;" class="star-outer"> {{ $postRating }} </li>
+                        @auth
+                            @if($userLiked !== null)
+                            <li id="like-post" data-id="{{ $post->id }}" style="display: inline-block; color: #5fbd74" class="star-outer">
+                                @if ($userLiked)
+                                    LIKED
+                                @else
+                                    LIKE
+                                @endif
+                            </li>
+                            @endif
+                        @endauth
                         </ul>
-
+                        @auth
                         <ul id="rating" style="display: inline-block;" class="post-meta pull-right w-30">
                             <li>Rate :</li>
                             <li id="1" class="star-outer"> <i class="star fa fa-star"></i> </li>
@@ -44,6 +58,7 @@
                             <li id="4" class="star-outer"> <i class="star fa fa-star"></i> </li>
                             <li id="5" class="star-outer"> <i class="star fa fa-star"></i> </li>
                         </ul>
+                        @endauth
                     </div>
                     <h1 class="entry-title">{{ $post->title }}</h1>
                     <div class="entry-content">
@@ -276,6 +291,17 @@
                     }
                 }).fail(function(data) {
                     $('#comment-error').show();
+                });
+            });
+
+            $(document).on('click', '#like-post', function() {
+                $.ajax({
+                    url: "{{ route('blog.like', $post->id) }}",
+                    method: 'POST'
+                }).done(function(data) {
+                    $('#like-post').text(data.text);
+                }).fail(function(data) {
+                    console.log(data);
                 });
             });
         });

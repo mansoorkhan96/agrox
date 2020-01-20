@@ -53,4 +53,8 @@ class Post extends Model
     public function discussions() {
         return $this->hasMany('App\Discussion');
     }
+
+    public function likes() {
+        return $this->hasMany('App\Like');
+    }
 }

@@ -31,7 +31,7 @@
                                     <span class="mr-4">Created:
                                         <a class="text-success" href="javascript:;">{{ date('F, j Y', strtotime($item->create_at)) }}</a>
                                     </span>
-                                    {{-- <span class="text-muted mr-4"><i class="fa fa-heart mr-2"></i>56</span> --}}
+                                    <span class="text-muted mr-4"><i class="fa fa-heart mr-2"></i>{{ $item->likes_count }}</span>
                                     <span class="text-muted"><i class="fa fa-comment mr-2"></i>{{ $item->discussions_count }}</span>
                                 </div>
                             </div>

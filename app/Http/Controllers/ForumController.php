@@ -16,15 +16,24 @@ class ForumController extends Controller
      */
     public function index()
     {
-        $myForums = Post::where('user_id', auth()->user()->id)->where('post_type', 'discussion')->with('categories')->latest()->get()->toArray();
-        
-        $forums = Post::latest()->where('post_type', 'discussion')->withCount('discussions')->with('user')->get();
+        $searchResults = null;
 
+        $myForums = Post::where('user_id', auth()->user()->id)->where('post_type', 'discussion')->with('categories')->latest()->get()->toArray();
+
+        if(request()->search_query) {
+            $searchResults = Post::latest()->where('post_type', 'discussion')->withCount('discussions')
+                ->with('user')    
+                ->search(request()->search_query)
+                ->get();
+        } 
+
+        $forums = Post::latest()->where('post_type', 'discussion')->withCount('discussions')->with('user')->get();
+        
         $activeTopics = Post::where('post_type', 'discussion')->whereHas('discussions', function($query) {
             $query->where('discussion', '!=', null)->whereDate('created_at', '>=', Carbon::now()->subDays(3));
         })->get();
 
-        return view('forum.index', compact(['forums', 'myForums', 'activeTopics']));
+        return view('forum.index', compact(['forums', 'myForums', 'activeTopics', 'searchResults']));
     }
 
     /**

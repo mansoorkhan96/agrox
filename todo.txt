@@ -5,9 +5,7 @@ Repsonsiveness for phonegap: {
 } 
 
 Web: {
-    like
     cart db
-    user num likes
     search each part
 }
 Android: {
@@ -17,7 +15,6 @@ Android: {
         get address from current location to fill up the check out form
     }
     splash and icon
-    check if device is android then notify with beep()
 }
 
 Image-Thumbnails

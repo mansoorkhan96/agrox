@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\City;
 use App\Country;
 use App\Http\Controllers\Controller;
+use App\Like;
 use App\Post;
 use App\Proficiency;
 use App\Province;
@@ -64,17 +65,20 @@ class ProfilesController extends Controller
      */
     public function show(User $user)
     {
-        // if(auth()->user()->role_id != 1 && $user->id != auth()->user()->id) {
-        //     abort(401);
-        // }
-
         $userPostCount = Post::where('user_id', $user->id)->count();
+    
+        $userPostLikeCount = collect(Post::where('user_id', $user->id)->withCount('likes')->get()->toArray())->sum('likes_count');
 
         $location = $user->city()->get()->toArray();
 
         $location = Arr::collapse($location);
 
-        return view('profiles.show', compact(['user', 'location', 'userPostCount']));
+        return view('profiles.show', compact([
+            'user',
+            'location',
+            'userPostCount',
+            'userPostLikeCount',
+        ]));
     }
 
     /**

@@ -25,6 +25,8 @@ Route::get('/message', 'PagesController@message')->name('pages.message');
 Route::get('/forum', 'ForumController@index')->name('forum.index');
 Route::get('/forum/{post}', 'PostsController@show')->name('forum.show');
 
+Route::post('/like/{post}', 'BlogController@like')->name('blog.like');
+
 Route::resource('blog', 'BlogController');
 Route::post('/rating/{post}', 'PostRating@store')->name('postRating.store');
 Route::post('/create-comment/{post}', 'BlogController@createComment')->name('comment.create');

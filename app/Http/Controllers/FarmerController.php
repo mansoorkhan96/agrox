@@ -55,7 +55,7 @@ class FarmerController extends Controller
 
         $popularCategories = Category::withCount('products')->latest('products_count')->take(10)->get();
 
-        $latestPosts = Post::where('post_type', 'post')->latest()->withCount('discussions')->take(6)->get();
+        $latestPosts = Post::where('post_type', 'post')->latest()->withCount('discussions')->withCount('likes')->take(6)->get();
 
         $newCustomers = User::whereDate('created_at', Carbon::today())->get();
 

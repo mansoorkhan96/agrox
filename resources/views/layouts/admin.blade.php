@@ -60,9 +60,9 @@
         </div>
     </div>
     <!-- START SEARCH PANEL-->
-    <form class="search-top-bar" action="http://admincast.com/adminca/preview/admin_1/html/search.html">
-        <input class="form-control search-input" type="text" placeholder="Search...">
-        <button class="reset input-search-icon"><i class="ti-search"></i></button>
+    <form class="search-top-bar" action="">
+        <input class="form-control search-input" name="search_query" value="{{ request()->search_query ?? '' }}" type="text" placeholder="Search...">
+        <button type="submit" class="reset input-search-icon"><i class="ti-search"></i></button>
         <button class="reset input-search-close" type="button"><i class="ti-close"></i></button>
     </form>
     <!-- END SEARCH PANEL-->

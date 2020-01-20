@@ -17,7 +17,7 @@
             </li>
             <li>
                 <a class="nav-link search-toggler js-search-toggler"><i class="ti-search"></i>
-                    <span>Search here...</span>
+                    <span>{{ request()->search_query ?? 'Search here...' }}</span>
                 </a>
             </li>
         </ul>

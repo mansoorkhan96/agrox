@@ -16,7 +16,7 @@ class PagesController extends Controller
      */
     public function home()
     {
-        $posts = Post::where('post_type', 'post')->withCount('discussions')->latest()->take(3)->get();
+        $posts = Post::where('post_type', 'post')->withCount('discussions')->withCount('likes')->latest()->take(3)->get();
 
         $products = Product::where('featured', true)->inRandomOrder()->latest()->take(8)->get()->toArray();
 

@@ -134,6 +134,7 @@ class PostsController extends Controller
      */
     public function show(Post $post)
     {
+        $likesCount = $post->likes()->count();
         $post_categories = $post->categories()->where('category_post.post_id', $post->id)->pluck('name');
         $comments = $post->discussions()->with('user')->get()->toArray();
         $author = $post->user()->first();
@@ -141,7 +142,7 @@ class PostsController extends Controller
         if($post->post_type == 'discussion') {
             return view('forum.show', compact(['post', 'post_categories', 'comments', 'author']));
         }
-        return view('posts.show', compact(['post', 'post_categories', 'comments', 'author']));
+        return view('posts.show', compact(['post', 'post_categories', 'comments', 'author', 'likesCount']));
     }
 
     /**

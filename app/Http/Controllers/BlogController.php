@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Discussion;
 use App\Http\Controllers\Controller;
+use App\Like;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,7 @@ class BlogController extends Controller
         $popular = Post::inRandomOrder()->where('post_type', 'post')->latest()->take(5)->get()->toArray();
 
         if(request()->tag) {
-            $posts = Post::where('tag', request()->tag)->where('post_type', 'post')->withCount('discussions')->paginate($pagination);
+            $posts = Post::where('tag', request()->tag)->where('post_type', 'post')->withCount('discussions')->withCount('likes')->paginate($pagination);
 
             $title = Str::title(request()->tag);
             $title = 'Tag: ' . str_replace('_', ' ', $title);
@@ -38,17 +39,18 @@ class BlogController extends Controller
 
             $posts = Post::whereHas('categories', function($query) {
                 $query->where('slug', request()->category);
-            })->where('post_type', 'post')->withCount('discussions')->paginate($pagination);
+            })->where('post_type', 'post')->withCount('discussions')->withCount('likes')->paginate($pagination);
 
             $title = Str::title(request()->tag);
             $title = 'Category: ' . Str::title(str_replace('-', ' ', request()->category));
             
         } else if(request()->search_query) {
-            $posts = Post::withCount('discussions')->where('post_type', 'post')->search(request()->search_query)->paginate($pagination);
+            $posts = Post::withCount('discussions')->withCount('likes')->where('post_type', 'post')->search(request()->search_query)->paginate($pagination);
 
             $title = 'Searched For: ' . request()->search_query;
         } else {
-            $posts = Post::where('post_type', 'post')->withCount('discussions')->paginate($pagination);
+            $posts = Post::where('post_type', 'post')->withCount('discussions')->withCount('likes')->paginate($pagination);
+            
             $title = 'Latest Posts';
         }
 
@@ -84,7 +86,19 @@ class BlogController extends Controller
      */
     public function show($slug)
     {
-        $post = Post::with('user')->where('slug', $slug)->firstOrFail();
+        $userLiked = null;
+
+        $post = Post::with('user')->withCount('likes')->where('slug', $slug)->firstOrFail();
+
+        $userPostLike = Like::where('user_id', auth()->user()->id)->where('post_id', $post->id)->get();
+        
+        //dd($userPostLike);
+        if($userPostLike->isNotEmpty()) {
+            $userLiked = true;
+        } else {
+            $userLiked = false;
+        }
+
 
         $comments = Discussion::with('user')->where('post_id', $post->id)->get();
 
@@ -112,7 +126,16 @@ class BlogController extends Controller
 
         $popular = Post::inRandomOrder()->where('post_type', 'post')->latest()->take(5)->get()->toArray();
 
-        return view('blog.show', compact(['post', 'categoriesPostCount', 'popular', 'post_categories', 'userRating', 'postRating', 'comments']));
+        return view('blog.show', compact([
+            'post',
+            'categoriesPostCount',
+            'popular',
+            'post_categories',
+            'userRating',
+            'postRating',
+            'comments',
+            'userLiked'
+            ]));
     }
 
     /**
@@ -161,5 +184,26 @@ class BlogController extends Controller
         ]);
 
         return response()->json(['success' => 'Your comment was saved!']);
+    }
+
+    public function like(Post $post) {
+        $model = Like::withTrashed()->firstOrCreate(
+            ['user_id' => auth()->user()->id, 'post_id' => $post->id],
+            ['user_id' => auth()->user()->id, 'post_id' => $post->id]
+        );
+
+        if($model->wasRecentlyCreated) {
+            return response()->json(['status' => true, 'text' => 'LIKED']);
+        } else {
+            if($model->deleted_at != null) {
+                $model->restore();
+
+                return response()->json(['status' => true, 'text' => 'LIKED']);
+            } else {
+                $model->delete();
+
+                return response()->json(['status' => true, 'text' => 'LIKE']);
+            }
+        }
     }
 }

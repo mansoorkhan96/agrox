@@ -19,9 +19,34 @@
 </script>
 
 @if (session('success'))
-    <script>toastr.success("{{session('success')}}", 'Success');</script>
+    <script>
+        toastr.success("{{ session('success') }}", 'Success');
+
+        let app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+        if(app) {
+            navigator.notification.beep();
+        }
+    </script>
+@endif
+
+@if (session('status'))
+    <script>
+        toastr.success("{{ session('status') }}", 'Success');
+
+        let app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+        if(app) {
+            navigator.notification.beep();
+        }
+    </script>
 @endif
 
 @if (session('error'))
-    <script>toastr.error("{{session('error')}}", 'Failed')</script>
+    <script>
+        toastr.error("{{ session('error') }}", 'Failed');
+        
+        let app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+        if(app) {
+            navigator.notification.beep();
+        }
+    </script>
 @endif
