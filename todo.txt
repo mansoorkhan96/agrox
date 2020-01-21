@@ -6,7 +6,6 @@ Repsonsiveness for phonegap: {
 
 Web: {
     cart db
-    search each part
 }
 Android: {
     save profile to phone,
