@@ -22,10 +22,7 @@
     <script>
         toastr.success("{{ session('success') }}", 'Success');
 
-        let app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
-        if(app) {
-            navigator.notification.beep();
-        }
+        navigator.notification.beep();
     </script>
 @endif
 
@@ -33,10 +30,7 @@
     <script>
         toastr.success("{{ session('status') }}", 'Success');
 
-        let app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
-        if(app) {
-            navigator.notification.beep();
-        }
+        navigator.notification.beep();
     </script>
 @endif
 
@@ -44,9 +38,6 @@
     <script>
         toastr.error("{{ session('error') }}", 'Failed');
         
-        let app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
-        if(app) {
-            navigator.notification.beep();
-        }
+        navigator.notification.beep();
     </script>
 @endif

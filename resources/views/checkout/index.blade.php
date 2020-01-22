@@ -87,7 +87,7 @@
                         <div class="col-md-12">
                             <label>Shipping Address </label>
                             <div class="form-wrap">
-                                {{ Form::textarea('shipping_address', auth()->user()->address, ['rows' => 3, 'shipping_address']) }}
+                                {{ Form::textarea('shipping_address', auth()->user()->address, ['rows' => 3, 'id' => 'shipping_address']) }}
                                 @error('shipping_address')
                                     <label for="shipping_address" class="text-danger">{{ $message }}</label>
                                 @enderror
@@ -163,4 +163,64 @@
         {{ Form::close() }}
     </div>
 </div>
+@endsection
+
+@section('page_script')
+    <script>
+		//let app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+            //if(app) {  
+				//alert('in')
+                /**
+                * Get Current Location
+                *
+                */
+                navigator.geolocation.getCurrentPosition(onSuccess, onError, { enableHighAccuracy: true });
+
+                /**
+                * Get Latitude and Longitude Cordinates and pass to getCity() to fetch the cityname
+                *
+                */
+                function onSuccess(position) {
+                    timestamp = position.timestamp;
+					//alert(position.coords.latitude)
+					//alert(position.coords.longitude)
+                    getCity(
+                        position.coords.latitude,
+                        position.coords.longitude
+                    );
+                }
+
+                /**
+                * Get cityname from Lat, Long
+                *
+                */
+                function getCity(latitude, longitude) {
+                    $.ajax({
+                        url: 'https://agrox.roshnigrammarschool.com/api/location',
+						data: {lat: latitude, long: longitude},
+                    }).done(function(data) {
+						
+                        let postal = jQuery.isEmptyObject(data[0].postal) ? 'Postal Code not Fetched' : data[0].postal
+						console.log(postal);
+                        
+                        $('#billing_postal').attr('placeholder', postal);
+                        $('#billing_country option:contains('+data[0].country+')').attr("selected", "selected");
+                        $('#billing_province option:contains('+data[0].region+')').attr("selected", "selected");
+                        $('#billing_city option:contains('+data[0].city+')').attr("selected", "selected");
+                        $('#billing_address').text(data[0].staddress);
+                        $('#shipping_address').text(data[0].staddress);
+                        
+                    }).fail(function(xhr, status, error) {
+						console.log(xhr);
+						console.log(status);
+						console.log(error);
+						alert('Something Went Wrong While Fetching the city name..');
+                    });
+                }
+            
+                function onError(error) {
+                    console.log(error)
+                }
+           // }
+    </script>
 @endsection

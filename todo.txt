@@ -8,33 +8,39 @@ Web: {
     cart db
 }
 Android: {
-    save profile to phone,
-    get relavant data to fill up the form: {
-        capture pics,
-        get address from current location to fill up the check out form
-    }
+    battery,
     splash and icon
+}
+
+tricks : {
+    write code to api and phone gap
 }
 
 Image-Thumbnails
 
-
-Pros: {
+{
     Cart Library,
     Helpers,
     Social Provider table seperation,
     Dynamic Pagination,
-    Policies,
     Archives Tag, Category
+}
+
+New: {
+    Policies,
+    Telescope,
+    ACL Management,
+    Larvel Resource Publishingl
+    Laravel Mailables
+    MailTrap
     (Front-End) -> Slug Based Blog and Shop {
+        unique (10-digit random key appended to end of the slug)
         user friendly
         search engine friendly
     }
 
-
     Laravel Cache (Dont load frequent request from db every time load it from cache)
-    ACL Management,
-    Ajax only Requests(For Api),
+
     Indexes (Optimized DB Queries)
 }
 
@@ -43,10 +49,8 @@ Users {
     admin: mafalda@example.com
     password: password
 
-
     customer: price.bill@example.com
     password: password
-
 
     farmer: braulio.schroeder@example.net
     password: mansoorkhan

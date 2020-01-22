@@ -17,4 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/', 'Api\PagesController@home');
+
+Route::get('/home', 'API\ApiPagesController@home');
+
+Route::get('shop/list', 'API\ApiShopController@shopList');
+Route::get('shop/grid', 'API\ApiShopController@shopGrid');
+Route::resource('shop', 'API\ApiShopController');
+
