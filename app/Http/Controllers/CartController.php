@@ -38,6 +38,7 @@ class CartController extends Controller
     {
         $added = MCart::add(
             $request->id,
+            $request->seller_id,
             $request->image,
             $request->name,
             $request->details,
@@ -45,7 +46,7 @@ class CartController extends Controller
             $request->price,
             $request->slug
         );
-
+        
         if($added) {
             return redirect('/cart')->with('success', 'Item was added to cart!');
         }

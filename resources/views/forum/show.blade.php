@@ -72,7 +72,7 @@
                 
                 
                 <hr class="my-4">
-                <h5 class="font-strong mb-3"><i class="fa fa-comment-o mr-2"></i>{{ count($comments) }} Ansers(s)</h5>
+                <h5 class="font-strong mb-3"><i class="fa fa-comment-o mr-2"></i>{{ count($comments) }} Answer(s)</h5>
                 <ul class="media-list">
                     @forelse ($comments as $item)
                     <li class="media">

@@ -2,12 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Library\Cart;
+use App\Library\DBCart;
 use Illuminate\Http\Request;
 
 class HandleAuthController extends Controller
 {
     public function index() {
         $redirect = null;
+
+        if(session()->has('mcart')) {
+            foreach(session()->get('mcart') as $item) {
+                DBCart::add(
+                    $item['id'],
+                    $item['image'],
+                    $item['name'],
+                    $item['details'],
+                    $item['qty'],
+                    $item['price'],
+                    $item['slug']);
+            }
+
+            Cart::destroy();
+        }
 
         if(request()->redirect) {
             $redirect = request()->redirect;

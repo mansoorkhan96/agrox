@@ -5,7 +5,9 @@ Repsonsiveness for phonegap: {
 } 
 
 Web: {
-    cart db
+    Show Profieciency in the Profile
+    make Profile Viewbale set links for that everywhere
+    show consultant with reviews
 }
 Android: {
     battery,
@@ -30,7 +32,7 @@ New: {
     Policies,
     Telescope,
     ACL Management,
-    Larvel Resource Publishingl
+    Laravel Resource Publishingl
     Laravel Mailables
     MailTrap
     (Front-End) -> Slug Based Blog and Shop {
@@ -40,7 +42,6 @@ New: {
     }
 
     Laravel Cache (Dont load frequent request from db every time load it from cache)
-
     Indexes (Optimized DB Queries)
 }
 

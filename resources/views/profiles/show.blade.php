@@ -19,7 +19,11 @@
                             <p class="lead">Role: {{ roleName($user->role_id) }}</p>
                             @can('update', $user)
                             <p class="lead">
-                                <a href="{{ route('profile.edit', auth()->user()->id) }}">Edit Profile</a></p>
+                                <a style="color: #18c5a9" href="{{ route('profile.edit', auth()->user()->id) }}">Edit Profile</a> | 
+                                @if (auth()->user()->id == $user->id)   
+                                <a style="color: #18c5a9" href="{{ route('password.request') }}">Reset Password</a>
+                                @endif
+                            </p>
                             @endcan
                         </div>
                     </div>

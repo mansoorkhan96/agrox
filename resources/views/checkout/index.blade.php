@@ -219,6 +219,7 @@
                 }
             
                 function onError(error) {
+                    //alert('geolocation error');
                     console.log(error)
                 }
            // }

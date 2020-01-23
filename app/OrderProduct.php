@@ -8,7 +8,7 @@ class OrderProduct extends Model
 {
     protected $table = 'order_product';
     
-    protected $fillable = ['order_id', 'product_id', 'quantity'];
+    protected $fillable = ['order_id', 'product_id', 'quantity', 'seller_id'];
 
     public function product() {
         return $this->belongsTo('App\Product');

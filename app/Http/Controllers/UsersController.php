@@ -16,7 +16,7 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(AdminRoleCheck::class);
+        $this->middleware(AdminRoleCheck::class, ['except' => ['consultants']]);
     }
     
     public function index() {
@@ -52,5 +52,9 @@ class UsersController extends Controller
 
             return back()->with('success', 'User restored successfully');
         }
+    }
+
+    public function consultants() {
+        return 'consultants';
     }
 }

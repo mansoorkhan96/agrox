@@ -32,6 +32,7 @@
                             <div class="product-action">
                                 {{ Form::open(['action' => 'CartController@store', 'method' => 'POST', 'id' => 'add_to_cart']) }}
                                     {{ Form::hidden('id', $product['id']) }}
+                                    {{ Form::hidden('seller_id', $product['user_id']) }}
                                     {{ Form::hidden('image', $product['featured_image']) }}
                                     {{ Form::hidden('name', $product['name']) }}
                                     {{ Form::hidden('details', $product['details']) }}

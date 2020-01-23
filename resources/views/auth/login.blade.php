@@ -50,7 +50,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 Don't have account ? <a style="color: #5fbd74;" href="{{ route('register') }}">Create Account</a> <br>
-                                <a href="#">Lost your password?</a>
+                                <a href="{{ route('password.request') }}">Lost your password?</a>
                             </div>
                         </div>
                     {{Form::close()}}

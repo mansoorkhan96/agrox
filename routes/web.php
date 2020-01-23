@@ -79,6 +79,8 @@ Route::get('/dashboard/users/trashed', 'UsersController@trashed')->name('users.t
 Route::delete('/dashboard/users/{user}', 'UsersController@destroy')->name('users.destroy');
 Route::put('/dashboard/users/{user}', 'UsersController@restore')->name('users.restore');
 
+Route::get('/consultants', 'UsersController@consultants')->name('consultants.index');
+
 Route::get('/dashboard/products/products', 'ProductsController@products');
 Route::get('/dashboard/products/trashed', 'ProductsController@trashed');
 Route::put('/dashboard/products/restore/{product}', 'ProductsController@restore');

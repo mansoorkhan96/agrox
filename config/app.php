@@ -229,6 +229,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'MCart' => App\Library\MCart::class,
+        'Cart' => App\Library\Cart::class,
+        'DBCart' => App\Library\DBCart::class,
 
     ],
 

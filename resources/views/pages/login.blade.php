@@ -35,7 +35,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <a href="#">Lost your password?</a>
+                                <a href="{{ route('password.request') }}">Lost your password? k;</a>
                             </div>
                         </div>
                     </form>

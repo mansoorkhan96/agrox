@@ -26,6 +26,11 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('consultants.index') }}"><i class="sidebar-item-icon ti-user"></i>
+                    <span class="nav-label">Consultants</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('forum.index') }}"><i class="sidebar-item-icon ti-comments"></i>
                     <span class="nav-label">Forum</span>
                 </a>
