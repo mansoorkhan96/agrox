@@ -8,6 +8,7 @@ Web: {
     Show Profieciency in the Profile
     make Profile Viewbale set links for that everywhere
     show consultant with reviews
+    review consultant
 }
 Android: {
     battery,

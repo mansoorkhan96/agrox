@@ -10,6 +10,8 @@ use App\City;
 use App\Country;
 use App\Product;
 use App\Province;
+use Cartalyst\Stripe\Laravel\Facades\Stripe;
+use Exception;
 
 class CheckoutController extends Controller
 {
@@ -79,17 +81,39 @@ class CheckoutController extends Controller
             'billing_address' => 'required',
             'shipping_address' => 'required',
             'billing_phone' => ['required'],
+            'payment_method' => ['required']
         ]);
 
         $data['user_id'] = auth()->user()->id;
         $data['billing_subtotal'] = MCart::total();
         $data['shipping_charges'] = 200;
         $data['billing_total'] = MCart::total() + 200;
+        
+        if($data['payment_method'] == 'Stripe') {
+            try {
+                $contents = collect(MCart::content())->map(function($item) {
+                    return $item['slug'] . ', ' . $item['qty']; 
+                })->values()->toJson();
+    
+                $charge = Stripe::charges()->create([
+                    'amount' => $data['billing_total'],
+                    'currency' => 'PKR',
+                    'source' => $request->stripeToken,
+                    'description' => 'Order',
+                    'receipt_email' => $data['billing_email'],
+                    'metadata' => [
+                        'contents' => $contents,
+                        'quantity' => MCart::count(),
+                    ],
+                ]);
+    
+            } catch (Exception $e) {
+                return back()->with('error', $e->getMessage());
+            }
+        }
 
         $order = Order::create($data);
-        
-        // seller_id goes in order_product
-        
+       
         foreach(MCart::content() as $item) {
             OrderProduct::create([
                 'seller_id' => $item['seller_id'],
@@ -104,6 +128,7 @@ class CheckoutController extends Controller
         MCart::destroy();
 
         return redirect()->route('pages.message')->with('message', 'Thank you! Your order has been successfully placed!');
+
     }
 
     /**

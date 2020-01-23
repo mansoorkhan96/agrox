@@ -15,9 +15,11 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
+
             $table->unsignedBigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')
                   ->onUpdate('cascade')->onDelete('set null');
+
             $table->string('billing_email')->nullable();
             $table->string('billing_name')->nullable();
             $table->string('billing_address')->nullable();
@@ -29,7 +31,8 @@ class CreateOrdersTable extends Migration
             $table->integer('billing_subtotal');
             $table->integer('shipping_charges')->default(200);
             $table->integer('billing_total');
-            $table->integer('quantity')->unsigned();
+            $table->string('payment_method')->default('Cash-On-Delivery');
+            $table->string('error')->nullable();
             $table->enum('status', ['Complete', 'Pending', 'Cancelled'])->default('Pending');
             $table->timestamps();
         });

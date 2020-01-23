@@ -22,7 +22,6 @@ class ProductsController extends Controller
         $this->middleware('auth');
         
         $this->middleware(AdminRoleCheck::class) OR $this->middleware(FarmerRoleCheck::class);
-        
     }
 
     /**
