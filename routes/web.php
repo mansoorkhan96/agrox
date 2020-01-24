@@ -19,7 +19,8 @@ Route::get('/api/location', function() {
 	$lat = request()->lat;
 	$long = request()->long;
 	$response = file_get_contents('https://geocode.xyz/' . $lat .',' . $long . '?geoit=json', false);
-        $response = json_decode($response);
+
+    $response = json_decode($response);
 	
 	return response()->json([$response]);
 });

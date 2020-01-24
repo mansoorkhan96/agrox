@@ -6,9 +6,10 @@ Repsonsiveness for phonegap: {
 
 Web: {
     Show Profieciency in the Profile
-    make Profile Viewbale set links for that everywhere
+    make Profile Viewbale, set links for that everywhere
     show consultant with reviews
     review consultant
+    buy item directly
 }
 Android: {
     battery,
