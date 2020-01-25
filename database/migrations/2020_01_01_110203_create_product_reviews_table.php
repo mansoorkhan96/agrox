@@ -17,8 +17,10 @@ class CreateProductReviewsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
+
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            
             $table->tinyInteger('rating');
             $table->text('review')->nullable();
             $table->timestamps();

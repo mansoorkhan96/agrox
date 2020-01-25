@@ -67,10 +67,13 @@
                 </div>
                 <hr class="my-4">
                 <div class="">
-                    <p class="lead">{{ $author->name }}</p>
+                    <a href="{{ route('profile.show', $author->id) }}">
+                        <p class="lead">{{ $author->name }}</p>
+                    </a>
                     <div class="d-flex">
-                        <img width="70" height="70" src="{{ avatar($author->avatar) }}" alt="">
-                    
+                        <a href="{{ route('profile.show', $author->id) }}">
+                            <img width="70" height="70" src="{{ avatar($author->avatar) }}" alt="">
+                        </a>
                         <p class="pt-2 pl-3 pr-3 pb-3">{{ $author->bio }} </p>
                     </div>
                 </div>

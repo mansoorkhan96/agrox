@@ -73,8 +73,14 @@ class ProfilesController extends Controller
 
         $location = Arr::collapse($location);
 
+        $proficiency = null;
+        if($user->proficiency) {
+            $proficiency = $user->proficiency()->first()->proficiency;
+        }
+        
         return view('profiles.show', compact([
             'user',
+            'proficiency',
             'location',
             'userPostCount',
             'userPostLikeCount',

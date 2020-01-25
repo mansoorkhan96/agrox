@@ -52,7 +52,7 @@ Route::get('/my-orders', 'ShopController@orders')->name('order.index');
 Route::get('/my-order/{order}', 'ShopController@showOrder')->name('order.show');
 Route::put('/my-order/{order}', 'ShopController@updateOrder')->name('order.update');
 
-
+Route::post('/buy', 'CartController@buy');
 Route::resource('cart', 'CartController');
 
 Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
@@ -100,6 +100,7 @@ Route::post('/dashboard/create-comment/{post}', 'PostsController@createComment')
 Route::delete('/dashboard/delete-comment/{post}', 'PostsController@deleteComment')->name('post.deletecomment');
 Route::resource('/dashboard/posts', 'PostsController');
 
+Route::post('/dashboard/consultancies/rating', 'ConsultancyController@rating')->name('consultant.rating');
 Route::resource('/dashboard/consultancies', 'ConsultancyController');
 Route::put('/dashboard/consultancies/reject/{consultancy}', 'ConsultancyController@reject')->name('consultancies.reject');
 Route::put('/dashboard/consultancies/accept/{consultancy}', 'ConsultancyController@accept')->name('consultancies.accept');

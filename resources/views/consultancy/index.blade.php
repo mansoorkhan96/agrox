@@ -53,13 +53,38 @@
             @endforelse
         </ul>
     </div>
+    <style>
+        .star-outer {
+            padding-left: 0px !important;
+            margin-right: 10px !important;
+            cursor:pointer;
+        }
+        #rating li{
+            font-size: 15px;
+            display: inline-block;
+        }
+    </style>
     <div class="col-lg-9 col-md-8">
         <div class="ibox" id="mailbox-container">
-            <div class="flexbox-b p-4">
-                <h5 class="font-strong m-0 mr-3">INBOX</h5>
-                
+            <div class="p-4 row">
+                <div class="col-4">
+                    <h5 class="font-strong m-0 mr-3">INBOX</h5>
+                </div>
+                <div class="col-4 text-center">
+                    @if(!empty($inbox) && auth()->user()->role_id !== 3)
+                    <h5 class="font-strong m-0 mr-3" id="rating" style="display: inline-block;">
+                        <li id="1" class="star-outer"> <i class="star fa fa-star"></i> </li>
+                        <li id="2" class="star-outer"> <i class="star fa fa-star"></i> </li>
+                        <li id="3" class="star-outer"> <i class="star fa fa-star"></i> </li>
+                        <li id="4" class="star-outer"> <i class="star fa fa-star"></i> </li>
+                        <li id="5" class="star-outer"> <i class="star fa fa-star"></i> </li>
+                    </h5>
+                    @endif
+                </div>
                 @if(!empty($inbox) OR $accepter == auth()->user()->id)
+                <div class="col-4 text-right">
                     <button class="d-block create-message btn btn-primary btn-air ml-auto p-2" data-toggle="modal" data-target="#create-message-modal"><i class="la la-pencil"></i> Compose</button>
+                </div>
                 @endif
             </div>
             
@@ -67,7 +92,9 @@
                 <tbody class="rowlinkx" data-link="row">
                     @forelse ($inbox as $item)
                     <tr data-id="1">
-                        <td>{{ $item['from']['name'] }}</td>
+                        <td>
+                            <a class="active" href="{{ route('profile.show', $item['from']['id']) }}">{{ $item['from']['name'] }}</a>
+                        </td>
                         <td>
                             <input type="hidden" value="{{ $item['message'] }}" class="message-text-input">
                             <a class="d-block read-message" data-toggle="modal" data-target="#mail-view-modal">{{ Str::limit($item['message'], 80) }}</a>
@@ -192,10 +219,43 @@
                 let url = "{{ route('consultancies.accept', ':id') }}";
                 url = url.replace(':id', id);
 
-                $.ajax
+                // $.ajax
             });
+
+
+
+            // Rating
+            $('.star-outer').click(function() {
+                let url = "{{ route('consultant.rating') }}";
+                let rating = this.id;
+                let consultancy_id = $('input[name=consultancy_id]').val();
+                let consultant = $('input[name=to]').val();
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: {
+                        rating: rating,
+                        consultancy_id: consultancy_id,
+                        consultant: consultant
+                    }
+                }).done(function(data) {
+                    unstyle_stars();
+                    style_stars(rating);
+                });
+            });
+
+            style_stars('{{ $userRating->rating ?? "" }}');
+
+            function style_stars(count) {
+                for (let i = 1; i <= count; i++ ) {
+                    document.getElementById(i).style.color='#18c5a9';
+                }
+            }
+
+            function unstyle_stars() {
+                $('.star-outer').css('color', '#aaa')
+            }
         });
-
-
     </script>
 @endsection

@@ -71,4 +71,8 @@ class User extends Authenticatable
     public function city() {
         return $this->belongsTo('App\City')->with('province');
     }
+
+    public function proficiency() {
+        return $this->belongsTo('App\Proficiency');
+    }
 }

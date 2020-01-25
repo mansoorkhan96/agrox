@@ -62,7 +62,9 @@
                 </div>
                 <hr class="my-4">
                 <div class="">
-                    <p class="lead">{{ $author->name }}</p>
+                    <a href="{{ route('profile.show', $author->id) }}">
+                        <p class="lead">{{ $author->name }}</p>
+                    </a>
                     <div class="d-flex">
                         <img width="70" height="70" src="{{ avatar($author->avatar) }}" alt="">
                     
@@ -76,12 +78,14 @@
                 <ul class="media-list">
                     @forelse ($comments as $item)
                     <li class="media">
-                        <a class="media-img" href="javascript:;">
+                        <a class="media-img" href="{{ route('profile.show', $item['user']['id']) }}">
                             <img src="{{ avatar($item['user']['avatar']) }}" alt="image" width="45" />
                         </a>
                         <div class="media-body">
                             <div class="media-heading">
-                                <a class="comment-author" href="javascript:;">{{ $item['user']['name'] }}</a><small class="text-muted ml-2">{{ date('F, j Y', strtotime($item['user']['created_at'])) }}</small>
+                                <a class="comment-author" href="{{ route('profile.show', $item['user']['id']) }}">
+                                    {{ $item['user']['name'] }}
+                                </a><small class="text-muted ml-2">{{ date('F, j Y', strtotime($item['user']['created_at'])) }}</small>
                                 <div class="pull-right font-13">
                                     
                                 </div>

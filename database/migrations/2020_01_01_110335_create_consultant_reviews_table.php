@@ -15,10 +15,15 @@ class CreateConsultantReviewsTable extends Migration
     {
         Schema::create('consultant_reviews', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('consultancy_id');
+            $table->foreign('consultancy_id')->references('id')->on('consultancies');
+
             $table->unsignedBigInteger('consultant');
             $table->foreign('consultant')->references('id')->on('users');
+
             $table->unsignedBigInteger('consumer');
             $table->foreign('consumer')->references('id')->on('users');
+
             $table->tinyInteger('rating');
             $table->text('review')->nullable();
             $table->timestamps();

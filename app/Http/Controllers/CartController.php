@@ -23,9 +23,34 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function buy(Request $request)
     {
+        $request->validate([
+            'id' => 'required',
+            'seller_id' => 'required',
+            'image' => 'required',
+            'name' => 'required',
+            'details' => 'required',
+            'price' => 'required',
+            'slug' => 'required',
+        ]);
+
+        $added = MCart::add(
+            $request->id,
+            $request->seller_id,
+            $request->image,
+            $request->name,
+            $request->details,
+            1,
+            $request->price,
+            $request->slug
+        );
         
+        if($added) {
+            return redirect('/checkout')->with('success', 'Item was added to cart!');
+        }
+
+        return redirect('/checkout')->with('success', 'Item is already in your cart');
     }
 
     /**
@@ -36,6 +61,16 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'id' => 'required',
+            'seller_id' => 'required',
+            'image' => 'required',
+            'name' => 'required',
+            'details' => 'required',
+            'price' => 'required',
+            'slug' => 'required',
+        ]);
+        
         $added = MCart::add(
             $request->id,
             $request->seller_id,

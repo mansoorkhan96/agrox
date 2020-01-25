@@ -17,10 +17,13 @@ class CreateConsultanciesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('consultant');
             $table->foreign('consultant')->references('id')->on('users');
+
             $table->unsignedBigInteger('consumer');
             $table->foreign('consumer')->references('id')->on('users');
+
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
+            
             $table->string('title');
             $table->text('description')->nullable();
             $table->enum('status', ['Pending', 'Accepted', 'Rejected'])->default('Pending');

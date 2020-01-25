@@ -477,6 +477,16 @@
     <!-- CORE PLUGINS-->
     <script src="{{ asset('assets/vendors/jquery/dist/jquery.min.js') }}"></script>
 
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        });
+    </script>
+
     <script src="{{ asset('assets/vendors/toastr/toastr.min.js') }}"></script>
     @include('includes.admin.message')
 

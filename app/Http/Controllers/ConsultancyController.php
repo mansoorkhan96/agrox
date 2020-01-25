@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Consultancy;
+use App\ConsultantReview;
 use App\Http\Controllers\Controller;
 use App\PrivateMessage;
 use App\User;
@@ -53,6 +54,8 @@ class ConsultancyController extends Controller
          */
         $inbox = [];
         $consultancies = Consultancy::latest()->get();
+        
+        $userRating = null;
 
         if(auth()->user()->role_id != 1 && auth()->user()->role_id != 3) {
 
@@ -60,6 +63,8 @@ class ConsultancyController extends Controller
             
             if(! $consultancies->isEmpty()) {
                 $inbox = PrivateMessage::where('consultancy_id', $this->consultancy_id($consultancies))->latest()->with(['from', 'consultancies'])->get()->toArray();
+
+                $userRating = ConsultantReview::where('consultancy_id', $this->consultancy_id($consultancies))->first();
             }
 
             if(! $consultancies->isEmpty()) {
@@ -84,7 +89,15 @@ class ConsultancyController extends Controller
         $consultants = User::where('role_id', 3)->pluck('name', 'id');
         $categories = Category::pluck('name', 'id');
 
-        return view('consultancy.index', compact(['consultancies', 'inbox', 'consultants', 'categories', 'to', 'accepter']));
+        return view('consultancy.index', compact([
+            'consultancies',
+            'inbox',
+            'consultants',
+            'categories',
+            'to',
+            'accepter',
+            'userRating',
+        ]));
     }
 
     /**
@@ -243,5 +256,18 @@ class ConsultancyController extends Controller
         } else {
             return $consultancies[0]['consumer'];
         }
+    }
+
+
+    public function rating() {
+        ConsultantReview::updateOrCreate(
+            ['consultancy_id' => request()->consultancy_id, 'consultant' => request()->consultant],
+            [
+                'consultancy_id' => request()->consultancy_id,
+                'consultant' => request()->consultant,
+                'consumer' => auth()->user()->id,
+                'rating' => request()->rating
+                ]
+        );
     }
 }

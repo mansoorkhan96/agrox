@@ -1,5 +1,6 @@
 <?php
 
+use App\ConsultantReview;
 use App\Proficiency;
 use App\Role;
 
@@ -50,5 +51,14 @@ use App\Role;
         }
 
         return Proficiency::where('id', $id)->first()->proficiency;
+    }
+
+    function consultancyRating($id) {
+        $ratingSum = ConsultantReview::where('consultant', $id)->sum('rating');
+        $ratingCount = ConsultantReview::where('consultant', $id)->count();
+
+        if($ratingCount && $ratingSum) {
+            return $ratingSum / $ratingCount;
+        }
     }
 ?>

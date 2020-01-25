@@ -97,10 +97,14 @@
                     <div class="entry-author">
                         <div class="row">
                             <div class="col-xs-2 col-md-2">
-                                <img alt="" src="{{ avatar($post->user->avatar) }}" class="avatar" />
+                                <a href="{{ route('profile.show', $post->user->id) }}">
+                                    <img alt="" src="{{ avatar($post->user->avatar) }}" class="avatar" />
+                                </a>
                             </div>
                             <div class="col-xs-10 col-md-10">
-                                <h3 class="name">{{ $post->user->name }}</h3>
+                                <a href="{{ route('profile.show', $post->user->id) }}">
+                                    <h3 class="name">{{ $post->user->name }}</h3>
+                                </a>
                                 <div class="desc">{{ $post->user->bio }}</div>
                             </div>
                         </div>
@@ -115,10 +119,14 @@
                                 <li>
                                     <div class="comment-container">
                                         <div class="comment-author-vcard">
-                                            <img alt="" src="{{ avatar($comment->user->avatar) }}" />
+                                            <a href="{{ route('profile.show', $comment->user->id) }}">
+                                                <img alt="" src="{{ avatar($comment->user->avatar) }}" />
+                                            </a>
                                         </div>
                                         <div class="comment-author-info">
-                                            <span class="comment-author-name">{{ $comment->user->name }}</span>
+                                            <a href="{{ route('profile.show', $comment->user->id) }}">
+                                                <span class="comment-author-name">{{ $comment->user->name }}</span>
+                                            </a>
                                             <a href="#" class="comment-date">{{ date('F, j Y', strtotime($comment->created_at)) }}</a>
                                             <p>{{ $comment->discussion }}</p>
                                         </div>

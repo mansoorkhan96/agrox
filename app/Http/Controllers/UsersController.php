@@ -55,6 +55,8 @@ class UsersController extends Controller
     }
 
     public function consultants() {
-        return 'consultants';
+        $consultants = User::where('role_id', 3)->get();
+
+        return view('users.consultants', compact('consultants'));
     }
 }

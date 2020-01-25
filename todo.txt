@@ -5,11 +5,13 @@ Repsonsiveness for phonegap: {
 } 
 
 Web: {
-    Show Profieciency in the Profile
-    make Profile Viewbale, set links for that everywhere
-    show consultant with reviews
-    review consultant
-    buy item directly
+    Paypal
+    *Learn local payment integerations: {
+        JazzCash,
+        Omini,
+        Banks,
+        Easypaisa,
+    }
 }
 Android: {
     battery,
@@ -31,10 +33,11 @@ Image-Thumbnails
 }
 
 New: {
+    Stripe,
     Policies,
     Telescope,
     ACL Management,
-    Laravel Resource Publishingl
+    Laravel Resource Publishing
     Laravel Mailables
     MailTrap
     (Front-End) -> Slug Based Blog and Shop {
