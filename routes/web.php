@@ -28,6 +28,7 @@ Route::get('/api/location', function() {
 Route::get('/handleAuth', 'HandleAuthController@index');
 
 Route::get('/', 'PagesController@home')->name('home');
+Route::get('/other', 'PagesController@other')->name('pages.other');
 Route::get('/about', 'PagesController@about')->name('pages.about');
 Route::get('/contact', 'PagesController@contact')->name('pages.contact');
 Route::get('/message', 'PagesController@message')->name('pages.message');
@@ -51,7 +52,7 @@ Route::get('/my-orders', 'ShopController@orders')->name('order.index');
 Route::get('/my-order/{order}', 'ShopController@showOrder')->name('order.show');
 Route::put('/my-order/{order}', 'ShopController@updateOrder')->name('order.update');
 
-
+Route::post('/buy', 'CartController@buy')->name('cart.buy');
 Route::resource('cart', 'CartController');
 
 Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');

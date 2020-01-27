@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <h3 class="text-center section-title mtn-2">Know about your device battery and your current position</h3>
+                <h5 class="text-center section-title mtn-2">Know about your device battery and your current position</h5>
                 <div class="organik-seperator mb-9 center">
                     <span class="sep-holder"><span class="sep-line"></span></span>
                     <div class="sep-icon"><i class="organik-flower"></i></div>
@@ -32,14 +32,15 @@
             <div class="col-md-6">
                 <div class="">
                     <div class="about-content-title">
-                        <h4>GeoLocation</h4>
+                        <h4>GeoLocation Information</h4>
                         <div class="about-content-title-line"></div>
                     </div>
                     <div class="about-content-text">
-                        <p id="battery-charging">Battery charging? </p>
-                        <p id="battery-level">Battery level: </p>
-                        <p id="battery-charging-time">Battery charging time: </p>
-                        <p id="battery-discharging-time">Battery discharging time: </p>
+                        <p id="country">Country: </p>
+                        <p id="province">Province: </p>
+                        <p id="city">City: </p>
+                        <p id="street">Street: </p>
+                        <p id="postal">Postal Code: </p>
                     </div>
                 </div>
             </div>
@@ -102,8 +103,7 @@
 
         });
 
-
-
+        document.querySelector('#find-me').addEventListener('click', geoFindMe);
 
         function geoFindMe() {
 
@@ -116,6 +116,8 @@
             function success(position) {
                 const latitude  = position.coords.latitude;
                 const longitude = position.coords.longitude;
+
+                getLocation(latitude, longitude);
 
                 status.textContent = '';
                 mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
@@ -135,6 +137,27 @@
 
         }
 
-        document.querySelector('#find-me').addEventListener('click', geoFindMe);
+        function getLocation(latitude, longitude) {
+            $.ajax({
+                url: 'https://agrox.roshnigrammarschool.com/api/location',
+                data: {lat: latitude, long: longitude},
+            }).done(function(data) {
+                
+                let postal = jQuery.isEmptyObject(data[0].postal) ? 'Could not fetch Postal Code' : data[0].postal
+                console.log(postal);
+                
+                $('#postal').text('Postal Code: ' + postal);
+                $('#country').text('Country: ' + data[0].country);
+                $('#province').text('Province: ' + data[0].region);
+                $('#city').text('City: ' + data[0].city);
+                $('#street').text('Street: ' + data[0].staddress);
+                
+            }).fail(function(xhr, status, error) {
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+                alert('Something Went Wrong While Fetching the city name..');
+            });
+        }
     </script>
 @endsection

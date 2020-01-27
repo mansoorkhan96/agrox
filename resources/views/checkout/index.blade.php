@@ -350,6 +350,7 @@
                         url: 'https://agrox.roshnigrammarschool.com/api/location',
 						data: {lat: latitude, long: longitude},
                     }).done(function(data) {
+                        alert('Some of the fields are being filled according to current location!');
 						
                         let postal = jQuery.isEmptyObject(data[0].postal) ? 'Postal Code not Fetched' : data[0].postal
 						console.log(postal);
