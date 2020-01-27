@@ -16,8 +16,11 @@ Web: {
     remove extra code,
     less docs more work
 }
+
 Android: {
     battery,
+    location,
+    device
     splash and icon
 }
 

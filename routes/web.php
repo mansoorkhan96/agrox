@@ -15,7 +15,6 @@ use App\Library\MCart;
 use Illuminate\Support\Facades\Session;
 
 Route::get('/api/location', function() {
-	
 	$lat = request()->lat;
 	$long = request()->long;
 	$response = file_get_contents('https://geocode.xyz/' . $lat .',' . $long . '?geoit=json', false);
@@ -31,7 +30,6 @@ Route::get('/handleAuth', 'HandleAuthController@index');
 Route::get('/', 'PagesController@home')->name('home');
 Route::get('/about', 'PagesController@about')->name('pages.about');
 Route::get('/contact', 'PagesController@contact')->name('pages.contact');
-Route::get('/other', 'PagesController@other')->name('pages.other');
 Route::get('/message', 'PagesController@message')->name('pages.message');
 
 Route::get('/forum', 'ForumController@index')->name('forum.index');
@@ -53,7 +51,7 @@ Route::get('/my-orders', 'ShopController@orders')->name('order.index');
 Route::get('/my-order/{order}', 'ShopController@showOrder')->name('order.show');
 Route::put('/my-order/{order}', 'ShopController@updateOrder')->name('order.update');
 
-Route::post('/buy', 'CartController@buy');
+
 Route::resource('cart', 'CartController');
 
 Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
@@ -64,10 +62,6 @@ Route::put('/profile/{user}', 'ProfilesController@update')->name('profile.update
 Route::get('/profile/{user}', 'ProfilesController@show')->name('profile.show');
 
 Route::get('/reviews', 'ReviewsController@index')->name('review.index');
-
-Route::get('/test', function() {
-    return count(MCart::content());
-});
 
 Route::get('/dashboard/admin', 'AdminController@index')->name('admin.index');
 Route::get('/dashboard/farmer', 'FarmerController@index')->name('farmer.index');
@@ -101,7 +95,6 @@ Route::post('/dashboard/create-comment/{post}', 'PostsController@createComment')
 Route::delete('/dashboard/delete-comment/{post}', 'PostsController@deleteComment')->name('post.deletecomment');
 Route::resource('/dashboard/posts', 'PostsController');
 
-Route::post('/dashboard/consultancies/rating', 'ConsultancyController@rating')->name('consultant.rating');
 Route::resource('/dashboard/consultancies', 'ConsultancyController');
 Route::put('/dashboard/consultancies/reject/{consultancy}', 'ConsultancyController@reject')->name('consultancies.reject');
 Route::put('/dashboard/consultancies/accept/{consultancy}', 'ConsultancyController@accept')->name('consultancies.accept');
