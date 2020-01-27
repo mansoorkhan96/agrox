@@ -15,6 +15,7 @@ class HandleAuthController extends Controller
             foreach(session()->get('mcart') as $item) {
                 DBCart::add(
                     $item['id'],
+                    $item['seller_id'],
                     $item['image'],
                     $item['name'],
                     $item['details'],
@@ -49,7 +50,6 @@ class HandleAuthController extends Controller
                 return redirect()->route('academic.index');
             }
         } else {
-
             return redirect()->route('profile.edit', auth()->user()->id);
         }
     }

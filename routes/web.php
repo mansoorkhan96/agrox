@@ -31,6 +31,7 @@ Route::get('/handleAuth', 'HandleAuthController@index');
 Route::get('/', 'PagesController@home')->name('home');
 Route::get('/about', 'PagesController@about')->name('pages.about');
 Route::get('/contact', 'PagesController@contact')->name('pages.contact');
+Route::get('/other', 'PagesController@other')->name('pages.other');
 Route::get('/message', 'PagesController@message')->name('pages.message');
 
 Route::get('/forum', 'ForumController@index')->name('forum.index');

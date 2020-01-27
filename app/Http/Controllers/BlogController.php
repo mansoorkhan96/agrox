@@ -90,13 +90,15 @@ class BlogController extends Controller
 
         $post = Post::with('user')->withCount('likes')->where('slug', $slug)->firstOrFail();
 
-        $userPostLike = Like::where('user_id', auth()->user()->id)->where('post_id', $post->id)->get();
-        
-        //dd($userPostLike);
-        if($userPostLike->isNotEmpty()) {
-            $userLiked = true;
-        } else {
-            $userLiked = false;
+        if(Auth::check()) {
+            $userPostLike = Like::where('user_id', auth()->user()->id)->where('post_id', $post->id)->get();
+            
+            //dd($userPostLike);
+            if($userPostLike->isNotEmpty()) {
+                $userLiked = true;
+            } else {
+                $userLiked = false;
+            }
         }
 
 

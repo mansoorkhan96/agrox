@@ -12,6 +12,9 @@ Web: {
         Banks,
         Easypaisa,
     }
+
+    remove extra code,
+    less docs more work
 }
 Android: {
     battery,
@@ -25,7 +28,7 @@ tricks : {
 Image-Thumbnails
 
 {
-    Cart Library,
+    Cart Library (vulnerable),
     Helpers,
     Social Provider table seperation,
     Dynamic Pagination,

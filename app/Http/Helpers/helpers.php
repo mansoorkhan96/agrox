@@ -53,6 +53,12 @@ use App\Role;
         return Proficiency::where('id', $id)->first()->proficiency;
     }
 
+    /**
+     * Returns Rating average for given conusltancy
+     *
+     * @param [int] $id
+     * @return string Rating average
+     */
     function consultancyRating($id) {
         $ratingSum = ConsultantReview::where('consultant', $id)->sum('rating');
         $ratingCount = ConsultantReview::where('consultant', $id)->count();
@@ -60,5 +66,7 @@ use App\Role;
         if($ratingCount && $ratingSum) {
             return $ratingSum / $ratingCount;
         }
+
+        return null;
     }
 ?>

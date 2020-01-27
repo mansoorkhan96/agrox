@@ -131,12 +131,13 @@
 						</div>
 						<div class="col-md-2">
 							<div class="widget">
-								<h3 class="widget-title">Useful Link</h3>
+								<h3 class="widget-title">Useful Links</h3>
 								<ul>
 									<li><a href="{{ route('pages.about') }}">Our Team</a></li>
 									<li><a href="{{ route('blog.index') }}">Our Blog</a></li>
 									<li><a href="{{ route('pages.about') }}">About Us</a></li>
 									<li><a href="{{ route('shop.index') }}">Secure Shopping</a></li>
+									<li><a href="{{ route('pages.other') }}">Other</a></li>
 								</ul>
 							</div>
 						</div>
