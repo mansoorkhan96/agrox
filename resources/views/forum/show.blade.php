@@ -12,7 +12,7 @@
                             <span class="font-13">{{ date('M', strtotime($post->created_at)) }}</span>
                         </div>
                         <div class="d-inline-flex">
-                            <span class="text-muted pl-3 pr-3 text-center"><i class="fa fa-comment-o d-block font-16 mb-2"></i>56</span>
+                            <span class="text-muted pl-3 pr-3 text-center"><i class="fa fa-comment-o d-block font-16 mb-2"></i>{{ count($comments) }}</span>
                         </div>
                     </div>
                     

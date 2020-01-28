@@ -39,7 +39,7 @@
                             <li id="post-rating" style="display: inline-block;" class="star-outer"> {{ $postRating }} </li>
                         @auth
                             @if($userLiked !== null)
-                            <li id="like-post" data-id="{{ $post->id }}" style="display: inline-block; color: #5fbd74" class="star-outer">
+                            <li id="like-post" data-id="{{ $post->id }}" style="cursor:pointer; display: inline-block; color: #5fbd74" class="">
                                 @if ($userLiked)
                                     LIKED
                                 @else

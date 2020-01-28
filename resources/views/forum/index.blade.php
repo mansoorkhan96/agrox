@@ -48,7 +48,7 @@
 
 <div class="ibox">
     <div class="ibox-body">
-        <h5 class="font-strong mb-4">My Forum Topics</h5>
+        <h5 class="font-strong mb-4">My Forum Topics/Questions</h5>
         <div class="flexbox mb-4">
             <div class="flexbox">
                 
@@ -59,7 +59,7 @@
                     <input class="form-control form-control-rounded form-control-solid" id="key-search" type="text" placeholder="Search ...">
                 </div>
                 <a class="btn btn-success btn-air" href="/dashboard/posts/create">
-                    <i class="la la-plus"></i> <span class="btn-text-pg">Add New </span>
+                    <i class="la la-plus"></i> <span class="btn-text-pg">Ask</span>
                 </a>
             </div>
         </div>

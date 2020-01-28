@@ -34,11 +34,11 @@
                             <li class="{{ request()->is('forum') ? 'active' : '' }}">
                                 <a href="{{ route('forum.index') }}">Forum</a>
                             </li>
+                            <li class="{{ request()->is('consultancies') ? 'active' : '' }}">
+                                <a href="{{ route('consultancies.index') }}">Consultancies</a>
+                            </li>
                             <li class="{{ request()->is('contact') ? 'active' : '' }}">
                                 <a href="{{ route('pages.contact') }}">Contact</a>
-                            </li>
-                            <li class="{{ request()->is('about') ? 'active' : '' }}">
-                                <a href="{{ route('pages.about') }}">About Us</a>
                             </li>
                         </ul>
                     </nav>

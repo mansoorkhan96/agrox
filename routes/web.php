@@ -36,10 +36,11 @@ Route::get('/message', 'PagesController@message')->name('pages.message');
 Route::get('/forum', 'ForumController@index')->name('forum.index');
 Route::get('/forum/{post}', 'PostsController@show')->name('forum.show');
 
-Route::post('/like/{post}', 'BlogController@like')->name('blog.like');
+
 
 Route::resource('blog', 'BlogController');
 Route::post('/rating/{post}', 'PostRating@store')->name('postRating.store');
+Route::post('/like/{post}', 'BlogController@like')->name('blog.like');
 Route::post('/create-comment/{post}', 'BlogController@createComment')->name('comment.create');
 
 Route::get('/shop/list', 'ShopController@shopList')->name('shop.list');
@@ -96,6 +97,7 @@ Route::post('/dashboard/create-comment/{post}', 'PostsController@createComment')
 Route::delete('/dashboard/delete-comment/{post}', 'PostsController@deleteComment')->name('post.deletecomment');
 Route::resource('/dashboard/posts', 'PostsController');
 
+Route::get('/dashboard/consultancies/rating', 'ConsultancyController@rating')->name('consultant.rating');
 Route::resource('/dashboard/consultancies', 'ConsultancyController');
 Route::put('/dashboard/consultancies/reject/{consultancy}', 'ConsultancyController@reject')->name('consultancies.reject');
 Route::put('/dashboard/consultancies/accept/{consultancy}', 'ConsultancyController@accept')->name('consultancies.accept');

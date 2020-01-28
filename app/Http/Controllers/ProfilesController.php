@@ -120,6 +120,7 @@ class ProfilesController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('profile.show', auth()->user()->id)->with('success', 'Profile Updated Successfully!');
+        return redirect()->route('profile.show', $user->id)->with('success', 'Profile Updated Successfully!');
+        
     }
 }

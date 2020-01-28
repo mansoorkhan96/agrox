@@ -39,21 +39,23 @@ Image-Thumbnails
 }
 
 New: {
+    TDD approach
     Stripe,
     Policies,
     Telescope,
     ACL Management,
     Laravel Resource Publishing
     Laravel Mailables
-    MailTrap
+    Deep Search
+    Indexes (Optimized DB Queries)
     (Front-End) -> Slug Based Blog and Shop {
         unique (10-digit random key appended to end of the slug)
         user friendly
         search engine friendly
     }
 
+    MailTrap
     Laravel Cache (Dont load frequent request from db every time load it from cache)
-    Indexes (Optimized DB Queries)
 }
 
 
