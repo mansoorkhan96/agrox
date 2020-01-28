@@ -35,8 +35,8 @@
                         </span>
 
                         <ul style="display: inline-block;" class="post-meta w-30">
-                            <li style="display: inline-block; color: #5fbd74" class="star-outer"> <i class="star fa fa-star"></i> </li>
-                            <li id="post-rating" style="display: inline-block;" class="star-outer"> {{ $postRating }} </li>
+                            <li style="display: inline-block; color: #5fbd74" class=""> <i class="star fa fa-star"></i> </li>
+                            <li id="post-rating" style="display: inline-block;" class=""> {{ $postRating }} </li> &nbsp; 
                         @auth
                             @if($userLiked !== null)
                             <li id="like-post" data-id="{{ $post->id }}" style="cursor:pointer; display: inline-block; color: #5fbd74" class="">
@@ -170,7 +170,7 @@
                 <div class="sidebar">
                     <div class="widget widget-product-search">
                         <form class="form-search">
-                            <input type="text" class="search-field" placeholder="Search products…" value="{{ request()->search_query ?? '' }}" name="search_query" />
+                            <input type="text" class="search-field" placeholder="Search blogs…" value="{{ request()->search_query ?? '' }}" name="search_query" />
                             <input type="submit" value="Search" />
                         </form>
                     </div>

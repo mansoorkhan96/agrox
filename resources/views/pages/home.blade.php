@@ -90,22 +90,20 @@
                                 <img src="{{ asset('/storage/' . $product['featured_image']) }}" alt="" />
                             </a>
                             <div class="product-action">
-                                @can('order', $product)
-                                    @if ($product['quantity'] > 0)
-                                    {{ Form::open(['action' => 'CartController@store', 'method' => 'POST', 'id' => 'add_to_cart']) }}
-                                        {{ Form::hidden('id', $product['id']) }}
-                                        {{ Form::hidden('seller_id', $product['user_id']) }}
-                                        {{ Form::hidden('image', $product['featured_image']) }}
-                                        {{ Form::hidden('name', $product['name']) }}
-                                        {{ Form::hidden('details', $product['details']) }}
-                                        {{ Form::hidden('price', $product['price']) }}
-                                        {{ Form::hidden('slug', $product['slug']) }}
-                                        <span class="add-to-cart">
-                                            <button type="submit" data-placement="top" title="Add to cart"></button>
-                                        </span>
-                                    {{ Form::close() }}
-                                    @endif
-                                @endcan
+                                @if ($product['quantity'] > 0)
+                                {{ Form::open(['action' => 'CartController@store', 'method' => 'POST', 'id' => 'add_to_cart']) }}
+                                    {{ Form::hidden('id', $product['id']) }}
+                                    {{ Form::hidden('seller_id', $product['user_id']) }}
+                                    {{ Form::hidden('image', $product['featured_image']) }}
+                                    {{ Form::hidden('name', $product['name']) }}
+                                    {{ Form::hidden('details', $product['details']) }}
+                                    {{ Form::hidden('price', $product['price']) }}
+                                    {{ Form::hidden('slug', $product['slug']) }}
+                                    <span class="add-to-cart">
+                                        <button type="submit" data-placement="top" title="Add to cart"></button>
+                                    </span>
+                                {{ Form::close() }}
+                                @endif
                             </div>
                         </div>
                         <div class="product-info">

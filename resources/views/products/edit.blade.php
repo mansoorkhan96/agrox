@@ -9,9 +9,11 @@
         <div class="row">
             <div class="col-lg-4">
                 <div style="width: 325px; height:355px" style="position:relative">
-                    <div class="lead" id="featured_image">Featured Image</div>
+                    <div class="lead" id="featured_image">
+                        <img style="width: 325px; height:355px" src="{{ asset('/storage/' . $product->featured_image) }}">
+                    </div>
                     <div class="add-featured-img" style="position: absolute;
-                    left: 35%;
+                    left: 40%;
                     top: 16%;">
                         <div class="file-input-plus file-input" id="feature-image-btn"><i class="la la-plus-circle"></i>
                             <input type="file" name="featured_image" id="upload_featured_image">
@@ -22,6 +24,17 @@
                     @enderror
                 </div>
                 <div class="row mt-4" id="product_images">
+                    @if($product->images != "")
+                        <?php
+                            $product_images = explode(',', $product->images);    
+                        ?>
+                        @foreach ($product_images as $image)
+                            <div class="col-md-3">
+                                <img src="{{ asset('/storage/' . $image) }}">
+                            </div>
+                        @endforeach
+                    @endif
+                    
                     <div class="col-md-3">
                         <div class="file-input-plus file-input"><i class="la la-plus-circle"></i>
                             <input type="file" name="images[]" id="upload_product_images" multiple="multiple">
@@ -154,9 +167,17 @@
                     let reader = new FileReader();
 
                     reader.onload = function(e) {
-                        $('#product_images').prepend(
+                        $('#product_images').html(
                             `<div class="col-md-3">
                                 <img src="${e.target.result}">
+                            </div>
+                            <div class="col-md-3">
+                                <div class="file-input-plus file-input"><i class="la la-plus-circle"></i>
+                                    <input type="file" name="images[]" id="upload_product_images" multiple="multiple">
+                                </div> Add More Images
+                                @error('images.*')
+                                    <label for="images" class="col-form-label text-danger">{{ $message }}</label>
+                                @enderror
                             </div>
                             `
                         );

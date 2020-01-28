@@ -64,7 +64,7 @@ use App\Role;
         $ratingCount = ConsultantReview::where('consultant', $id)->count();
 
         if($ratingCount && $ratingSum) {
-            return $ratingSum / $ratingCount;
+            return round(($ratingSum / $ratingCount), 1);
         }
 
         return null;

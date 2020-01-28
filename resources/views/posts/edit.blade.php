@@ -11,10 +11,12 @@
         <div class="row">
             <div class="col-lg-4">
                 <div style="width: 325px; height:355px" style="position:relative">
-                    <div class="lead" id="featured_image">Featured Image</div>
+                    <div class="lead" id="featured_image">
+                        <img style="width: 325px; height:355px" src="{{ asset('/storage/' . $post->featured_image) }}">
+                    </div>
                     <div class="add-featured-img" style="position: absolute;
-                    left: 35%;
-                    top: 16%;">
+                    left: 40%;
+                    top: 13%;">
                         <div class="file-input-plus file-input" id="feature-image-btn"><i class="la la-plus-circle"></i>
                             <input type="file" name="featured_image" id="upload_featured_image">
                         </div>

@@ -13,7 +13,7 @@
                     <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
                     <input class="form-control form-control-rounded form-control-solid" id="key-search" type="text" placeholder="Search ...">
                 </div>
-                <a class="btn btn-success btn-air" href="/dashboard/posts/create">
+                <a class="btn btn-success btn-air" href="{{ route('posts.create', ['type' => 'post']) }}">
                     <i class="la la-plus"></i> <span class="btn-text-pg">Add New </span>
                 </a>
                 <a class="btn btn-warning ml-2 btn-air" href="/dashboard/posts/trashed">

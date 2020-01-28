@@ -57,8 +57,8 @@
                             <h1 class="product-title">{{ $product->name }}</h1>
                             <div class="product-rating">
                                 <ul class="post-meta w-30" style="display:inline-block">
-                                    <li id="post-rating" style="display: inline-block;" class="star-outer"> {{ $productRating }} </li>
-                                    <li style="display: inline-block; color: #5fbd74" class="star-outer"> <i class="star fa fa-star"></i> </li>
+                                    <li id="post-rating" style="display: inline-block;" class=""> {{ $productRating }} </li>
+                                    <li style="display: inline-block; color: #5fbd74" class=""> <i class="star fa fa-star"></i> </li> &nbsp; 
                                 </ul>
                                 <i>[ {{ count($reviews) }} customer review(s) ]</i>
                             </div>

@@ -91,15 +91,4 @@ class ProductsPolicy
     {
         //
     }
-
-    /**
-     * Determine whether the user can order products.
-     *
-     * @param  \App\User  $user
-     * @return mixed
-     */
-    public function order(User $user, Product $product)
-    {
-        return $user->id !== $product->user_id;
-    }
 }

@@ -121,6 +121,10 @@ class CartController extends Controller
     public function update(Request $request, $id)
     {
         $productQuantity = Product::findOrfail($request->productId)->quantity;
+        
+        if($request->quantity < 1) {
+            return response()->json(['status' => false, 'message' => 'Bad Request']);
+        }
 
         if($productQuantity < $request->quantity) {
             return response()->json(['status' => false, 'message' => 'We currently do not have enough items in stock']);

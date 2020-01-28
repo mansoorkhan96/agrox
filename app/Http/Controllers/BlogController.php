@@ -110,7 +110,7 @@ class BlogController extends Controller
 
         $postRating = '';
         if($ratings > 0) {
-            $postRating = ($ratingsSum / $ratings);
+            $postRating = round(($ratingsSum / $ratings), 1);
         }
 
         $userRating = null;

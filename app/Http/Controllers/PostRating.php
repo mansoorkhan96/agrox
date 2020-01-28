@@ -35,7 +35,7 @@ class PostRating extends Controller
 
         $ratingsSum = $post->ratings()->sum('rating');
 
-        $postRating = ($ratingsSum / $ratings);
+        $postRating = round(($ratingsSum / $ratings), 1);
 
         return response()->json(['success' => 'Posted Rated Successfully!', 'postRating' => $postRating]);
     }

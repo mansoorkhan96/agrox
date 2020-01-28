@@ -27,9 +27,13 @@
                     <div class="col-md-4 col-sm-6 product-item text-center mb-3">
                         <div class="product-thumb">
                             <a href="{{ route('shop.show', $product->slug) }}">
+                                @if ($product['quantity'] < 1)
+                                <span class="outofstock"><span>Out</span>of stock</span>
+                                @endif
                                 <img src="{{ asset('/storage/' . $product->featured_image) }}" alt="" />
                             </a>
                             <div class="product-action">
+                                @if ($product->quantity > 0)
                                 {{ Form::open(['action' => 'CartController@store', 'method' => 'POST', 'id' => 'add_to_cart']) }}
                                     {{ Form::hidden('id', $product['id']) }}
                                     {{ Form::hidden('seller_id', $product['user_id']) }}
@@ -42,6 +46,7 @@
                                         <button type="submit" class="organik-btn small" data-placement="top" title="Add to cart">Add To Cart</button>
                                     </span>
                                 {{ Form::close() }}
+                                @endif
                             </div>
                         </div>
                         <div class="product-info">

@@ -3,6 +3,7 @@ Repsonsiveness for phonegap: {
 
     Galaxy S to S5 series
 } 
+
 Issues: {
     1: No support for laravel on free hosts
     2: No support for symlink on subdomains (plesk)

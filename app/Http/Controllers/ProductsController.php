@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\Http\Middleware\AdminRoleCheck;
-use App\Http\Middleware\FarmerRoleCheck;
+use App\Http\Middleware\AdminFarmerRoleCheck;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -21,7 +20,7 @@ class ProductsController extends Controller
     {
         $this->middleware('auth');
         
-        $this->middleware(AdminRoleCheck::class) OR $this->middleware(FarmerRoleCheck::class);
+        $this->middleware(AdminFarmerRoleCheck::class);
     }
 
     /**
@@ -96,7 +95,7 @@ class ProductsController extends Controller
             }
         }
         
-        $data['user_id'] = 1;
+        $data['user_id'] = auth()->user()->id;
         $data['images'] = implode(',', $images);
 
         $categories = $data['categories'];
@@ -185,7 +184,7 @@ class ProductsController extends Controller
             $data['images'] = implode(',', $images);
         }
         
-        $data['user_id'] = 1;
+        $data['user_id'] = auth()->user()->id;
         
         $categories = $data['categories'];
         unset($data['categories']);

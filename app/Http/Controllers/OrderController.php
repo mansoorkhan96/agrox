@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Middleware\AdminRoleCheck;
-use App\Http\Middleware\FarmerRoleCheck;
+use App\Http\Middleware\AdminFarmerRoleCheck;
 use App\Order;
 use App\Product;
 use Illuminate\Http\Request;
@@ -20,7 +19,7 @@ class OrderController extends Controller
     {
         $this->middleware('auth');
         
-        $this->middleware(AdminRoleCheck::class) OR $this->middleware(FarmerRoleCheck::class);
+        $this->middleware(AdminFarmerRoleCheck::class);
     }
 
     /**
@@ -30,7 +29,13 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('products')->latest()->get()->toArray();
+        if(auth()->user()->role_id == 1) {
+            $orders = Order::with('products')->latest()->get()->toArray();
+        } else {
+            $orders = Order::whereHas('product', function($query) {
+                $query->where('seller_id', auth()->user()->id);
+            })->latest()->with('products')->get()->toArray();
+        }
 
         return view('orders.index', compact('orders'));
     }

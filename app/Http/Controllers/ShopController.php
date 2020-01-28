@@ -120,7 +120,7 @@ class ShopController extends Controller
 
         $productRating = '';
         if($ratings > 0) {
-            $productRating = ($ratingsSum / $ratings);
+            $productRating = round(($ratingsSum / $ratings), 1);
         }
 
         $userRating = null;
@@ -204,7 +204,7 @@ class ShopController extends Controller
 
         $ratingsSum = $product->reviews()->sum('rating');
 
-        $productRating = ($ratingsSum / $ratings);
+        $productRating = round(($ratingsSum / $ratings), 1);
 
         return response()->json(['success' => 'Product Rated Successfully!', 'productRating' => $productRating]);
     }
