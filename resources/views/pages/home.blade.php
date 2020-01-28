@@ -83,31 +83,33 @@
                 @forelse ($products as $product)
                     <div class="col-md-3 col-sm-6 product-item masonry-item text-center juice">
                         <div class="product-thumb">
-                            <a href="{{ '/shop/' . $product['slug'] }}">
+                            <a href="{{ route('shop.show', $product['slug'])  }}">
                                 @if ($product['quantity'] < 1)
                                 <span class="outofstock"><span>Out</span>of stock</span>
                                 @endif
                                 <img src="{{ asset('/storage/' . $product['featured_image']) }}" alt="" />
                             </a>
                             <div class="product-action">
-                                @if ($product['quantity'] > 0)
-                                {{ Form::open(['action' => 'CartController@store', 'method' => 'POST', 'id' => 'add_to_cart']) }}
-                                    {{ Form::hidden('id', $product['id']) }}
-                                    {{ Form::hidden('seller_id', $product['user_id']) }}
-                                    {{ Form::hidden('image', $product['featured_image']) }}
-                                    {{ Form::hidden('name', $product['name']) }}
-                                    {{ Form::hidden('details', $product['details']) }}
-                                    {{ Form::hidden('price', $product['price']) }}
-                                    {{ Form::hidden('slug', $product['slug']) }}
-                                    <span class="add-to-cart">
-                                        <button type="submit" data-placement="top" title="Add to cart"></button>
-                                    </span>
-                                {{ Form::close() }}
-                                @endif
+                                @can('order', $product)
+                                    @if ($product['quantity'] > 0)
+                                    {{ Form::open(['action' => 'CartController@store', 'method' => 'POST', 'id' => 'add_to_cart']) }}
+                                        {{ Form::hidden('id', $product['id']) }}
+                                        {{ Form::hidden('seller_id', $product['user_id']) }}
+                                        {{ Form::hidden('image', $product['featured_image']) }}
+                                        {{ Form::hidden('name', $product['name']) }}
+                                        {{ Form::hidden('details', $product['details']) }}
+                                        {{ Form::hidden('price', $product['price']) }}
+                                        {{ Form::hidden('slug', $product['slug']) }}
+                                        <span class="add-to-cart">
+                                            <button type="submit" data-placement="top" title="Add to cart"></button>
+                                        </span>
+                                    {{ Form::close() }}
+                                    @endif
+                                @endcan
                             </div>
                         </div>
                         <div class="product-info">
-                            <a href="{{ '/shop/' . $product['slug'] }}">
+                            <a href="{{ route('shop.show', $product['slug'])  }}">
                                 <h2 class="title">{{ $product['name'] }}</h2>
                                 <span class="price">
                                     

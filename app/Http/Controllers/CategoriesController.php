@@ -27,7 +27,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::with('parent')->get()->toArray();
+        $categories = Category::with('parent')->latest()->get()->toArray();
         
         return view('categories.index', compact('categories'));
     }

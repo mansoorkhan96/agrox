@@ -3,8 +3,12 @@ Repsonsiveness for phonegap: {
 
     Galaxy S to S5 series
 } 
-
+Issues: {
+    1: No support for laravel on free hosts
+    2: No support for symlink on subdomains (plesk)
+}
 Web: {
+    Seller should not be able to buy his own product (use Policies)
     Paypal
     *Learn local payment integerations: {
         JazzCash,
@@ -15,13 +19,6 @@ Web: {
 
     remove extra code,
     less docs more work
-}
-
-Android: {
-    battery,
-    location,
-    device
-    splash and icon
 }
 
 tricks : {

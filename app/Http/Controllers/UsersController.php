@@ -20,7 +20,7 @@ class UsersController extends Controller
     }
     
     public function index() {
-        $users = User::all();
+        $users = User::latest()->get();
 
         return view('users.index', compact('users'));
     }
@@ -55,7 +55,7 @@ class UsersController extends Controller
     }
 
     public function consultants() {
-        $consultants = User::where('role_id', 3)->get();
+        $consultants = User::where('role_id', 3)->latest()->get();
 
         return view('users.consultants', compact('consultants'));
     }

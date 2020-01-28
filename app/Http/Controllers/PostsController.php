@@ -153,9 +153,7 @@ class PostsController extends Controller
      */
     public function edit(Post $post)
     {
-        if(auth()->user()->role_id != 1 && $post->user_id != auth()->user()->id) {
-            abort(401);
-        }
+        $this->authorize('update', $post);
 
         $categories = Category::with('parent')->get()->toArray();
 
