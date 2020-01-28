@@ -1,14 +1,17 @@
 Repsonsiveness for phonegap: {
     (min-width: 320px) and (max-width: 489px);
 
-    Galaxy S to S5 series
+    Galaxy S and A series
 } 
 
 Issues: {
     1: No support for laravel on free hosts
     2: No support for symlink on subdomains (plesk)
 }
+
+
 Web: {
+    Image-Thumbnails
     Seller should not be able to buy his own product (use Policies)
     Paypal
     *Learn local payment integerations: {
@@ -22,11 +25,6 @@ Web: {
     less docs more work
 }
 
-tricks : {
-    write code to api and phone gap
-}
-
-Image-Thumbnails
 
 {
     Cart Library (vulnerable),
