@@ -12,19 +12,10 @@ use App\Product;
 use App\Province;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     /**
      * Display a listing of the resource.
      *
@@ -32,6 +23,10 @@ class CheckoutController extends Controller
      */
     public function index()
     {
+        if(! Auth::check()) {
+            return redirect()->route('login', ['redirect' => 'checkout']);
+        }
+
         if(MCart::count() == 0) {
             return redirect()->route('shop.index');
         }
@@ -46,16 +41,6 @@ class CheckoutController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -63,6 +48,9 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
+        if(! Auth::check()) {
+            return redirect('/login');
+        }
 
         if(MCart::count() == 0) {
             return redirect()->route('shop.index');
@@ -129,51 +117,6 @@ class CheckoutController extends Controller
 
         return redirect()->route('pages.message')->with('message', 'Thank you! Your order has been successfully placed!');
 
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     private function decreaseQuantities() {

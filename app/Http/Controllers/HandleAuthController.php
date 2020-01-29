@@ -33,8 +33,9 @@ class HandleAuthController extends Controller
 
         if(auth()->user()->role_id && auth()->user()->proficiency_id) {
 
-            if(auth()->user()->role_id == 5) {
-                
+            if($redirect) {
+                return redirect($redirect);
+            } else if(auth()->user()->role_id == 5) {
                 return redirect()->route('home');
             } else if(auth()->user()->role_id == 1) {
 

@@ -10,42 +10,22 @@ Issues: {
     3: Stripe Error on server
 }
 
-
-Web: {
-    Image-Thumbnails
-    Seller should not be able to buy his own product (use Policies)
-    Paypal
-    *Learn local payment integerations: {
-        JazzCash,
-        Omini,
-        Banks,
-        Easypaisa,
-    }
-
-    remove extra code,
-    less docs more work
-}
-
-
-{
+New: {
     Cart Library (vulnerable): {
-        1 - Does not supports model access,
-        2 - 
+        1 - Does not supports model accociation,
+        2 - No type hints
+        3 - No strict types
+        4 - 
     },
     Helpers,
     Social Provider table seperation,
     Dynamic Pagination,
     Archives Tag, Category
-}
-
-New: {
-    TDD approach
+    TDD (Test Driven Development) approach
     MailTrap
     Stripe,
     Policies,
     Telescope,
-    ACL Management,
-    Laravel Resource Publishing
     Laravel Mailables
     Deep Search
     Indexes (Optimized DB Queries)
@@ -54,7 +34,6 @@ New: {
         user friendly
         search engine friendly
     }
-
 
     Laravel Cache (Dont load frequent request from db every time load it from cache)
 }

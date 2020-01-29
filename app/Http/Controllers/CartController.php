@@ -46,11 +46,11 @@ class CartController extends Controller
             $request->slug
         );
         
-        if($added) {
-            return redirect('/checkout')->with('success', 'Item was added to cart!');
-        }
+        // if($added) {
+        //     return redirect('/checkout')->with('success', 'Item was added to cart!');
+        // }
 
-        return redirect('/checkout')->with('success', 'Item is already in your cart');
+        // return redirect('/checkout')->with('success', 'Item is already in your cart');
     }
 
     /**
