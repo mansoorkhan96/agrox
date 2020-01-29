@@ -21,7 +21,7 @@ class CreateProductReviewsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             
-            $table->tinyInteger('rating');
+            $table->tinyInteger('rating')->nullable();
             $table->text('review')->nullable();
             $table->timestamps();
         });

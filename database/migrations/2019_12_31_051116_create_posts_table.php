@@ -24,6 +24,7 @@ class CreatePostsTable extends Migration
             $table->string('slug');
             $table->enum('post_type', ['post', 'discussion']);
             $table->enum('tag', ['success_story', 'farmer_experience'])->nullable();
+            $table->enum('status', ['PUBLISHED', 'DRAFT', 'PENDING'])->nullable();
             $table->softDeletes();
             $table->timestamps();
 

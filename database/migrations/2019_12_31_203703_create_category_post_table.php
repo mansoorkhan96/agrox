@@ -15,6 +15,7 @@ class CreateCategoryPostTable extends Migration
     {
         Schema::create('category_post', function (Blueprint $table) {
             $table->bigIncrements('id');
+            
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
 

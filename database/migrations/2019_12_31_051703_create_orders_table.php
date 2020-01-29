@@ -34,6 +34,8 @@ class CreateOrdersTable extends Migration
             $table->string('payment_method')->default('Cash-On-Delivery');
             $table->string('error')->nullable();
             $table->enum('status', ['Complete', 'Pending', 'Cancelled'])->default('Pending');
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }
