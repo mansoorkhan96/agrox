@@ -122,9 +122,26 @@ class CategoriesController extends Controller
     public function destroy(Category $category)
     {
         if($category->delete()) {
-            back()->with('success', 'Category deleted succussfully');
+            return back()->with('success', 'Category deleted succussfully');
         }
 
-        back()->with('error', 'Failed! Could not delete Category');
+        return back()->with('error', 'Failed! Could not delete Category');
+    }
+
+    public function trashed() {
+        
+        $categories = Category::onlyTrashed()->with('parent')->latest()->get()->toArray();
+        
+        return view('categories.trashed', compact('categories'));
+    }
+
+    public function restore($id) {
+        if($product = Category::onlyTrashed()->where('id', $id)) {
+            $product->restore();
+
+            return back()->with('success', 'Category restored successfully');
+        }
+
+        abort(419);
     }
 }

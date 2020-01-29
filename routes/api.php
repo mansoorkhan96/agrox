@@ -22,5 +22,9 @@ Route::get('/home', 'API\ApiPagesController@home');
 
 Route::get('shop/list', 'API\ApiShopController@shopList');
 Route::get('shop/grid', 'API\ApiShopController@shopGrid');
+
 Route::resource('shop', 'API\ApiShopController');
+
+
+Route::resource('blog', 'API\ApiBlogController');
 

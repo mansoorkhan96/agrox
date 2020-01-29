@@ -3,7 +3,7 @@
 @section('content')
 <div class="ibox">
     <div class="ibox-body">
-        <h5 class="font-strong mb-4">Categories</h5>
+        <h5 class="font-strong mb-4">Trashed Categories</h5>
         <div class="flexbox mb-4">
             <div class="flexbox">
                 
@@ -16,10 +16,6 @@
                 <a class="btn btn-success btn-air" href="/dashboard/categories/create">
                     <i class="la la-plus"></i> <span class="btn-text-pg">Add New </span>
                 </a>
-                <a class="btn btn-warning ml-2 btn-air" href="{{ route('categories.trashed') }}">
-                    <i class="la la-trash"></i> <span class="btn-text-pg">Trashed </span>
-                </a>
-                
             </div>
         </div>
         <div class="table-responsive row">
@@ -44,9 +40,8 @@
                             <td>{{ $name }}</td>
                             <td>{{ $slug }}</td>
                             <td>
-                                <a class="text-light mr-3 font-16" href="{{ route('categories.edit', $id) }}"><i class="ti-pencil"></i></a>
-                                {{ Form::open(['route' => ['categories.destroy', $id], 'class' =>'d-inline ', 'method' => 'delete']) }}
-                                    <button type="submit" class="no-btn text-light font-16"><i class="ti-trash"></i></button>
+                                {{ Form::open(['action' => ['CategoriesController@restore', $id], 'class' =>'d-inline ', 'method' => 'PUT']) }}
+                                    <button type="submit" class="btn btn-warning btn-sm font-12">Restore</button>
                                 {{ Form::close() }}
                             </td>
                         </tr>

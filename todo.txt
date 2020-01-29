@@ -7,6 +7,7 @@ Repsonsiveness for phonegap: {
 Issues: {
     1: No support for laravel on free hosts
     2: No support for symlink on subdomains (plesk)
+    3: Stripe Error on server
 }
 
 
@@ -27,7 +28,10 @@ Web: {
 
 
 {
-    Cart Library (vulnerable),
+    Cart Library (vulnerable): {
+        1 - Does not supports model access,
+        2 - 
+    },
     Helpers,
     Social Provider table seperation,
     Dynamic Pagination,
@@ -36,6 +40,7 @@ Web: {
 
 New: {
     TDD approach
+    MailTrap
     Stripe,
     Policies,
     Telescope,
@@ -50,7 +55,7 @@ New: {
         search engine friendly
     }
 
-    MailTrap
+
     Laravel Cache (Dont load frequent request from db every time load it from cache)
 }
 

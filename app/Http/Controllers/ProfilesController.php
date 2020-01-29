@@ -64,10 +64,6 @@ class ProfilesController extends Controller
      */
     public function edit(User $user)
     {
-        // if(auth()->user()->role_id != 1 && $user->id != auth()->user()->id) {
-        //     abort(401);
-        // }
-
         $this->authorize('update', $user);
 
         $location = $user->city()->get()->toArray();
@@ -121,6 +117,5 @@ class ProfilesController extends Controller
         $user->update($data);
 
         return redirect()->route('profile.show', $user->id)->with('success', 'Profile Updated Successfully!');
-        
     }
 }

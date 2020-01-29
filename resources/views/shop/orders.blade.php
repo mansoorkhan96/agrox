@@ -50,9 +50,9 @@
                             <td>
                                 <a href="{{ route('order.show', $order->id) }}" class="btn btn-sm btn-info mb-1">View</a>
                                 @if ($order->status == 'Pending')
-                                    <a href="#" data-action="Cancelled" order-id="{{ $order->id }}" id="order-action" class="btn btn-sm btn-default">Cancel</a>
+                                    <a href="#" data-action="Cancelled" order-id="{{ $order->id }}" id="" class="order-action btn btn-sm btn-default">Cancel</a>
                                 @elseif($order->status == 'Cancelled')
-                                    <a href="#" data-action="Reorder" order-id="{{ $order->id }}" id="order-action" class="btn btn-sm btn-default">Reorder</a>
+                                    <a href="#" data-action="Reorder" order-id="{{ $order->id }}" id="" class="order-action btn btn-sm btn-default">Reorder</a>
                                 @endif
                                 
                             </td>
@@ -109,8 +109,9 @@
 @section('page_script')
     <script>
         $(document).ready(function() {
-            $(document).on('click', '#order-action', function(e) {
+            $(document).on('click', '.order-action', function(e) {
                 e.preventDefault();
+                let currentObject = $(this);
 
                 let status = $(this).attr('data-action');
                 let id = $(this).attr('order-id');
@@ -124,15 +125,16 @@
                     method: 'PUT'
                 }).done(function(data) {
                     if(status == 'Cancelled') {
-                        $('#order-action').attr('data-action', 'Reorder');
-                        $('#order-action').text('Reorder');
+                        console.log(currentObject)
+                        currentObject.attr('data-action', 'Reorder');
+                        currentObject.text('Reorder');
 
                         $('#' + id).removeClass('badge-info');
                         $('#' + id).addClass('badge-warning');
                         $('#' + id).text('Cancelled')
                     } else if(status == 'Reorder') {
-                        $('#order-action').attr('data-action', 'Cancelled');
-                        $('#order-action').text('Cancel');
+                        currentObject.attr('data-action', 'Cancelled');
+                        currentObject.text('Cancel');
 
                         $('#' + id).removeClass('badge-warning');
                         $('#' + id).addClass('badge-info');

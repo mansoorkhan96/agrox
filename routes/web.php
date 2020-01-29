@@ -70,6 +70,8 @@ Route::get('/dashboard/farmer', 'FarmerController@index')->name('farmer.index');
 Route::get('/dashboard/consultant', 'ConsultantController@index')->name('consultant.index');
 Route::get('/dashboard/academic', 'AcademicController@index')->name('academic.index');
 
+Route::get('/dashboard/categories/trashed', 'CategoriesController@trashed')->name('categories.trashed');
+Route::put('/dashboard/categories/restore/{id}', 'CategoriesController@restore')->name('categories.restore');
 Route::resource('/dashboard/categories', 'CategoriesController');
 
 Route::get('/dashboard/users', 'UsersController@index')->name('users.index');
@@ -97,7 +99,7 @@ Route::post('/dashboard/create-comment/{post}', 'PostsController@createComment')
 Route::delete('/dashboard/delete-comment/{post}', 'PostsController@deleteComment')->name('post.deletecomment');
 Route::resource('/dashboard/posts', 'PostsController');
 
-Route::get('/dashboard/consultancies/rating', 'ConsultancyController@rating')->name('consultant.rating');
+Route::post('/dashboard/consultancies/rating', 'ConsultancyController@rating')->name('consultant.rating');
 Route::resource('/dashboard/consultancies', 'ConsultancyController');
 Route::put('/dashboard/consultancies/reject/{consultancy}', 'ConsultancyController@reject')->name('consultancies.reject');
 Route::put('/dashboard/consultancies/accept/{consultancy}', 'ConsultancyController@accept')->name('consultancies.accept');

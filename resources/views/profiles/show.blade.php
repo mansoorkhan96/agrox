@@ -36,7 +36,7 @@
                 <div class="d-inline-flex">
                     @if ($user->role_id == 3)
                     <div class="px-4 text-center">
-                        <div class="text-muted font-13">Rating</div>
+                        <div class="text-muted font-13">RATING</div>
                         <div class="h2 mt-2">{{ consultancyRating($user->id) }}</div>
                     </div>
                     @endif
@@ -45,7 +45,7 @@
                         <div class="h2 mt-2">{{ $userPostCount }}</div>
                     </div>
                     <div class="px-4 text-center">
-                        <div class="text-muted font-13">Post Likes</div>
+                        <div class="text-muted font-13">ARTICLE LIKES</div>
                         <div class="h2 mt-2">{{ $userPostLikeCount }}</div>
                     </div>
                 </div>

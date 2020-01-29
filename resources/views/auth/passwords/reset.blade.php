@@ -45,7 +45,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-wrap">
-                                    <input type="submit" value="LOGIN">
+                                    <input type="submit" value="RESET">
                                 </div>
                             </div>
                         </div>
